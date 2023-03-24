@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import Home from '~/layouts/Home/Home';
+import LoginForm from '~/layouts/LoginUser/LoginUser';
+import SignUpForm from './layouts/SignUp/SignUp';
+import BookPage from '~/layouts/Book/Book';
+import BookDetail from '~/layouts/BookDetail/BookDetail';
+
+import { Route, Routes } from 'react-router-dom';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <Routes>
+            <Route exact index element={<Home />}></Route>
+            <Route path="home" element={<Home />}></Route>
+            <Route path="library/login" element={<LoginForm />}></Route>
+            <Route path="library/signup" element={<SignUpForm />}></Route>
+            <Route path="library/books" element={<BookPage />}></Route>
+            <Route path="library/book/detail/:nameBook" element={<BookDetail />}></Route>
+        </Routes>
+    );
 }
 
 export default App;
