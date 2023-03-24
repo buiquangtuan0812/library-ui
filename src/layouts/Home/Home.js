@@ -13,7 +13,7 @@ function Home() {
         if (location.state) {
             setUser(location.state.user);
         }
-    });
+    }, []);
     return (
         <div>
             <Header user={user} />

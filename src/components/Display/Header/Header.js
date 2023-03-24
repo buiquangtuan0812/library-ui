@@ -30,7 +30,9 @@ function Header(props) {
 
             <div className={cx('container__infor')}>
                 <div className={cx('introduction')}>
-                    <span className={cx('icon')}></span>
+                    <Link to="/home" state={{ user: props.user }}>
+                        <span className={cx('icon')}></span>
+                    </Link>
                 </div>
             </div>
 

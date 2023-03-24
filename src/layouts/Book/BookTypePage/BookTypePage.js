@@ -1,31 +1,27 @@
 import classNames from 'classnames/bind';
-import styles from './Book.module.scss';
-import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import axios from 'axios';
-
+import styles from './BookTypePage.module.scss';
 import Header from '~/components/Display/Header/Header';
 import Footer from '~/components/Display/Footer/Footer';
-import CategoryBook from './CategoryBook/CategoryBook';
+import CategoryBook from '../CategoryBook/CategoryBook';
+
+import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
-function BookPage() {
+function BookTypePage() {
     const [dataBook, setdataBook] = useState([]);
-    document.title = 'Book | My Library';
 
     const [user, setUser] = useState([]);
     const location = useLocation();
+    document.title = 'Book | ' + location.state.type;
+    const url = 'http://localhost:8086/library/books/' + location.state.title;
     useEffect(() => {
-        if (location.state) {
-            setUser(location.state.user);
-        }
-    });
-
-    useEffect(() => {
+        setUser(location.state.user);
         axios
-            .get('http://localhost:8086/library/books')
+            .get(url)
             .then((res) => setdataBook(res.data))
             .catch((err) => {
                 console.log(err);
@@ -94,4 +90,4 @@ function BookPage() {
     );
 }
 
-export default BookPage;
+export default BookTypePage;

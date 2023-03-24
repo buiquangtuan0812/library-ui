@@ -3,8 +3,7 @@ import styles from './SignUp.module.scss';
 import Notification from '~/components/Display/Notification/Notification';
 
 import axios from 'axios';
-import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 const cx = classNames.bind(styles);
 
@@ -24,7 +23,13 @@ function SignUpForm() {
     const [warnEmail, setWarningEmail] = useState(false);
     const [warnPassword, setWarningPassword] = useState(false);
 
+    const [checkRegister, setCheckRegister] = useState(false);
+    const [message, setMessage] = useState('');
+    const [messageLink, setMessageLink] = useState('');
+    const [count, setCount] = useState(0);
+
     const handleSignup = () => {
+        setCount(count + 1);
         const dataUser = {
             username: username,
             email: email,
@@ -32,11 +37,11 @@ function SignUpForm() {
             password: password,
         };
         if (
-            username.length == 0 &&
-            email.length == 0 &&
-            password.length == 0 &&
-            tel.length == 0 &&
-            password.length == 0
+            username.length === 0 &&
+            email.length === 0 &&
+            password.length === 0 &&
+            tel.length === 0 &&
+            password.length === 0
         ) {
             setErrorEmail(true);
             setErrorName(true);
@@ -50,19 +55,36 @@ function SignUpForm() {
             setState(true);
             axios
                 .post('http://localhost:8086/library/signup', dataUser, {
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
                 })
                 .then((res) => {
+                    console.log(res.data);
                     setToken(res.data);
+                    setMessage('You have successfully registered !');
+                    setMessageLink('Login now!');
+                    setCheckRegister(true);
                 })
-                .catch((err) => console.log(err));
+                .catch((err) => {
+                    setMessage(err.request.response);
+                    setMessageLink('Try re-entering !');
+                    setCheckRegister(false);
+                    // console.log(err.request.response);
+                });
         }
     };
 
     return (
         <div className={cx('container__signup')}>
             <div className={cx(display ? 'show' : 'hide-content')}>
-                <Notification token={token} />
+                <Notification
+                    token={token}
+                    message={message}
+                    messageLink={messageLink}
+                    check={checkRegister}
+                    count={count}
+                />
             </div>
             <div className={cx('form')}>
                 <form>
@@ -76,6 +98,7 @@ function SignUpForm() {
                             className={cx('input-field')}
                             type="text"
                             id="username"
+                            value={username}
                             name="username"
                             onChange={(e) => {
                                 if (e.target.value.length > 0) {
@@ -96,6 +119,7 @@ function SignUpForm() {
                             type="text"
                             id="email"
                             name="email"
+                            value={email}
                             onChange={(e) => {
                                 setEmail(e.target.value);
                                 if (
@@ -123,6 +147,7 @@ function SignUpForm() {
                             type="text"
                             name="numberphone"
                             id="numberphone"
+                            value={tel}
                             onChange={(e) => {
                                 if (e.target.value.length === 10) {
                                     setErrorTel(false);
@@ -146,6 +171,7 @@ function SignUpForm() {
                             type="password"
                             name="password"
                             id="password"
+                            value={password}
                             onChange={(e) => {
                                 if (e.target.value.length >= 8) {
                                     setErrorPassword(false);
@@ -165,8 +191,10 @@ function SignUpForm() {
                         You must enter your password!
                     </div>
                 </form>
-                <div className={cx('btn-signup')} onClick={handleSignup}>
-                    <button className={cx('button2')}>Sign Up</button>
+                <div className={cx('btn-signup')}>
+                    <button className={cx('button2')} onClick={handleSignup}>
+                        Sign Up
+                    </button>
                 </div>
             </div>
         </div>

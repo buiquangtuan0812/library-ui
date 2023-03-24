@@ -20,7 +20,7 @@ function LoginUser() {
         };
         axios
             .post('http://localhost:8086/library/signin', dataUser, {
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                headers: { 'Content-Type': 'application/json' },
             })
             .then((response) => {
                 setData(response.data);
@@ -32,7 +32,7 @@ function LoginUser() {
     return (
         <div className={cx('container__signin')}>
             <div className={cx('form')}>
-                <p className={cx('heading')}>Login</p>
+                <p className={cx('heading')}>Log In</p>
                 <form>
                     <div className={cx('field')}>
                         <i className={cx('fa-solid fa-user')}></i>
@@ -61,11 +61,15 @@ function LoginUser() {
                     </div>
                 </form>
                 <div className={cx('btn')}>
-                    <Link to={data.token ? '/home' : '/library/login'} state={data.token ? { user: data } : ''}>
-                        <button className={cx('button1')} onClick={handleLogin}>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Login&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        </button>
-                    </Link>
+                    <button className={cx('button1')} onClick={(e) => handleLogin(e)}>
+                        <Link
+                            to={data.token ? '/home' : '/library/login'}
+                            state={data.token ? { user: data } : ''}
+                            className={cx('btn-submit')}
+                        >
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Log In&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </Link>
+                    </button>
                 </div>
                 <button className={cx('button3')}>Forgot Password</button>
                 <div className={cx('direct-signup')}>

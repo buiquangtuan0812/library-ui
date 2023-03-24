@@ -56,7 +56,7 @@ function BookDetail() {
                 </div>
                 <div className={cx('row')}>
                     <div className={cx('col-2')}>
-                        <CategoryBook />
+                        <CategoryBook user={user} />
                     </div>
                     <div className={cx('col-10')}>
                         <div className={cx('row row-cols-auto')}>
@@ -89,7 +89,7 @@ function BookDetail() {
                                     </span>
                                     <span className={cx('container__book-content-language')}>
                                         Language:
-                                        <p>{book.lanhuage}</p>
+                                        <p>{book.language}</p>
                                     </span>
                                 </div>
                             </div>
