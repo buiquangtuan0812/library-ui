@@ -1,5 +1,4 @@
-.container__signin,
-.container__signup {
+.container__signin {
     position: fixed;
     top: 0;
     bottom: 0;
@@ -12,6 +11,23 @@
     justify-content: center;
     background: url('/img/background.jpg') no-repeat center;
     background-size: cover;
+}
+
+.btn-loginAdmin {
+    position: absolute;
+    top: 28px;
+    right: 40px;
+    padding: 12px 24px;
+    background-color: #171717;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 12px;
+    transition: 0.4s ease-in-out;
+    &:hover {
+        cursor: pointer;
+        transform: scale(1.05);
+        border: 1px solid black;
+    }
 }
 
 .form {
@@ -70,6 +86,21 @@
 }
 .field {
     margin-bottom: 16px;
+    position: relative;
+}
+
+.show-err {
+    position: absolute;
+    left: 12px;
+    top: 52px;
+    display: block;
+    color: #dc3545;
+    font-size: 13px;
+    font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Noto Sans', 'Liberation Sans', Arial, sans-serif,
+        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+.hide-err {
+    display: none;
 }
 
 .form .btn {

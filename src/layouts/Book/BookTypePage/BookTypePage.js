@@ -13,19 +13,29 @@ const cx = classNames.bind(styles);
 
 function BookTypePage() {
     const [dataBook, setdataBook] = useState([]);
-
+    const [inputBook, setinputBook] = useState('');
     const [user, setUser] = useState([]);
     const location = useLocation();
     document.title = 'Book | ' + location.state.type;
     const url = 'http://localhost:8086/library/books/' + location.state.title;
+    const urlAuthor = 'http://localhost:8086/library/books/author';
     useEffect(() => {
         setUser(location.state.user);
-        axios
-            .get(url)
-            .then((res) => setdataBook(res.data))
-            .catch((err) => {
-                console.log(err);
-            });
+        if (location.state.author) {
+            axios
+                .get(urlAuthor, { params: { author: location.state.author } })
+                .then((res) => setdataBook(res.data))
+                .catch((err) => {
+                    console.log(err);
+                });
+        } else {
+            axios
+                .get(url)
+                .then((res) => setdataBook(res.data))
+                .catch((err) => {
+                    console.log(err);
+                });
+        }
     }, []);
     const renderBook = dataBook.map((book, index) => {
         return (
@@ -65,9 +75,11 @@ function BookTypePage() {
                         <div className={cx('row')}>
                             <form className={cx('form-serach')} method="GET" action="/library/books/search">
                                 <div className={cx('col-1')} id="btnSubmit">
-                                    <button type="submit" className={cx('btn-search')}>
-                                        Search
-                                    </button>
+                                    <Link to={`/library/book/detail/${inputBook}`}>
+                                        <button type="submit" className={cx('btn-search')}>
+                                            Search
+                                        </button>
+                                    </Link>
                                 </div>
                                 <div className={cx('col-6 search__input form-group')}>
                                     <label htmlFor="name"></label>
@@ -77,6 +89,7 @@ function BookTypePage() {
                                         name="name"
                                         id="name"
                                         placeholder="Nhập từ khóa tìm kiếm!"
+                                        onChange={(e) => setinputBook(e.target.value)}
                                     />
                                 </div>
                             </form>

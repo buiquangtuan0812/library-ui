@@ -82,20 +82,60 @@ function CategoryBook(props) {
             <ul className={cx('author__search')}>
                 {/* <i className={cx('fa-solid fa-user-secret"></i> */}
                 Author
-                <li className={cx('getAuthor')}>Dale Carnegie</li>
-                <li className={cx('getAuthor')}>Paulo Coelho</li>
-                <li className={cx('getAuthor')}>Thích Nhất Hạnh</li>
-                <li className={cx('getAuthor')}>Tony Buổi Sáng</li>
-                <li className={cx('getAuthor')}>Nguyễn Nhật Ánh</li>
+                <Link
+                    className={cx('link-author')}
+                    to={`/library/book/author/${'Dale Carnegie'}`}
+                    state={{ author: 'Dale Carnegie', user: props.user, type: handleTitle('Dale Carnegie') }}
+                >
+                    <li className={cx('getAuthor')}>Dale Carnegie</li>
+                </Link>
+                <Link
+                    className={cx('link-author')}
+                    to={`/library/book/author/${'Paulo Coelho'}`}
+                    state={{ author: 'Paulo Coelho', user: props.user, type: handleTitle('Paulo Coelho') }}
+                >
+                    <li className={cx('getAuthor')}>Paulo Coelho</li>
+                </Link>
+                <Link
+                    className={cx('link-author')}
+                    to={`/library/book/author/${'Thích Nhất Hạnh'}`}
+                    state={{ author: 'Thích Nhất Hạnh', user: props.user, type: handleTitle('Thích Nhất Hạnh') }}
+                >
+                    <li className={cx('getAuthor')}>Thích Nhất Hạnh</li>
+                </Link>
+                <Link
+                    className={cx('link-author')}
+                    to={`/library/book/author/${'Tony Buổi Sáng'}`}
+                    state={{ author: 'Tony Buổi Sáng', user: props.user, type: handleTitle('Tony Buổi Sáng') }}
+                >
+                    <li className={cx('getAuthor')}>Tony Buổi Sáng</li>
+                </Link>
+                <Link
+                    className={cx('link-author')}
+                    to={`/library/book/author/${'Nguyễn Nhật Ánh'}`}
+                    state={{ author: 'Nguyễn Nhật Ánh', user: props.user, type: handleTitle('Nguyễn Nhật Ánh') }}
+                >
+                    <li className={cx('getAuthor')}>Nguyễn Nhật Ánh</li>
+                </Link>
             </ul>
 
             <ul className={cx('country__search')}>
                 Country
                 <li className={cx('item-catergory')}>
-                    <Link to="/library/books/domestic">Domestic</Link>
+                    <Link
+                        to={`/library/book/${'domestic'}`}
+                        state={{ title: 'domestic', user: props.user, type: handleTitle('domestic') }}
+                    >
+                        Domestic
+                    </Link>
                 </li>
                 <li className={cx('item-catergory')}>
-                    <Link to="/library/books/foreign">Foreign</Link>
+                    <Link
+                        to={`/library/book/${'foreign'}`}
+                        state={{ title: 'foreign', user: props.user, type: handleTitle('foreign') }}
+                    >
+                        Foreign
+                    </Link>
                 </li>
             </ul>
         </div>

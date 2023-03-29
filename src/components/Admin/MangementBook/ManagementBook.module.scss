@@ -1,0 +1,90 @@
+.container__manage-header {
+    display: flex;
+    align-items: center;
+    padding: 24px;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+    &-title {
+        font-size: 22px;
+        font-weight: 700;
+    }
+    .d-flex {
+        display: flex;
+        align-items: center;
+    }
+    .form-control {
+        padding: 8px 12px;
+        display: block;
+        width: 420px;
+        font-size: 1.4rem;
+        font-weight: 400;
+        line-height: 1.5;
+        background-clip: padding-box;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        outline: none;
+        appearance: none;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    }
+    .btn {
+        height: 40px;
+        background-color: #171717;
+        padding: 8px 20px;
+        color: #fff;
+        font-size: 1.4rem;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        margin-left: 12px;
+        transition: 0.4s ease-in-out;
+        &:hover {
+            cursor: pointer;
+            transform: scale(1.05);
+            border: 1px solid black;
+        }
+    }
+}
+.container__manage-main {
+    .header-title-index {
+        text-align: center;
+        padding-left: 22px;
+    }
+    .header-title-option {
+        text-align: center;
+        padding-right: 22px;
+    }
+    .header-title {
+        text-align: center;
+    }
+    .manage__book-item {
+        &:hover {
+            cursor: pointer;
+            background-color: #f2f2f2;
+        }
+        .title-index {
+            text-align: center;
+            padding-left: 22px;
+        }
+        .title-author,
+        .title-price,
+        .title-quantity,
+        .title-type {
+            text-align: center;
+        }
+        .title-book {
+            width: 420px;
+            &-one {
+                width: 420px;
+                text-align: center;
+            }
+        }
+        .details_book {
+            text-align: center;
+            font-size: 20px;
+            padding: 8px 22px 8px 12px;
+            cursor: pointer;
+            color: #2b80ff;
+        }
+    }
+}

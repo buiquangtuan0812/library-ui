@@ -13,6 +13,7 @@ const cx = classNames.bind(styles);
 
 function BookPage() {
     const [dataBook, setdataBook] = useState([]);
+    const [inputBook, setinputBook] = useState('');
     document.title = 'Book | My Library';
 
     const [user, setUser] = useState([]);
@@ -50,16 +51,17 @@ function BookPage() {
             </div>
         );
     });
+
     return (
         <div>
             <Header user={user} />
             <div className={cx('container')}>
                 <div className={cx('separate')}></div>
                 <div className={cx('btn-back')}>
-                    <a href="/library">
+                    <Link to="/home">
                         <i className={cx('fa-solid fa-arrow-left')}></i>
                         Back
-                    </a>
+                    </Link>
                 </div>
                 <div className={cx('row')}>
                     <div className={cx('col-2')}>
@@ -69,9 +71,11 @@ function BookPage() {
                         <div className={cx('row')}>
                             <form className={cx('form-serach')} method="GET" action="/library/books/search">
                                 <div className={cx('col-1')} id="btnSubmit">
-                                    <button type="submit" className={cx('btn-search')}>
-                                        Search
-                                    </button>
+                                    <Link to={`/library/book/detail/${inputBook}`}>
+                                        <button type="submit" className={cx('btn-search')}>
+                                            Search
+                                        </button>
+                                    </Link>
                                 </div>
                                 <div className={cx('col-6 search__input form-group')}>
                                     <label htmlFor="name"></label>
@@ -81,6 +85,8 @@ function BookPage() {
                                         name="name"
                                         id="name"
                                         placeholder="Nhập từ khóa tìm kiếm!"
+                                        value={inputBook}
+                                        onChange={(e) => setinputBook(e.target.value)}
                                     />
                                 </div>
                             </form>

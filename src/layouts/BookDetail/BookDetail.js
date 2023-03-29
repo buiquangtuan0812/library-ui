@@ -6,9 +6,9 @@ import Footer from '~/components/Display/Footer/Footer';
 import CategoryBook from '../Book/CategoryBook/CategoryBook';
 
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
@@ -49,10 +49,10 @@ function BookDetail() {
             <div className={cx('container')}>
                 <div className={cx('separate')}></div>
                 <div className={cx('btn-back')}>
-                    <a href="/library">
+                    <Link to="/library/books">
                         <i className={cx('fa-solid fa-arrow-left')}></i>
                         Back
-                    </a>
+                    </Link>
                 </div>
                 <div className={cx('row')}>
                     <div className={cx('col-2')}>

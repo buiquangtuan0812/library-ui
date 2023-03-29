@@ -78,12 +78,17 @@
 .container__account-support,
 .container__account-cash,
 .container__account-user {
+    position: relative;
     font-size: 22px;
     padding: 6px 12px;
     margin-left: 16px;
 }
 .iconUser {
     font-size: 36px;
+    color: #ffffff;
+    &:hover {
+        cursor: pointer;
+    }
 }
 
 .container__account-cash {

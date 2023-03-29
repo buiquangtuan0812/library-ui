@@ -23,6 +23,7 @@
     background-color: #fff;
     animation-name: show;
     animation-duration: 1s;
+    border: 1px solid #ccc;
     font-family: source sans pro, sans-serif;
     .confirm__err {
         display: flex;
@@ -70,6 +71,18 @@
             padding: 12px;
             cursor: pointer;
             border-radius: 25px;
+            background-color: #8bc34a;
+        }
+    }
+    &-create {
+        text-align: center;
+        margin-bottom: 24px;
+        button {
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 8px;
             background-color: #8bc34a;
         }
     }

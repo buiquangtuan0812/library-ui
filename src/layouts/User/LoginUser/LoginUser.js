@@ -12,6 +12,7 @@ function LoginUser() {
     const [userNamme, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [data, setData] = useState([]);
+    const [err, setErr] = useState('');
 
     const handleLogin = () => {
         const dataUser = {
@@ -23,7 +24,12 @@ function LoginUser() {
                 headers: { 'Content-Type': 'application/json' },
             })
             .then((response) => {
-                setData(response.data);
+                if (response.data.message) {
+                    setErr(response.data.message);
+                } else {
+                    setData(response.data);
+                    setErr('');
+                }
             })
             .catch((err) => {
                 console.log(err);
@@ -31,6 +37,9 @@ function LoginUser() {
     };
     return (
         <div className={cx('container__signin')}>
+            <Link to="/admin/login">
+                <div className={cx('btn-loginAdmin')}>Admin</div>
+            </Link>
             <div className={cx('form')}>
                 <p className={cx('heading')}>Log In</p>
                 <form>
@@ -58,6 +67,7 @@ function LoginUser() {
                             id="password"
                             onChange={(e) => setPassword(e.target.value)}
                         />
+                        <span className={cx(err ? 'show-err' : 'hide-err')}>{err}</span>
                     </div>
                 </form>
                 <div className={cx('btn')}>

@@ -26,9 +26,12 @@
     border-radius: 8px;
     border: none;
     padding: 8px 16px;
-    background-color: rgb(13, 110, 253);
+    background-color: #252730;
+    transition: 0.4s ease-in-out;
     &:hover {
-        background-color: #0b5ed7;
+        cursor: pointer;
+        transform: scale(1.05);
+        background-color: #171717;
     }
 }
 .search__input {

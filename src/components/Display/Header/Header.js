@@ -1,6 +1,9 @@
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
 
+import AccountReview from '../AccountReview/AccountReview';
+
+import Tippy from '@tippyjs/react/headless';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { BiUserCircle } from 'react-icons/bi';
@@ -12,6 +15,13 @@ function Header(props) {
     useEffect(() => {
         setToken(props.user.token);
     });
+    const renderTippy = (props) => {
+        return (
+            <div>
+                <AccountReview />
+            </div>
+        );
+    };
     return (
         <div className={cx('header')}>
             <div className={cx('container__content')}>
@@ -37,9 +47,15 @@ function Header(props) {
             </div>
 
             <div className={cx('container__account')}>
-                <div className={cx('container__account-user')}>
-                    <Link to="/library/login">{token ? <BiUserCircle className={cx('iconUser')} /> : 'Log in'}</Link>
-                </div>
+                {token ? (
+                    <Tippy render={renderTippy} interactive delay={[200, 100]} offset={[-85, 3]} placement="bottom">
+                        <div className={cx('container__account-user')}>
+                            <BiUserCircle className={cx('iconUser')} />
+                        </div>
+                    </Tippy>
+                ) : (
+                    <div className={cx('container__account-user')}>Log in</div>
+                )}
                 <div className={cx('container__account-support')}>
                     <a href="/">Support</a>
                 </div>
