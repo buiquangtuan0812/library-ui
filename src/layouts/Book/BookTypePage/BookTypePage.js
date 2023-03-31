@@ -6,7 +6,7 @@ import CategoryBook from '../CategoryBook/CategoryBook';
 
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useLocation } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
@@ -36,36 +36,54 @@ function BookTypePage() {
                     console.log(err);
                 });
         }
-    }, []);
-    const renderBook = dataBook.map((book, index) => {
-        return (
-            <div className={cx('col-3')} key={index}>
-                <Link className={cx('link-item')} to={`/library/book/detail/${book.name}`} state={{ user: user }}>
-                    <div className={cx('book-item')}>
-                        <div className={cx('card')}>
-                            <img src={book.imgDes} className={cx('card-img-top')} alt="..." />
-                            <div className={cx('card-body')}>
-                                <div className={cx('card-title')}>
-                                    <span className={cx('card-name')}>{book.name}</span>
-                                    <span className={cx('card-text')}> ({book.author})</span>
+    }, [dataBook]);
+
+    const renderBook = useCallback(
+        dataBook.map((book, index) => {
+            return (
+                <div className={cx('col-3')} key={index}>
+                    <Link className={cx('link-item')} to={`/library/book/detail/${book.name}`} state={{ user: user }}>
+                        <div className={cx('book-item')}>
+                            <div className={cx('card')}>
+                                <img src={book.imgDes} className={cx('card-img-top')} alt="..." />
+                                <div className={cx('card-body')}>
+                                    <div className={cx('card-title')}>
+                                        <span className={cx('card-name')}>{book.name}</span>
+                                        <span className={cx('card-text')}> ({book.author})</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </Link>
-            </div>
-        );
-    });
+                    </Link>
+                </div>
+            );
+        }),
+        [dataBook],
+    );
+
+    const searchBook = () => {
+        axios
+            .get('http://localhost:8086/library/books/search', { params: { name: inputBook } })
+            .then((response) => {
+                if (response.data.length > 1) {
+                    setdataBook(response.data);
+                } else {
+                    setdataBook([response.data]);
+                }
+            })
+            .catch((err) => console.error(err));
+    };
+
     return (
         <div>
             <Header user={user} />
             <div className={cx('container')}>
                 <div className={cx('separate')}></div>
                 <div className={cx('btn-back')}>
-                    <a href="/library">
+                    <Link to="/library/books">
                         <i className={cx('fa-solid fa-arrow-left')}></i>
                         Back
-                    </a>
+                    </Link>
                 </div>
                 <div className={cx('row')}>
                     <div className={cx('col-2')}>
@@ -73,13 +91,13 @@ function BookTypePage() {
                     </div>
                     <div className={cx('col-10')}>
                         <div className={cx('row')}>
-                            <form className={cx('form-serach')} method="GET" action="/library/books/search">
+                            <div className={cx('form-serach')}>
                                 <div className={cx('col-1')} id="btnSubmit">
-                                    <Link to={`/library/book/detail/${inputBook}`}>
-                                        <button type="submit" className={cx('btn-search')}>
-                                            Search
-                                        </button>
-                                    </Link>
+                                    {/* <Link to={`/library/book/detail/${inputBook}`}> */}
+                                    <button type="submit" className={cx('btn-search')} onClick={searchBook}>
+                                        Search
+                                    </button>
+                                    {/* </Link> */}
                                 </div>
                                 <div className={cx('col-6 search__input form-group')}>
                                     <label htmlFor="name"></label>
@@ -92,7 +110,7 @@ function BookTypePage() {
                                         onChange={(e) => setinputBook(e.target.value)}
                                     />
                                 </div>
-                            </form>
+                            </div>
                         </div>
                         <div className={cx('row row-cols-auto"')}>{renderBook}</div>
                     </div>

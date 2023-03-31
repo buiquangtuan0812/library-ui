@@ -51,8 +51,10 @@
         }
         &-des {
             font-size: 20px;
+            font-weight: 600;
             p {
-                font-size: 20px;
+                font-weight: 400;
+                font-size: 18px;
                 margin-top: 12px;
                 line-height: 4.2rem;
                 text-align: justify;
@@ -64,12 +66,19 @@
         &-date,
         &-language {
             display: flex;
-            font-size: 18px;
             padding: 8px 0;
             align-items: center;
+            font-size: 18px;
+            font-weight: 600;
             p {
-                margin-left: 8px;
+                font-weight: 500;
+                color: #000;
+                font-size: 16px;
+                margin-left: 12px;
                 margin-bottom: 0;
+            }
+            &:hover {
+                cursor: pointer;
             }
         }
     }
@@ -108,91 +117,70 @@
     }
 }
 
-.feedback__book {
-    margin-bottom: 100px;
+.container__book-feedback {
+    margin: 60px 0 100px 0;
     h3 {
-        color: #f42535;
-        margin-bottom: 24px;
+        font-size: 32px;
+        margin-bottom: 52px;
         padding-bottom: 16px;
         border-bottom: 1px solid #000;
     }
-    &-content {
-        display: flex;
-        padding: 6px;
-        margin-left: 24px;
-        .imgDes-user img {
-            border-radius: 50%;
-        }
-        .comment {
-            margin-left: 24px;
-            .content-cmt {
-                padding: 8px 12px;
-                border-radius: 10px;
-                background-color: #f0f2f5;
-                .p1 {
-                    font-weight: 600;
-                    margin-bottom: 4px;
-                }
-                .p2 {
-                    font-size: 15px;
-                    margin-bottom: 0;
-                }
-            }
-            .interact-cmt {
-                margin-top: 3px;
-                padding: 0 0 0 12px;
-                font-size: 15px;
-                color: #65676b;
-                font-weight: 600;
-                .btn-like {
-                    margin-right: 12px;
-                    cursor: pointer;
-                    &:hover {
-                        text-decoration: underline;
-                    }
-                }
-                .btn-reply {
-                    cursor: pointer;
-                    &:hover {
-                        text-decoration: underline;
-                    }
-                }
-            }
-        }
+    .not-cmt {
+        color: #050505;
+        font-size: 28px;
     }
-
     .comment__user {
         display: flex;
-        align-items: center;
-        margin-left: 24px;
-        padding: 6px;
+        padding-top: 8px;
+        margin-top: 20px;
         .imgDes-user img {
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
         }
         &-text {
-            margin-left: 24px;
+            margin-left: 16px;
             width: 100%;
             form {
                 display: flex;
                 position: relative;
                 align-items: center;
+                width: 100%;
+                border-radius: 24px;
+                border: 1px solid #ccc;
                 .input-cmt {
-                    width: 100%;
-                    padding: 8px 12px;
-                    border-radius: 18px;
-                    border: 1px solid #ccc;
+                    width: 612px;
+                    outline: none;
+                    padding: 0 12px;
+                    white-space: pre-wrap;
+                    word-break: break-word;
+                    margin: 8px;
+                    border: none;
+                    resize: none;
+                    min-height: 48px;
                 }
-                i {
+                .icon-send {
                     right: 12px;
                     font-size: 20px;
                     color: #65676b;
                     position: absolute;
+                    transition: 0.4s ease-in-out;
                     &:hover {
                         cursor: pointer;
-                        color: #2b80ff;
+                        color: #252730;
+                        transform: scale(1.05);
                     }
                 }
             }
+            span {
+                color: #050505;
+                font-size: 14px;
+                margin-left: 12px;
+                font-weight: 500;
+            }
         }
     }
+}
+.hide {
+    display: none;
 }

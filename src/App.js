@@ -30,6 +30,7 @@ function App() {
                 path="admin/manage/books/:nameBook"
                 element={<HomeAdmin page="ManagementBook" name="Book" />}
             ></Route>
+            <Route path="admin/manage/book/:nameBook" element={<HomeAdmin page="View" />}></Route>
             <Route path="admin/manage/book-create" element={<HomeAdmin page="Create" />}></Route>
         </Routes>
     );

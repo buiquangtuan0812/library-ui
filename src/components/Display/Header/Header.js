@@ -54,7 +54,9 @@ function Header(props) {
                         </div>
                     </Tippy>
                 ) : (
-                    <div className={cx('container__account-user')}>Log in</div>
+                    <Link to="/library/login">
+                        <div className={cx('container__account-user')}>Log in</div>
+                    </Link>
                 )}
                 <div className={cx('container__account-support')}>
                     <a href="/">Support</a>

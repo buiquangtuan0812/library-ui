@@ -8,19 +8,26 @@ import CreateBook from '../CreateBook/CreateBook';
 import ManagementBook from '../MangementBook/ManagementBook';
 
 import { useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 const cx = classNames.bind(styles);
 
 function HomeAdmin(props) {
+    const [token, setToken] = useState('');
     document.title = 'Admin | Books';
     const location = useLocation();
+    useEffect(() => {
+        if (location.state.token) {
+            setToken(location.state.token);
+        }
+    }, []);
     return (
         <div className={cx('container__admin')}>
             <Navigation />
             <div className={cx('container__admin-conent')}>
                 <HeaderAdmin />
                 {props.page === 'Statistic' ? <Statistic /> : ''}
-                {props.page === 'ManagementBook' ? <ManagementBook token={location.state.token} /> : ''}
+                {props.page === 'ManagementBook' ? <ManagementBook token={token ? token : ''} /> : ''}
                 {props.page === 'Create' ? <CreateBook token={location.state.token} /> : ''}
             </div>
         </div>

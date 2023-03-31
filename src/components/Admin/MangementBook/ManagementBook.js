@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './ManagementBook.module.scss';
 
-import React from 'react';
+import React, { useCallback } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
@@ -11,9 +11,6 @@ const cx = classNames.bind(styles);
 function ManagementBook() {
     const [dataBook, setdataBook] = useState([]);
     const [nameBook, setnameBook] = useState('');
-    const [book, setBook] = useState({});
-    const [state, setState] = useState(false);
-
     useEffect(() => {
         axios
             .get('http://localhost:8086/library/books')
@@ -23,32 +20,40 @@ function ManagementBook() {
             });
     }, []);
 
-    const renderBooks = dataBook.map((book, index) => {
-        return (
-            <tr className={cx('manage__book-item')} key={index}>
-                <td className={cx('title-index')}>{Number(`${index}`) + 1}</td>
-                <td className={cx('title-book')}>{book.name}</td>
-                <td className={cx('title-author')}>{book.author}</td>
-                <td className={cx('title-type')}>{book.type}</td>
-                <td className={cx('title-price')}>{book.price}</td>
-                <td className={cx('title-quantity')}>100</td>
-                <td className={cx('details_book')}>
-                    <i className={cx('fa-solid fa-circle-info')}></i>
-                </td>
-            </tr>
-        );
-    });
+    const renderBooks = useCallback(
+        dataBook.map((book, index) => {
+            return (
+                <tr className={cx('manage__book-item')} key={index}>
+                    <td className={cx('title-index')}>{Number(`${index}`) + 1}</td>
+                    <td className={cx('title-book')}>{book.name}</td>
+                    <td className={cx('title-author')}>{book.author}</td>
+                    <td className={cx('title-type')}>{book.type}</td>
+                    <td className={cx('title-price')}>{book.price}</td>
+                    <td className={cx('title-quantity')}>100</td>
+                    <td className={cx('details_book')}>
+                        <Link to={`/admin/manage/book/${book.name}`}>
+                            <i className={cx('fa-solid fa-circle-info')}></i>
+                        </Link>
+                    </td>
+                </tr>
+            );
+        }),
+        [dataBook],
+    );
 
     const handleSearch = () => {
         axios
             .get('http://localhost:8086/library/books/search', { params: { name: nameBook } })
             .then((response) => {
-                console.log(response.data);
-                setBook(response.data);
-                setState(true);
+                if (response.data.length > 1) {
+                    setdataBook(response.data);
+                } else {
+                    setdataBook([response.data]);
+                }
             })
             .catch((err) => console.error(err));
     };
+
     return (
         <div className={cx('container__manage')}>
             <div className={cx('container__manage-header')}>
@@ -98,23 +103,7 @@ function ManagementBook() {
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {state === false ? (
-                            renderBooks
-                        ) : (
-                            <tr className={cx('manage__book-item')}>
-                                <td className={cx('title-index')}>1</td>
-                                <td className={cx('title-book-one')}>{book.name}</td>
-                                <td className={cx('title-author')}>{book.author}</td>
-                                <td className={cx('title-type')}>{book.type}</td>
-                                <td className={cx('title-price')}>{book.price}</td>
-                                <td className={cx('title-quantity')}>100</td>
-                                <td className={cx('details_book')}>
-                                    <i className={cx('fa-solid fa-circle-info')}></i>
-                                </td>
-                            </tr>
-                        )}
-                    </tbody>
+                    <tbody>{renderBooks}</tbody>
                 </table>
             </div>
         </div>

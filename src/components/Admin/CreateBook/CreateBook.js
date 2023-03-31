@@ -120,6 +120,7 @@ function CreateBook() {
                             <label htmlFor="description">Description of the book</label>
                             <textarea
                                 name="description"
+                                spellCheck={false}
                                 placeholder="Description of the book"
                                 className={cx('description')}
                                 onChange={(e) => setDescription(e.target.value)}

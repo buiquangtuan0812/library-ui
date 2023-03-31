@@ -120,7 +120,7 @@ function CategoryBook(props) {
             </ul>
 
             <ul className={cx('country__search')}>
-                Country
+                Regional
                 <li className={cx('item-catergory')}>
                     <Link
                         to={`/library/book/${'domestic'}`}

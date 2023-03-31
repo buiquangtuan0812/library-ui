@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './Book.module.scss';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 
@@ -22,7 +22,7 @@ function BookPage() {
         if (location.state) {
             setUser(location.state.user);
         }
-    });
+    }, []);
 
     useEffect(() => {
         axios
@@ -32,25 +32,41 @@ function BookPage() {
                 console.log(err);
             });
     }, []);
-    const renderBook = dataBook.map((book, index) => {
-        return (
-            <div className={cx('col-3')} key={index}>
-                <Link className={cx('link-item')} to={`/library/book/detail/${book.name}`} state={{ user: user }}>
-                    <div className={cx('book-item')}>
-                        <div className={cx('card')}>
-                            <img src={book.imgDes} className={cx('card-img-top')} alt="..." />
-                            <div className={cx('card-body')}>
-                                <div className={cx('card-title')}>
-                                    <span className={cx('card-name')}>{book.name}</span>
-                                    <span className={cx('card-text')}> ({book.author})</span>
+    const renderBook = useCallback(
+        dataBook.map((book, index) => {
+            return (
+                <div className={cx('col-3')} key={index}>
+                    <Link className={cx('link-item')} to={`/library/book/detail/${book.name}`} state={{ user: user }}>
+                        <div className={cx('book-item')}>
+                            <div className={cx('card')}>
+                                <img src={book.imgDes} className={cx('card-img-top')} alt="..." />
+                                <div className={cx('card-body')}>
+                                    <div className={cx('card-title')}>
+                                        <span className={cx('card-name')}>{book.name}</span>
+                                        <span className={cx('card-text')}> ({book.author})</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </Link>
-            </div>
-        );
-    });
+                    </Link>
+                </div>
+            );
+        }),
+        [dataBook],
+    );
+
+    const searchBook = () => {
+        axios
+            .get('http://localhost:8086/library/books/search', { params: { name: inputBook } })
+            .then((response) => {
+                if (response.data.length > 1) {
+                    setdataBook(response.data);
+                } else {
+                    setdataBook([response.data]);
+                }
+            })
+            .catch((err) => console.error(err));
+    };
 
     return (
         <div>
@@ -69,13 +85,13 @@ function BookPage() {
                     </div>
                     <div className={cx('col-10')}>
                         <div className={cx('row')}>
-                            <form className={cx('form-serach')} method="GET" action="/library/books/search">
+                            <div className={cx('form-serach')}>
                                 <div className={cx('col-1')} id="btnSubmit">
-                                    <Link to={`/library/book/detail/${inputBook}`}>
-                                        <button type="submit" className={cx('btn-search')}>
-                                            Search
-                                        </button>
-                                    </Link>
+                                    {/* <Link to={`/library/book/detail/${inputBook}`}> */}
+                                    <button onClick={searchBook} className={cx('btn-search')}>
+                                        Search
+                                    </button>
+                                    {/* </Link> */}
                                 </div>
                                 <div className={cx('col-6 search__input form-group')}>
                                     <label htmlFor="name"></label>
@@ -89,7 +105,7 @@ function BookPage() {
                                         onChange={(e) => setinputBook(e.target.value)}
                                     />
                                 </div>
-                            </form>
+                            </div>
                         </div>
                         <div className={cx('row row-cols-auto"')}>{renderBook}</div>
                     </div>
