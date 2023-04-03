@@ -103,9 +103,12 @@
     display: none;
 }
 
-.form .btn {
+.btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-top: 2em;
-    margin-left: -12px;
+    margin-bottom: 0.5em;
 }
 
 .button1 {
@@ -118,11 +121,10 @@
     transition: 0.4s ease-in-out;
     background-color: #252525;
     color: white;
-    margin-bottom: 6px;
-    margin-left: 12px;
 }
 
-.btn-submit {
+.btn-submit,
+.btn-signup {
     color: #fff;
     font-size: 18px;
     text-decoration: none;
@@ -164,11 +166,4 @@
 .button3:hover {
     background-color: red;
     color: white;
-}
-
-.direct-signup {
-    position: absolute;
-    bottom: 112px;
-    right: 32px;
-    font-size: 18px;
 }

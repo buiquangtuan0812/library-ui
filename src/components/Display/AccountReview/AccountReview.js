@@ -2,7 +2,8 @@ import classNames from 'classnames/bind';
 import styles from './AccountReview.module.scss';
 
 import { BiHelpCircle } from 'react-icons/bi';
-import { AiOutlineUser, AiOutlineShoppingCart } from 'react-icons/ai';
+import { BsCoin } from 'react-icons/bs';
+import { AiOutlineUser } from 'react-icons/ai';
 
 const cx = classNames.bind(styles);
 
@@ -25,9 +26,9 @@ function AccountReview() {
                     View profile
                 </div>
 
-                <div className={cx('container__account-cart')}>
-                    <AiOutlineShoppingCart className={cx('icon')} />
-                    My cart
+                <div className={cx('container__account-coin')}>
+                    <BsCoin className={cx('icon')} />
+                    My coin
                 </div>
 
                 <div className={cx('container__account-feedback')}>

@@ -60,7 +60,6 @@ function SignUpForm() {
                     },
                 })
                 .then((res) => {
-                    console.log(res.data);
                     setToken(res.data);
                     setMessage('You have successfully registered !');
                     setMessageLink('Login now!');
@@ -70,7 +69,6 @@ function SignUpForm() {
                     setMessage(err.request.response);
                     setMessageLink('Try re-entering !');
                     setCheckRegister(false);
-                    // console.log(err.request.response);
                 });
         }
     };

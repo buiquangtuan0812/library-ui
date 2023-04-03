@@ -9,7 +9,7 @@ import Comment from '~/components/Comment/Comment';
 import { BsFillSendFill } from 'react-icons/bs';
 
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -23,13 +23,14 @@ function BookDetail() {
     const [comment, setComment] = useState([]);
     const [cmtUser, setCmtUser] = useState('');
     const [stateCmt, setStateCmt] = useState(false);
+    const inputElement = useRef();
 
     const location = useLocation();
     useEffect(() => {
         if (location.state) {
             setUser(location.state.user);
         }
-    });
+    }, []);
 
     useEffect(() => {
         axios
@@ -38,7 +39,7 @@ function BookDetail() {
                 setComment(cmts.data);
             })
             .catch((err) => console.log(err));
-    }, []);
+    }, [comment]);
 
     useEffect(() => {
         axios
@@ -71,8 +72,10 @@ function BookDetail() {
                 headers: { 'Content-Type': 'application/json' },
             })
             .then((response) => {
-                console.log(response.data);
-                setStateCmt(true);
+                const cmt = [response.data];
+                setComment(comment.concat(cmt));
+                inputElement.current.focus();
+                inputElement.current.value = '';
             })
             .catch((err) => console.log(err));
     };
@@ -89,8 +92,10 @@ function BookDetail() {
                     headers: { 'Content-Type': 'application/json' },
                 })
                 .then((response) => {
-                    console.log(response.data);
-                    setStateCmt(true);
+                    const cmt = [response.data];
+                    setComment(comment.concat(cmt));
+                    inputElement.current.focus();
+                    inputElement.current.value = '';
                 })
                 .catch((err) => console.log(err));
         }
@@ -157,22 +162,19 @@ function BookDetail() {
                                     {comment.length ? renderCmt : <div className={cx('not-cmt')}>No reviews yet!</div>}
                                     <div className={cx(user.token ? 'comment__user' : 'hide')}>
                                         <div className={cx('imgDes-user')}>
-                                            <img
-                                                src="https://scontent.fhan5-10.fna.fbcdn.net/v/t1.30497-1/143086968_2856368904622192_1959732218791162458_n.png?stp=cp0_dst-png_p40x40&_nc_cat=1&ccb=1-7&_nc_sid=dbb9e7&_nc_ohc=vvZ-RZ-N9xEAX_I0180&_nc_ht=scontent.fhan5-10.fna&oh=00_AfBALTQWTvlWud1daS15sRYC6kcsWv3YwfAtwigrAgMlbg&oe=643ABAF8"
-                                                alt=""
-                                            />
+                                            <img src={user.imgDes} alt="" />
                                         </div>
                                         <div className={cx('comment__user-text')}>
                                             <form>
                                                 <textarea
                                                     className={cx('input-cmt')}
                                                     type="text"
-                                                    placeholder="Write a review - comment"
+                                                    placeholder="Write a review - comment!"
                                                     name="comment"
                                                     spellCheck={false}
                                                     maxLength="200"
-                                                    value={stateCmt ? '' : cmtUser}
                                                     onChange={(e) => setCmtUser(e.target.value)}
+                                                    ref={inputElement}
                                                 />
                                                 <BsFillSendFill className={cx('icon-send')} onClick={handleCmt} />
                                             </form>

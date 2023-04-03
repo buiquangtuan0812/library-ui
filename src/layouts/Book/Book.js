@@ -1,19 +1,22 @@
 import classNames from 'classnames/bind';
 import styles from './Book.module.scss';
-import { useCallback, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import axios from 'axios';
-
 import Header from '~/components/Display/Header/Header';
 import Footer from '~/components/Display/Footer/Footer';
 import CategoryBook from './CategoryBook/CategoryBook';
+
+import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { useCallback, useEffect, useState } from 'react';
+
+import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
 
 const cx = classNames.bind(styles);
 
 function BookPage() {
     const [dataBook, setdataBook] = useState([]);
     const [inputBook, setinputBook] = useState('');
+    const [id, setIndex] = useState(1);
     document.title = 'Book | My Library';
 
     const [user, setUser] = useState([]);
@@ -31,28 +34,36 @@ function BookPage() {
             .catch((err) => {
                 console.log(err);
             });
-    }, []);
+    }, [id]);
     const renderBook = useCallback(
         dataBook.map((book, index) => {
-            return (
-                <div className={cx('col-3')} key={index}>
-                    <Link className={cx('link-item')} to={`/library/book/detail/${book.name}`} state={{ user: user }}>
-                        <div className={cx('book-item')}>
-                            <div className={cx('card')}>
-                                <img src={book.imgDes} className={cx('card-img-top')} alt="..." />
-                                <div className={cx('card-body')}>
-                                    <div className={cx('card-title')}>
-                                        <span className={cx('card-name')}>{book.name}</span>
-                                        <span className={cx('card-text')}> ({book.author})</span>
+            if (index < 20 * (id - 1) || index >= 20 * id) {
+                return;
+            } else {
+                return (
+                    <div className={cx('col-3')} key={index}>
+                        <Link
+                            className={cx('link-item')}
+                            to={`/library/book/detail/${book.name}`}
+                            state={{ user: user }}
+                        >
+                            <div className={cx('book-item')}>
+                                <div className={cx('card')}>
+                                    <img src={book.imgDes} className={cx('card-img-top')} alt="..." />
+                                    <div className={cx('card-body')}>
+                                        <div className={cx('card-title')}>
+                                            <span className={cx('card-name')}>{book.name}</span>
+                                            <span className={cx('card-text')}> ({book.author})</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </Link>
-                </div>
-            );
+                        </Link>
+                    </div>
+                );
+            }
         }),
-        [dataBook],
+        [dataBook, id],
     );
 
     const searchBook = () => {
@@ -66,6 +77,49 @@ function BookPage() {
                 }
             })
             .catch((err) => console.error(err));
+    };
+
+    const [indexArr, setArr] = useState([true, false, false, false]);
+    const handleDivide = (value) => {
+        const arr = [false, false, false, false];
+        for (var i = 0; i < arr.length; i++) {
+            if (value === i + 1) {
+                arr[i] = true;
+            }
+        }
+        setArr(arr);
+        setIndex(value);
+    };
+    const handlePre = () => {
+        if (id === 1) {
+            return;
+        } else {
+            const value = id - 1;
+            const arr = [false, false, false, false];
+            for (var i = 0; i < arr.length; i++) {
+                if (value === i + 1) {
+                    arr[i] = true;
+                }
+            }
+            setArr(arr);
+            setIndex(value);
+        }
+    };
+
+    const handleNext = () => {
+        if (id === 4) {
+            return;
+        } else {
+            const value = id + 1;
+            const arr = [false, false, false, false];
+            for (var i = 0; i < arr.length; i++) {
+                if (value === i + 1) {
+                    arr[i] = true;
+                }
+            }
+            setArr(arr);
+            setIndex(value);
+        }
     };
 
     return (
@@ -108,6 +162,38 @@ function BookPage() {
                             </div>
                         </div>
                         <div className={cx('row row-cols-auto"')}>{renderBook}</div>
+                        <div className={cx('divide-page')}>
+                            <span className={cx('icon-pre')} onClick={handlePre}>
+                                <GrFormPrevious />
+                            </span>
+                            <span
+                                className={cx(indexArr[0] === true ? 'index-curr' : 'index')}
+                                onClick={() => handleDivide(1)}
+                            >
+                                1
+                            </span>
+                            <span
+                                className={cx(indexArr[1] === true ? 'index-curr' : 'index')}
+                                onClick={() => handleDivide(2)}
+                            >
+                                2
+                            </span>
+                            <span
+                                className={cx(indexArr[2] === true ? 'index-curr' : 'index')}
+                                onClick={() => handleDivide(3)}
+                            >
+                                3
+                            </span>
+                            <span
+                                className={cx(indexArr[3] === true ? 'index-curr' : 'index')}
+                                onClick={() => handleDivide(4)}
+                            >
+                                4
+                            </span>
+                            <span>
+                                <GrFormNext className={cx('icon-next')} onClick={handleNext} />
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>

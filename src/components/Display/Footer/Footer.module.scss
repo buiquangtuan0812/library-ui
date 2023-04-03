@@ -1,12 +1,10 @@
 .footer {
-    bottom: 0;
-    left: 0;
-    right: 0;
     font-family: 'Calibre', Helvetica, Arial, sans-serif;
     background-color: #000;
     display: flex;
     justify-content: space-around;
     padding: 0 200px;
+    margin-top: 100px;
 }
 .footer-item {
     list-style-type: none;

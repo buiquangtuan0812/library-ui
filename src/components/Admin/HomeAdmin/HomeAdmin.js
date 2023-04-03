@@ -5,6 +5,7 @@ import Statistic from '../Statistic/Statistic';
 import Navigation from '../Navigation/Navigation';
 import HeaderAdmin from '../HeaderAdmin/HeaderAdmin';
 import CreateBook from '../CreateBook/CreateBook';
+import ViewBookComponent from '../ViewBook/ViewBook';
 import ManagementBook from '../MangementBook/ManagementBook';
 
 import { useLocation } from 'react-router-dom';
@@ -29,6 +30,7 @@ function HomeAdmin(props) {
                 {props.page === 'Statistic' ? <Statistic /> : ''}
                 {props.page === 'ManagementBook' ? <ManagementBook token={token ? token : ''} /> : ''}
                 {props.page === 'Create' ? <CreateBook token={location.state.token} /> : ''}
+                {props.page === 'View' ? <ViewBookComponent token={location.state.token} /> : ''}
             </div>
         </div>
     );

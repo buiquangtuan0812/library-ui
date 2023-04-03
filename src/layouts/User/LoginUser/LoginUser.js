@@ -71,22 +71,21 @@ function LoginUser() {
                     </div>
                 </form>
                 <div className={cx('btn')}>
-                    <button className={cx('button1')} onClick={(e) => handleLogin(e)}>
-                        <Link
-                            to={data.token ? '/home' : '/library/login'}
-                            state={data.token ? { user: data } : ''}
-                            className={cx('btn-submit')}
-                        >
+                    <Link
+                        to={data.token ? '/home' : '/library/login'}
+                        state={data.token ? { user: data } : ''}
+                        className={cx('btn-submit')}
+                        onClick={(e) => handleLogin(e)}
+                    >
+                        <button className={cx('button1')}>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Log In&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        </Link>
-                    </button>
-                </div>
-                <button className={cx('button3')}>Forgot Password</button>
-                <div className={cx('direct-signup')}>
-                    <Link to="/library/signup">
+                        </button>
+                    </Link>
+                    <Link to="/library/signup" className={cx('btn-signup')}>
                         <button className={cx('button2')}>Sign Up</button>
                     </Link>
                 </div>
+                <button className={cx('button3')}>Forgot Password</button>
             </div>
         </div>
     );
