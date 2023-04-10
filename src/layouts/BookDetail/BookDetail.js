@@ -9,7 +9,7 @@ import Comment from '~/components/Comment/Comment';
 import { BsFillSendFill } from 'react-icons/bs';
 
 import axios from 'axios';
-import { useEffect, useState, useCallback, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -22,7 +22,7 @@ function BookDetail() {
     const [user, setUser] = useState([]);
     const [comment, setComment] = useState([]);
     const [cmtUser, setCmtUser] = useState('');
-    const [stateCmt, setStateCmt] = useState(false);
+    // const [stateCmt, setStateCmt] = useState(false);
     const inputElement = useRef();
 
     const location = useLocation();
@@ -116,7 +116,7 @@ function BookDetail() {
                 <div className={cx('btn-back')}>
                     <Link to="/library/books">
                         <i className={cx('fa-solid fa-arrow-left')}></i>
-                        Back
+                        Quay lại
                     </Link>
                 </div>
                 <div className={cx('row')}>
@@ -128,39 +128,43 @@ function BookDetail() {
                             <div className={cx('col-8')}>
                                 <nav className={cx('container__book-heading')}>
                                     <div id="nameBook">{book.name}</div>
-                                    <div className={cx('book-author')}>Edit by {book.author}</div>
+                                    <div className={cx('book-author')}>Tác giả: {book.author}</div>
                                 </nav>
                                 <div className={cx('container__book-content')}>
                                     <h3>OVERVIEW</h3>
                                     <span className={cx('container__book-content-des')}>
-                                        Description:
+                                        Mô tả:
                                         <p>{book.description}</p>
                                     </span>
                                     <span className={cx('container__book-content-page')}>
-                                        Number of pages:
+                                        Số trang:
                                         <p>{book.numberPage}</p>
                                     </span>
                                     <span className={cx('container__book-content-date')}>
-                                        Date publish:
+                                        Ngày phát hành:
                                         <p>{book.publish}</p>
                                     </span>
                                     <span className={cx('container__book-content-type')}>
-                                        Type:
+                                        Thể loại:
                                         <p>{book.type}</p>
                                     </span>
                                     <span className={cx('container__book-content-language')}>
-                                        Language:
+                                        Ngôn ngữ:
                                         <p>{book.language}</p>
                                     </span>
                                     <span className={cx('container__book-content-company')}>
-                                        Publisher:
+                                        Nhà xuất bản:
                                         <p>{book.publishCompany}</p>
                                     </span>
                                 </div>
                                 <div className={cx('container__book-feedback')}>
-                                    <h3>Rating - Comments from readers</h3>
-                                    {comment.length ? renderCmt : <div className={cx('not-cmt')}>No reviews yet!</div>}
-                                    <div className={cx(user.token ? 'comment__user' : 'hide')}>
+                                    <h3>Nhận xét - đánh giá từ độc giả</h3>
+                                    {comment.length ? (
+                                        renderCmt
+                                    ) : (
+                                        <div className={cx('not-cmt')}>Chưa có nhận xét đánh giá!</div>
+                                    )}
+                                    <div className={cx(user.accessToken ? 'comment__user' : 'hide')}>
                                         <div className={cx('imgDes-user')}>
                                             <img src={user.imgDes} alt="" />
                                         </div>
@@ -169,7 +173,7 @@ function BookDetail() {
                                                 <textarea
                                                     className={cx('input-cmt')}
                                                     type="text"
-                                                    placeholder="Write a review - comment!"
+                                                    placeholder="Viết nhận xét - đánh giá!"
                                                     name="comment"
                                                     spellCheck={false}
                                                     maxLength="200"
@@ -178,7 +182,7 @@ function BookDetail() {
                                                 />
                                                 <BsFillSendFill className={cx('icon-send')} onClick={handleCmt} />
                                             </form>
-                                            <span>Press Enter to post.</span>
+                                            <span>Nhấn Enter để đăng.</span>
                                         </div>
                                     </div>
                                 </div>
@@ -189,18 +193,18 @@ function BookDetail() {
                                         <img src={book.imgDes} alt="" />
                                     </div>
                                     <div className={cx('container__book-cart-price')}>
-                                        <span>Price: </span>
+                                        <span>Giá: </span>
                                         <span className={cx('value')}>{solveString(`${book.price}`)}đ</span>
                                     </div>
                                     <div className={cx('container__book-cart-save')}>
-                                        <span>List Price:</span>
+                                        <span>Giá gốc:</span>
                                         <span>{countPrice(`${book.price}`)}đ</span>
                                         <span> (Save: 20%)</span>
-                                        <p>Free shipping</p>
+                                        <p>Miễn phí vận chuyển</p>
                                     </div>
                                     <div className={cx('bar-code-book')}></div>
                                     <div className={cx('container__book-cart-btn')}>
-                                        <button>ADD TO CART</button>
+                                        <button>Thêm vào giỏ hàng</button>
                                     </div>
                                 </div>
                             </div>

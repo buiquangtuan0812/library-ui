@@ -11,7 +11,7 @@ import { useState } from 'react';
 
 const cx = classNames.bind(styles);
 
-function CreateBook() {
+function CreateBook(props) {
     const [urlImg, setUrl] = useState('');
     const [state, setState] = useState(false);
     const [name, setName] = useState('');
@@ -58,7 +58,7 @@ function CreateBook() {
         };
         await axios
             .post('http://localhost:8086/admin/create-book', dataBook, {
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${props.data.token}` },
             })
             .then((response) => setNotice(true))
             .catch((err) => console.log(err));

@@ -82,7 +82,7 @@ function BookTypePage() {
                 <div className={cx('btn-back')}>
                     <Link to="/library/books">
                         <i className={cx('fa-solid fa-arrow-left')}></i>
-                        Back
+                        Quay lại
                     </Link>
                 </div>
                 <div className={cx('row')}>
@@ -92,13 +92,6 @@ function BookTypePage() {
                     <div className={cx('col-10')}>
                         <div className={cx('row')}>
                             <div className={cx('form-serach')}>
-                                <div className={cx('col-1')} id="btnSubmit">
-                                    {/* <Link to={`/library/book/detail/${inputBook}`}> */}
-                                    <button type="submit" className={cx('btn-search')} onClick={searchBook}>
-                                        Search
-                                    </button>
-                                    {/* </Link> */}
-                                </div>
                                 <div className={cx('col-6 search__input form-group')}>
                                     <label htmlFor="name"></label>
                                     <input
@@ -109,6 +102,13 @@ function BookTypePage() {
                                         placeholder="Nhập từ khóa tìm kiếm!"
                                         onChange={(e) => setinputBook(e.target.value)}
                                     />
+                                </div>
+                                <div className={cx('col-2')} id="btnSubmit">
+                                    {/* <Link to={`/library/book/detail/${inputBook}`}> */}
+                                    <button type="submit" className={cx('btn-search')} onClick={searchBook}>
+                                        Tìm kiếm
+                                    </button>
+                                    {/* </Link> */}
                                 </div>
                             </div>
                         </div>

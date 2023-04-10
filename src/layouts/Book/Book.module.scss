@@ -21,6 +21,7 @@
     align-items: center;
 }
 .btn-search {
+    width: 100px;
     color: #ffffff;
     cursor: pointer;
     border-radius: 8px;
@@ -28,6 +29,7 @@
     padding: 8px 16px;
     background-color: #252730;
     transition: 0.4s ease-in-out;
+    margin-left: 20px;
     &:hover {
         cursor: pointer;
         transform: scale(1.05);

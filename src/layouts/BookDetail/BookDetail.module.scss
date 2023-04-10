@@ -31,6 +31,11 @@
         background-color: #0b5ed7;
     }
 }
+.col-8 {
+    flex: 0 0 auto;
+    width: 66.66666667%;
+    padding: 0 28px;
+}
 .container__book {
     margin-bottom: 88px;
     &-heading {

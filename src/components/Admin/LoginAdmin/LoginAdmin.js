@@ -70,7 +70,7 @@ function LoginAdmin() {
                 <div className={cx('btn')}>
                     <Link
                         to={data ? '/admin/home' : '/admin/login'}
-                        state={data ? { token: data, page: 'Statistic' } : ''}
+                        state={data ? { data: data, page: 'Statistic' } : ''}
                         className={cx('btn-submit')}
                     >
                         <button className={cx('button1')} onClick={handleLogin}>

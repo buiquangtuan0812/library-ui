@@ -14,12 +14,12 @@ import { useEffect, useState } from 'react';
 const cx = classNames.bind(styles);
 
 function HomeAdmin(props) {
-    const [token, setToken] = useState('');
+    const [data, setToken] = useState('');
     document.title = 'Admin | Books';
     const location = useLocation();
     useEffect(() => {
-        if (location.state.token) {
-            setToken(location.state.token);
+        if (location.state.data) {
+            setToken(location.state.data);
         }
     }, []);
     return (
@@ -28,9 +28,9 @@ function HomeAdmin(props) {
             <div className={cx('container__admin-conent')}>
                 <HeaderAdmin />
                 {props.page === 'Statistic' ? <Statistic /> : ''}
-                {props.page === 'ManagementBook' ? <ManagementBook token={token ? token : ''} /> : ''}
-                {props.page === 'Create' ? <CreateBook token={location.state.token} /> : ''}
-                {props.page === 'View' ? <ViewBookComponent token={location.state.token} /> : ''}
+                {props.page === 'ManagementBook' ? <ManagementBook data={data} /> : ''}
+                {props.page === 'Create' ? <CreateBook data={data} /> : ''}
+                {props.page === 'View' ? <ViewBookComponent data={data} /> : ''}
             </div>
         </div>
     );

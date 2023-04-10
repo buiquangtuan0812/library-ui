@@ -21,7 +21,10 @@ function ConfirmDelete(props) {
                 'http://localhost:8086/admin/delete-book',
                 { _id: props.id },
                 {
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${props.data.token}`,
+                    },
                 },
             )
             .then((res) => {

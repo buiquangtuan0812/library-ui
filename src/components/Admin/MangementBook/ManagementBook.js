@@ -3,19 +3,21 @@ import styles from './ManagementBook.module.scss';
 
 import axios from 'axios';
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useState, useEffect, useCallback } from 'react';
 
 import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
 
 const cx = classNames.bind(styles);
 
-function ManagementBook() {
+function ManagementBook(props) {
     const [dataBook, setdataBook] = useState([]);
     const [nameBook, setnameBook] = useState('');
     const [id, setId] = useState(1);
+    const [dataUser, setDataUser] = useState({});
 
     useEffect(() => {
+        setDataUser(props.data);
         axios
             .get('http://localhost:8086/library/books')
             .then((res) => setdataBook(res.data))
@@ -38,7 +40,7 @@ function ManagementBook() {
                         <td className={cx('title-price')}>{book.price}</td>
                         <td className={cx('title-quantity')}>100</td>
                         <td className={cx('details_book')}>
-                            <Link to={`/admin/manage/book/${book.name}`} state={{ book: book }}>
+                            <Link to={`/admin/manage/book/${book.name}`} state={{ book: book, data: dataUser }}>
                                 <i className={cx('fa-solid fa-circle-info')}></i>
                             </Link>
                         </td>

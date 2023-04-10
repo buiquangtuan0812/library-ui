@@ -85,8 +85,9 @@
     color: #ffffff;
 }
 .iconUser {
-    font-size: 36px;
-    color: #ffffff;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
     &:hover {
         cursor: pointer;
     }

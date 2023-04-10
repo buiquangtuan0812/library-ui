@@ -5,17 +5,11 @@ import AccountReview from '../AccountReview/AccountReview';
 
 import Tippy from '@tippyjs/react/headless';
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { BiUserCircle } from 'react-icons/bi';
 
 const cx = classNames.bind(styles);
 
 function Header(props) {
-    const [token, setToken] = useState('');
-    useEffect(() => {
-        setToken(props.user.token);
-    });
-    const renderTippy = (props) => {
+    const renderTippy = (prop) => {
         return (
             <div>
                 <AccountReview />
@@ -26,15 +20,17 @@ function Header(props) {
         <div className={cx('header')}>
             <div className={cx('container__content')}>
                 <div className={cx('container__content-book')}>
-                    <Link to="/library/books" state={{ user: props.user }}>
-                        Books
+                    <Link to="/library/books" state={props.user ? { user: props.user } : ''}>
+                        Sách
                     </Link>
                 </div>
                 <div className={cx('container__content-author')}>
-                    <Link to="/library/authors">Author</Link>
+                    <Link to="/library/authors">Tác giả</Link>
                 </div>
                 <div className={cx('container__content-blog')}>
-                    <Link to="/library/blogs">Blogs</Link>
+                    <Link to="/library/blogs" state={props.user ? { user: props.user } : ''}>
+                        Blogs
+                    </Link>
                 </div>
             </div>
 
@@ -47,19 +43,19 @@ function Header(props) {
             </div>
 
             <div className={cx('container__account')}>
-                {token ? (
+                {props.user.accessToken ? (
                     <Tippy render={renderTippy} interactive delay={[200, 100]} offset={[-85, 3]} placement="bottom">
                         <div className={cx('container__account-user')}>
-                            <BiUserCircle className={cx('iconUser')} />
+                            <img src={props.user.imgDes} className={cx('iconUser')} alt="" />
                         </div>
                     </Tippy>
                 ) : (
                     <Link to="/library/login">
-                        <div className={cx('container__account-user')}>Log in</div>
+                        <div className={cx('container__account-user')}>Đăng nhập</div>
                     </Link>
                 )}
                 <div className={cx('container__account-support')}>
-                    <a href="/">Support</a>
+                    <a href="/">Hỗ trợ</a>
                 </div>
                 <div className={cx('container__account-cash')}>
                     <a href="/">

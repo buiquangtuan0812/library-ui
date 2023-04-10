@@ -11,15 +11,15 @@ function CategoryBook(props) {
     };
     return (
         <div className={cx('container__catergory')}>
-            <h2>Search</h2>
+            <h2>Main navigation</h2>
             <ul className={cx('catergory__search')}>
-                Catergory
+                Thể loại
                 <li className={cx('item-catergory')}>
                     <Link
                         to={`/library/book/${'psychology'}`}
                         state={{ title: 'psychology', user: props.user, type: handleTitle('psychology') }}
                     >
-                        Psychology
+                        Tâm lý học
                     </Link>
                 </li>
                 <li className={cx('item-catergory')}>
@@ -27,7 +27,7 @@ function CategoryBook(props) {
                         to={`/library/book/${'economy'}`}
                         state={{ title: 'economy', user: props.user, type: handleTitle('economy') }}
                     >
-                        Economy
+                        Kinh tế
                     </Link>
                 </li>
                 <li className={cx('item-catergory')}>
@@ -35,7 +35,7 @@ function CategoryBook(props) {
                         to={`/library/book/${'literature'}`}
                         state={{ title: 'literature', user: props.user, type: handleTitle('literature') }}
                     >
-                        Literature
+                        Văn học
                     </Link>
                 </li>
                 <li className={cx('item-catergory')}>
@@ -43,7 +43,7 @@ function CategoryBook(props) {
                         to={`/library/book/${'history'}`}
                         state={{ title: 'history', user: props.user, type: handleTitle('history') }}
                     >
-                        History
+                        Lịch sử
                     </Link>
                 </li>
                 <li className={cx('item-catergory')}>
@@ -51,7 +51,7 @@ function CategoryBook(props) {
                         to={`/library/book/${'self-growth'}`}
                         state={{ title: 'self-growth', user: props.user, type: handleTitle('self-growth') }}
                     >
-                        Self growth
+                        Phát triển bản thân
                     </Link>
                 </li>
                 <li className={cx('item-catergory')}>
@@ -59,7 +59,7 @@ function CategoryBook(props) {
                         to={`/library/book/${'life-skill'}`}
                         state={{ title: 'life-skill', user: props.user, type: handleTitle('life-skill') }}
                     >
-                        Life Skills
+                        Kỹ năng sống
                     </Link>
                 </li>
                 <li className={cx('item-catergory')}>
@@ -67,7 +67,7 @@ function CategoryBook(props) {
                         to={`/library/book/${'contemplation'}`}
                         state={{ title: 'contemplation', user: props.user, type: handleTitle('contemplation') }}
                     >
-                        Contemplation
+                        Chiêm nghiệm cuộc sống
                     </Link>
                 </li>
                 <li className={cx('item-catergory')}>
@@ -75,13 +75,12 @@ function CategoryBook(props) {
                         to={`/library/book/${'communicate'}`}
                         state={{ title: 'communicate', user: props.user, type: handleTitle('communicate') }}
                     >
-                        Communicate
+                        Kỹ năng giao tiếp
                     </Link>
                 </li>
             </ul>
             <ul className={cx('author__search')}>
-                {/* <i className={cx('fa-solid fa-user-secret"></i> */}
-                Author
+                Tác giảgiả
                 <Link
                     className={cx('link-author')}
                     to={`/library/book/author/${'Dale Carnegie'}`}
@@ -120,13 +119,13 @@ function CategoryBook(props) {
             </ul>
 
             <ul className={cx('country__search')}>
-                Regional
+                Phạm vi
                 <li className={cx('item-catergory')}>
                     <Link
                         to={`/library/book/${'domestic'}`}
                         state={{ title: 'domestic', user: props.user, type: handleTitle('domestic') }}
                     >
-                        Domestic
+                        Trong nước
                     </Link>
                 </li>
                 <li className={cx('item-catergory')}>
@@ -134,7 +133,7 @@ function CategoryBook(props) {
                         to={`/library/book/${'foreign'}`}
                         state={{ title: 'foreign', user: props.user, type: handleTitle('foreign') }}
                     >
-                        Foreign
+                        Nước ngoài
                     </Link>
                 </li>
             </ul>

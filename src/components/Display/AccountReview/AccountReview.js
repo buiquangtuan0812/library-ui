@@ -1,6 +1,8 @@
 import classNames from 'classnames/bind';
 import styles from './AccountReview.module.scss';
 
+import { Link } from 'react-router-dom';
+
 import { BiHelpCircle } from 'react-icons/bi';
 import { BsCoin } from 'react-icons/bs';
 import { AiOutlineUser } from 'react-icons/ai';
@@ -36,10 +38,12 @@ function AccountReview() {
                     Feedback and help
                 </div>
 
-                <div className={cx('container__account-logout')}>
-                    <i className={cx('fa-solid fa-arrow-right-from-bracket')}></i>
-                    Log out
-                </div>
+                <Link to={'/library/login'} className={cx('container__account-logout')}>
+                    <div>
+                        <i className={cx('fa-solid fa-arrow-right-from-bracket')}></i>
+                        Log out
+                    </div>
+                </Link>
             </div>
         </div>
     );

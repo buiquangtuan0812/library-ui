@@ -13,8 +13,9 @@ import axios from 'axios';
 
 const cx = classNames.bind(styles);
 
-function ViewBookComponent() {
+function ViewBookComponent(props) {
     const [dataBook, setData] = useState({});
+    const [dataUser, setDataUser] = useState({});
     const location = useLocation();
 
     const [edit, setEdit] = useState(false);
@@ -37,6 +38,7 @@ function ViewBookComponent() {
         setUrl(location.state.book.imgDes);
         if (location.state) {
             setData(location.state.book);
+            setDataUser(location.state.data);
         }
     }, []);
 
@@ -77,7 +79,7 @@ function ViewBookComponent() {
         };
         axios
             .put('http://localhost:8086/admin/update-book', data, {
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${dataUser.token}` },
             })
             .then((res) => {
                 setNotice(true);
@@ -92,7 +94,7 @@ function ViewBookComponent() {
 
     return (
         <div>
-            <ConfirmDelete count={count} id={dataBook._id} />
+            <ConfirmDelete count={count} id={dataBook._id} data={dataUser} />
             {notice ? (
                 <Notification
                     token={''}
@@ -213,29 +215,17 @@ function ViewBookComponent() {
                         <div className={cx(edit === false ? 'item-5s' : 'hide-content')}>
                             <div className={cx('container__content-field-type')}>
                                 <label htmlFor="price">Type of book</label>
-                                <input
-                                    disabled={edit ? '' : 'disabled'}
-                                    defaultValue={dataBook.type}
-                                    // onChange={(e) => setPrice(e.target.value)}
-                                />
+                                <input disabled={edit ? '' : 'disabled'} defaultValue={dataBook.type} />
                             </div>
 
                             <div className={cx('container__content-field-lang')}>
                                 <label htmlFor="page">Language</label>
-                                <input
-                                    disabled={edit ? '' : 'disabled'}
-                                    defaultValue={dataBook.language}
-                                    // onChange={(e) => setPage(e.target.value)}
-                                />
+                                <input disabled={edit ? '' : 'disabled'} defaultValue={dataBook.language} />
                             </div>
 
                             <div className={cx('container__content-field-region')}>
                                 <label htmlFor="page">Region</label>
-                                <input
-                                    disabled={edit ? '' : 'disabled'}
-                                    defaultValue={dataBook.region}
-                                    // onChange={(e) => setPage(e.target.value)}
-                                />
+                                <input disabled={edit ? '' : 'disabled'} defaultValue={dataBook.region} />
                             </div>
                         </div>
                         <div className={cx(edit ? 'item-5' : 'hide-content')}>

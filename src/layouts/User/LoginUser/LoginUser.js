@@ -41,7 +41,7 @@ function LoginUser() {
                 <div className={cx('btn-loginAdmin')}>Admin</div>
             </Link>
             <div className={cx('form')}>
-                <p className={cx('heading')}>Log In</p>
+                <p className={cx('heading')}>Đăng nhập</p>
                 <form>
                     <div className={cx('field')}>
                         <i className={cx('fa-solid fa-user')}></i>
@@ -72,20 +72,20 @@ function LoginUser() {
                 </form>
                 <div className={cx('btn')}>
                     <Link
-                        to={data.token ? '/home' : '/library/login'}
-                        state={data.token ? { user: data } : ''}
+                        to={data.accessToken ? '/home' : '/library/login'}
+                        state={data.accessToken ? { user: data } : ''}
                         className={cx('btn-submit')}
                         onClick={(e) => handleLogin(e)}
                     >
                         <button className={cx('button1')}>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Log In&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Đăng nhập&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         </button>
                     </Link>
                     <Link to="/library/signup" className={cx('btn-signup')}>
-                        <button className={cx('button2')}>Sign Up</button>
+                        <button className={cx('button2')}>Đăng ký</button>
                     </Link>
                 </div>
-                <button className={cx('button3')}>Forgot Password</button>
+                <button className={cx('button3')}>Quên mật khẩu</button>
             </div>
         </div>
     );

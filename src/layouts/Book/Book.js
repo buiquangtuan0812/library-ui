@@ -22,10 +22,10 @@ function BookPage() {
     const [user, setUser] = useState([]);
     const location = useLocation();
     useEffect(() => {
-        if (location.state) {
+        if (location.state.user) {
             setUser(location.state.user);
         }
-    }, []);
+    }, [location.state]);
 
     useEffect(() => {
         axios
@@ -38,7 +38,7 @@ function BookPage() {
     const renderBook = useCallback(
         dataBook.map((book, index) => {
             if (index < 20 * (id - 1) || index >= 20 * id) {
-                return;
+                return '';
             } else {
                 return (
                     <div className={cx('col-3')} key={index}>
@@ -130,7 +130,7 @@ function BookPage() {
                 <div className={cx('btn-back')}>
                     <Link to="/home">
                         <i className={cx('fa-solid fa-arrow-left')}></i>
-                        Back
+                        Quay lại
                     </Link>
                 </div>
                 <div className={cx('row')}>
@@ -140,13 +140,6 @@ function BookPage() {
                     <div className={cx('col-10')}>
                         <div className={cx('row')}>
                             <div className={cx('form-serach')}>
-                                <div className={cx('col-1')} id="btnSubmit">
-                                    {/* <Link to={`/library/book/detail/${inputBook}`}> */}
-                                    <button onClick={searchBook} className={cx('btn-search')}>
-                                        Search
-                                    </button>
-                                    {/* </Link> */}
-                                </div>
                                 <div className={cx('col-6 search__input form-group')}>
                                     <label htmlFor="name"></label>
                                     <input
@@ -158,6 +151,11 @@ function BookPage() {
                                         value={inputBook}
                                         onChange={(e) => setinputBook(e.target.value)}
                                     />
+                                </div>
+                                <div className={cx('col-2')} id="btnSubmit">
+                                    <button onClick={searchBook} className={cx('btn-search')}>
+                                        Tìm kiếm
+                                    </button>
                                 </div>
                             </div>
                         </div>

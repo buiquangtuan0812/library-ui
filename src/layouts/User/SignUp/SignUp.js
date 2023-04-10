@@ -86,13 +86,13 @@ function SignUpForm() {
             </div>
             <div className={cx('form')}>
                 <form>
-                    <p className={cx('heading')}>Sign Up</p>
+                    <p className={cx('heading')}>Đăng ký</p>
                     <div className={cx('field')}>
                         <i className={cx('fa-solid fa-user')}></i>
                         <label htmlFor="username"></label>
                         <input
                             autoComplete="off"
-                            placeholder="Username"
+                            placeholder="Tên đăng nhập"
                             className={cx('input-field')}
                             type="text"
                             id="username"
@@ -106,7 +106,9 @@ function SignUpForm() {
                             }}
                         />
                     </div>
-                    <div className={cx(errName ? 'err-username' : 'hide-content')}>You must enter your username!</div>
+                    <div className={cx(errName ? 'err-username' : 'hide-content')}>
+                        Tên đăng nhập không được bỏ tróng!
+                    </div>
                     <div className={cx('field')}>
                         <i className={cx('fa-solid fa-envelope')}></i>
                         <label htmlFor="email"></label>
@@ -133,14 +135,14 @@ function SignUpForm() {
                             }}
                         />
                     </div>
-                    <div className={cx(warnEmail ? 'err-mail' : 'hide-content')}>Email is wrong format!</div>
-                    <div className={cx(errEmail ? 'err-email' : 'hide-content')}>You must enter your email!</div>
+                    <div className={cx(warnEmail ? 'err-mail' : 'hide-content')}>Email chưa đúng định dạng!</div>
+                    <div className={cx(errEmail ? 'err-email' : 'hide-content')}>Email không được bỏ trống!</div>
                     <div className={cx('field')}>
                         <i className={cx('fa-solid fa-phone')}></i>
                         <label htmlFor="numberphone"></label>
                         <input
                             autoComplete="off"
-                            placeholder="NumberPhone"
+                            placeholder="Số điện thoại"
                             className={cx('input-field')}
                             type="text"
                             name="numberphone"
@@ -158,13 +160,13 @@ function SignUpForm() {
                             }}
                         />
                     </div>
-                    <div className={cx(errTel ? 'err-tel' : 'hide-content')}>You must enter your phone number!</div>
-                    <div className={cx(warnTel ? 'warn-tel' : 'hide-content')}>Phone number must have 10 digits</div>
+                    <div className={cx(errTel ? 'err-tel' : 'hide-content')}>Bạn cần nhập số điện thoại!</div>
+                    <div className={cx(warnTel ? 'warn-tel' : 'hide-content')}>Số điện thoại gồm 10 chữ số!</div>
                     <div className={cx('field')}>
                         <i className={cx('fa-solid fa-lock')}></i>
                         <label htmlFor="password"></label>
                         <input
-                            placeholder="Password"
+                            placeholder="Mật khẩu"
                             className={cx('input-field')}
                             type="password"
                             name="password"
@@ -183,15 +185,15 @@ function SignUpForm() {
                         />
                     </div>
                     <div className={cx(warnPassword ? 'err-pass' : 'hide-content')}>
-                        Password must contain at least 8 characters!
+                        Mật khẩu phải gồm ít nhất 8 ký tự!
                     </div>
                     <div className={cx(errpassword ? 'err-password' : 'hide-content')}>
-                        You must enter your password!
+                        Mật khẩu không được bỏ trống!
                     </div>
                 </form>
                 <div className={cx('btn-signup')}>
                     <button className={cx('button2')} onClick={handleSignup}>
-                        Sign Up
+                        Đăng ký
                     </button>
                 </div>
             </div>
