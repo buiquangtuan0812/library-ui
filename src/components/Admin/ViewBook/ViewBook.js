@@ -3,8 +3,11 @@ import styles from './ViewBook.module.scss';
 import ConfirmDelete from './ConfirmDelete/ConfirmDelete';
 import Notification from '~/components/Display/Notification/Notification';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
+import MarkdownEditor from 'react-markdown-editor-lite';
+import 'react-markdown-editor-lite/lib/index.css';
 
 import { RiDeleteBin5Fill } from 'react-icons/ri';
 import { FaCloudUploadAlt, FaEdit } from 'react-icons/fa';
@@ -38,6 +41,7 @@ function ViewBookComponent(props) {
         setUrl(location.state.book.imgDes);
         if (location.state) {
             setData(location.state.book);
+            setDescription(location.state.book.description);
             setDataUser(location.state.data);
         }
     }, []);
@@ -92,6 +96,27 @@ function ViewBookComponent(props) {
         setCount(count + 1);
     };
 
+    const handleEditorChange = ({ html, text }) => {
+        setDescription(text);
+    };
+
+    const toolbarConfig = {
+        h1: true,
+        h2: true,
+        h3: true,
+        h4: true,
+        h5: true,
+        img: true,
+        bold: true,
+        link: true,
+        code: true,
+        undo: true,
+        expand: true,
+    };
+    const render = (text) => {
+        return <ReactMarkdown>{text}</ReactMarkdown>;
+    };
+
     return (
         <div>
             <ConfirmDelete count={count} id={dataBook._id} data={dataUser} />
@@ -143,15 +168,15 @@ function ViewBookComponent(props) {
                         <div className={cx('item-2')}>
                             <div className={cx('container__content-field-des')}>
                                 <label htmlFor="description">Description of the book</label>
-                                <textarea
-                                    name="description"
-                                    spellCheck={false}
-                                    placeholder="Description of the book"
-                                    className={cx('description')}
-                                    defaultValue={dataBook.description}
-                                    disabled={edit ? '' : 'disabled'}
-                                    onChange={(e) => setDescription(e.target.value)}
-                                ></textarea>
+                                <MarkdownEditor
+                                    value={description}
+                                    renderHTML={(text) => render(text)}
+                                    onChange={handleEditorChange}
+                                    toolbars={toolbarConfig}
+                                    className={cx('editor')}
+                                    disabled={edit ? false : true}
+                                    readOnly={edit ? false : true}
+                                />
                             </div>
                         </div>
 

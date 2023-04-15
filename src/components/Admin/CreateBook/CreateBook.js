@@ -7,7 +7,10 @@ import { FaCloudUploadAlt } from 'react-icons/fa';
 import { BsFillCloudUploadFill, BsFillSendFill } from 'react-icons/bs';
 
 import axios from 'axios';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown';
+import MarkdownEditor from 'react-markdown-editor-lite';
+import 'react-markdown-editor-lite/lib/index.css';
 
 const cx = classNames.bind(styles);
 
@@ -75,6 +78,28 @@ function CreateBook(props) {
             console.log(err);
         };
     };
+
+    const handleEditorChange = ({ html, text }) => {
+        setDescription(text);
+    };
+
+    const toolbarConfig = {
+        h1: true,
+        h2: true,
+        h3: true,
+        h4: true,
+        h5: true,
+        img: true,
+        bold: true,
+        link: true,
+        code: true,
+        undo: true,
+        expand: true,
+    };
+    const render = (text) => {
+        return <ReactMarkdown>{text}</ReactMarkdown>;
+    };
+
     return (
         <div className={cx('container')}>
             <div className={cx(notice ? 'show' : 'hide-content')}>
@@ -118,13 +143,14 @@ function CreateBook(props) {
                     <div className={cx('item-2')}>
                         <div className={cx('container__content-field-des')}>
                             <label htmlFor="description">Description of the book</label>
-                            <textarea
-                                name="description"
-                                spellCheck={false}
-                                placeholder="Description of the book"
-                                className={cx('description')}
-                                onChange={(e) => setDescription(e.target.value)}
-                            ></textarea>
+                            <MarkdownEditor
+                                value={description}
+                                placeholder="Edit book content here"
+                                renderHTML={(text) => render(text)}
+                                onChange={handleEditorChange}
+                                toolbars={toolbarConfig}
+                                className={cx('editor')}
+                            />
                         </div>
                     </div>
 

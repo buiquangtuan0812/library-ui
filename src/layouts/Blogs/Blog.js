@@ -35,7 +35,7 @@ function Blog() {
             return (currentTime.getFullYear() - timePost.getFullYear()).toString() + ' năm trước';
         } else if (currentTime.getMonth() - timePost.getMonth() > 1) {
             return (currentTime.getMonth() - timePost.getMonth()).toString() + ' tháng trước';
-        } else if (currentTime.getMonth() - timePost.getMonth() == 1 && currentTime.getDate() >= timePost.getDate()) {
+        } else if (currentTime.getMonth() - timePost.getMonth() === 1 && currentTime.getDate() >= timePost.getDate()) {
             return '1 tháng trước';
         } else if (currentTime.getMonth() - timePost.getMonth() > 0 && currentTime.getDate() < timePost.getDate()) {
             return (currentTime.getDate() + (30 - timePost.getDate())).toString() + ' ngày trước';
@@ -50,7 +50,12 @@ function Blog() {
 
     const renderBlogs = blogs.map((blog, index) => {
         return (
-            <Link key={index} to={`/library/blog-detail/${blog.title}`}>
+            <Link
+                key={index}
+                to={`/library/blog-detail/${blog._id}`}
+                state={dataUser ? { user: dataUser, idBlog: blog._id } : { idBlog: blog._id }}
+                className={cx('blog-detail')}
+            >
                 <div className={cx('container__blog')}>
                     <div className={cx('container__blog-header')}>
                         <span className={cx('img-author')}>

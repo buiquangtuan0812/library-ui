@@ -80,7 +80,7 @@ function CategoryBook(props) {
                 </li>
             </ul>
             <ul className={cx('author__search')}>
-                Tác giảgiả
+                Tác giả
                 <Link
                     className={cx('link-author')}
                     to={`/library/book/author/${'Dale Carnegie'}`}

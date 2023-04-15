@@ -9,8 +9,10 @@ import Comment from '~/components/Comment/Comment';
 import { BsFillSendFill } from 'react-icons/bs';
 
 import axios from 'axios';
-import { useEffect, useState, useRef } from 'react';
+import remarkGfm from 'remark-gfm';
+import ReactMarkdown from 'react-markdown';
 import { useParams } from 'react-router-dom';
+import { useEffect, useState, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
@@ -114,7 +116,7 @@ function BookDetail() {
             <div className={cx('container')}>
                 <div className={cx('separate')}></div>
                 <div className={cx('btn-back')}>
-                    <Link to="/library/books">
+                    <Link to="/library/books" state={{ user }}>
                         <i className={cx('fa-solid fa-arrow-left')}></i>
                         Quay lại
                     </Link>
@@ -134,7 +136,7 @@ function BookDetail() {
                                     <h3>OVERVIEW</h3>
                                     <span className={cx('container__book-content-des')}>
                                         Mô tả:
-                                        <p>{book.description}</p>
+                                        <ReactMarkdown children={book.description} remarkPlugins={[remarkGfm]} />
                                     </span>
                                     <span className={cx('container__book-content-page')}>
                                         Số trang:

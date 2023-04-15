@@ -29,6 +29,10 @@
         }
     }
     &_list-blog {
+        .blog-detail {
+            text-decoration: none;
+            color: #000;
+        }
         .container__blog {
             width: 720px;
             padding: 24px;

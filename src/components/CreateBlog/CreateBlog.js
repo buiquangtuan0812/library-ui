@@ -75,15 +75,20 @@ function CreateBlog() {
         <div>
             <div className={cx(state ? 'hide' : '')}>
                 <div className={cx('header')}>
-                    <div className={cx('logo')}>
+                    <div className={cx('btn-back')}>
                         <span className={cx('icon-back')}>
                             <MdOutlineArrowBackIosNew />
                         </span>
                         <span className={cx('back')}>
                             <Link to="/library/blogs" state={{ user: user }}>
-                                BACK
+                                Quay lại
                             </Link>
                         </span>
+                    </div>
+                    <div className={cx('logo')}>
+                        <Link to="/home" state={{ user: user }}>
+                            <span className={cx('icon')}></span>
+                        </Link>
                     </div>
                     <div className={cx('header-item')}>
                         <span className={cx(title !== '' && markdownVal !== '' ? 'btn-success-post' : 'btn-post')}>
