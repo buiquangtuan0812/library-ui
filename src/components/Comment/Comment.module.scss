@@ -1,5 +1,5 @@
 .container__comment {
-    margin-bottom: 12px;
+    margin-bottom: 20px;
     margin-left: 52px;
     &-content {
         display: flex;
@@ -12,15 +12,16 @@
             }
         }
         &-text {
-            padding: 8px 12px;
+            padding: 12px 16px;
             border-radius: 18px;
             background-color: #f0f2f5;
             .comment__header {
-                font-size: 14px;
+                font-size: 16px;
                 font-weight: 600;
                 color: #050505;
             }
             .comment__content {
+                font-size: 18px;
                 font-weight: 400;
                 color: #050505;
             }

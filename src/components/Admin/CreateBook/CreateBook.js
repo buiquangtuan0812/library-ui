@@ -24,7 +24,7 @@ function CreateBook(props) {
     const [numberpage, setPage] = useState(0);
     const [price, setPrice] = useState(0);
     const [type, setType] = useState('Kỹ năng sống');
-    const [description, setDescription] = useState('');
+    const [description, setDescription] = useState(' ');
     const [country, setCountry] = useState('foreign');
     const [language, setLanguage] = useState('Vietnamese');
 
@@ -111,16 +111,16 @@ function CreateBook(props) {
                     count={0}
                 />
             </div>
-            <h3 className={cx('header')}>Create a new book</h3>
+            <h3 className={cx('header')}>Thêm mới một sách</h3>
             <div className={cx('container__content')}>
                 <div className={cx('container__content-field')}>
                     <div className={cx('item-1')}>
                         <div className={cx('container__content-field-name')}>
-                            <label htmlFor="nameBook">Book title</label>
+                            <label htmlFor="nameBook">Tên sách</label>
                             <input
                                 type="text"
                                 name="nameBook"
-                                placeholder="Enter name !"
+                                placeholder="Nhập tên sách!"
                                 id="nameBook"
                                 className={cx('input-title')}
                                 onChange={(e) => setName(e.target.value)}
@@ -128,11 +128,11 @@ function CreateBook(props) {
                         </div>
 
                         <div className={cx('container__content-field-author')}>
-                            <label htmlFor="author">Name of author</label>
+                            <label htmlFor="author">Tên tác giả</label>
                             <input
                                 type="text"
                                 name="author"
-                                placeholder="Enter author !"
+                                placeholder="Nhập tên tác giả!"
                                 id="author"
                                 className={cx('input-author')}
                                 onChange={(e) => setAuthor(e.target.value)}
@@ -142,10 +142,10 @@ function CreateBook(props) {
 
                     <div className={cx('item-2')}>
                         <div className={cx('container__content-field-des')}>
-                            <label htmlFor="description">Description of the book</label>
+                            <label htmlFor="description">Mô tả khái quát</label>
                             <MarkdownEditor
                                 value={description}
-                                placeholder="Edit book content here"
+                                placeholder="Nhập mô tả của sách tại đây"
                                 renderHTML={(text) => render(text)}
                                 onChange={handleEditorChange}
                                 toolbars={toolbarConfig}
@@ -156,24 +156,24 @@ function CreateBook(props) {
 
                     <div className={cx('item-3')}>
                         <div className={cx('container__content-field-publish')}>
-                            <label htmlFor="pusblish">Release date</label>
+                            <label htmlFor="pusblish">Ngày xuất bản</label>
                             <input
                                 type="text"
                                 name="pusblish"
                                 id="pusblish"
-                                placeholder="Enter release date !"
+                                placeholder="Nhập ngày xuất bản!"
                                 className={cx('input-date')}
                                 onChange={(e) => setPublish(e.target.value)}
                             />
                         </div>
 
                         <div className={cx('container__content-field-publisher')}>
-                            <label htmlFor="publisher">Publisher</label>
+                            <label htmlFor="publisher">Nhà xuất bản</label>
                             <input
                                 type="text"
                                 name="publisher"
                                 id="publisher"
-                                placeholder="Enter the publisher !"
+                                placeholder="Nhập tên nhà xuất bản!"
                                 onChange={(e) => setPublisher(e.target.value)}
                             />
                         </div>
@@ -181,31 +181,31 @@ function CreateBook(props) {
 
                     <div className={cx('item-4')}>
                         <div className={cx('container__content-field-price')}>
-                            <label htmlFor="price">Price of book</label>
+                            <label htmlFor="price">Giá bán</label>
                             <input
                                 type="number"
                                 id="price"
                                 name="price"
-                                placeholder="Enter price of book!"
+                                placeholder="Nhập giá bán!"
                                 className={cx('input-price')}
                                 onChange={(e) => setPrice(e.target.value)}
                             />
                         </div>
 
                         <div className={cx('container__content-field-numberPage')}>
-                            <label htmlFor="page">Number pages of book</label>
+                            <label htmlFor="page">Số trang</label>
                             <input
                                 type="number"
                                 id="page"
                                 name="page"
-                                placeholder="Enter number pages !"
+                                placeholder="Nhập số trang!"
                                 onChange={(e) => setPage(e.target.value)}
                             />
                         </div>
                     </div>
                     <div className={cx('item-5')}>
                         <div className={cx('container__content-field-type')}>
-                            <label htmlFor="type">Type of book</label>
+                            <label htmlFor="type">Thể loại</label>
                             <select name="type" id="type" onChange={(e) => setType(e.target.value)}>
                                 <option value="Kỹ năng sống">Life skills</option>
                                 <option value="Kỹ năng giao tiếp">Communication</option>
@@ -213,11 +213,12 @@ function CreateBook(props) {
                                 <option value="Văn học">Literature</option>
                                 <option value="Kinh tế">Economy</option>
                                 <option value="Psychology">Psychology</option>
+                                <option value="History">History</option>
                             </select>
                         </div>
 
                         <div className={cx('container__content-field-lang')}>
-                            <label htmlFor="language">Language</label>
+                            <label htmlFor="language">Ngôn ngữ</label>
                             <select
                                 name="language"
                                 id="language"
@@ -229,7 +230,7 @@ function CreateBook(props) {
                             </select>
                         </div>
                         <div className={cx('container__content-field-country')}>
-                            <label htmlFor="country">Country</label>
+                            <label htmlFor="country">Phạm vi</label>
                             <select
                                 name="country"
                                 id="country"
@@ -245,15 +246,15 @@ function CreateBook(props) {
                 <div className={cx('container__content-upload')}>
                     <div className={cx(state === false ? 'container__content-upload-img' : 'hide')}>
                         <FaCloudUploadAlt className={cx('icon-cloud')} />
-                        <div className={cx('select-title')}>Select image to upload</div>
+                        <div className={cx('select-title')}>Chọn ảnh từ máy</div>
                         <div className={cx('type-img')}>Type image: .png .jbg .gif .tiff</div>
-                        <div className={cx('size-img')}>Less than 1 GB</div>
+                        <div className={cx('size-img')}>Tối đa 1 GB</div>
                         <div className={cx('btn-upload')}>
                             <label htmlFor="file">
                                 <div className={cx('button')}>
                                     <div>
                                         <span>
-                                            <p className={cx('upload')}>Upload</p>
+                                            <p className={cx('upload')}>Chọn ảnh</p>
                                         </span>
                                     </div>
                                     <div>
@@ -277,7 +278,7 @@ function CreateBook(props) {
                     <div className={cx(state === true ? 'container__img' : 'hide')}>
                         <img src={urlImg} alt="" />
                         <label htmlFor="btn-change">
-                            <div className={cx('btn-change')}>Change</div>
+                            <div className={cx('btn-change')}>Thay đổi</div>
                         </label>
                         <input
                             type="file"
@@ -289,7 +290,7 @@ function CreateBook(props) {
                     </div>
                     <div className={cx('container__content-upload-submit')}>
                         <button onClick={createBook}>
-                            Create
+                            Tạo mới
                             <BsFillSendFill className={cx('icon-send')} />
                         </button>
                     </div>

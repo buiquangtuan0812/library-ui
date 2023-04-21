@@ -12,7 +12,7 @@ import axios from 'axios';
 import remarkGfm from 'remark-gfm';
 import ReactMarkdown from 'react-markdown';
 import { useParams } from 'react-router-dom';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
@@ -36,15 +36,6 @@ function BookDetail() {
 
     useEffect(() => {
         axios
-            .get('http://localhost:8086/users/cmt', { params: { nameBook: nameBook } })
-            .then((cmts) => {
-                setComment(cmts.data);
-            })
-            .catch((err) => console.log(err));
-    }, [comment]);
-
-    useEffect(() => {
-        axios
             .get('http://localhost:8086/library/books/detail', { params: { name: nameBook } })
             .then((res) => {
                 setBook(res.data);
@@ -53,25 +44,24 @@ function BookDetail() {
                 console.error(err);
             });
     }, []);
-
-    const renderCmt = comment.map((cmt, index) => {
-        return (
-            <div key={index}>
-                <Comment user={cmt.user} title={cmt.title} />
-            </div>
-        );
-    });
-
-    const handleCmt = () => {
-        const data = {
-            username: user.username,
-            nameBook: nameBook,
-            title: cmtUser,
-            img: user.imgDes,
-        };
+    useEffect(() => {
         axios
+            .get('http://localhost:8086/users/cmt', { params: { name: nameBook } })
+            .then((cmts) => {
+                setComment(cmts.data);
+            })
+            .catch((err) => console.log(err));
+    }, []);
+
+    const handleCmt = async () => {
+        console.log('success');
+        const data = {
+            book: book._id,
+            title: cmtUser,
+        };
+        await axios
             .post('http://localhost:8086/users/cmt/create', data, {
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${user.accessToken}` },
             })
             .then((response) => {
                 const cmt = [response.data];
@@ -81,17 +71,15 @@ function BookDetail() {
             })
             .catch((err) => console.log(err));
     };
-    document.onkeyup = (e) => {
+    document.onkeyup = async (e) => {
         const data = {
-            username: user.username,
-            nameBook: nameBook,
+            book: book._id,
             title: cmtUser,
-            img: user.imgDes,
         };
         if (e.key === 'Enter' && cmtUser !== '') {
-            axios
+            await axios
                 .post('http://localhost:8086/users/cmt/create', data, {
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${user.accessToken}` },
                 })
                 .then((response) => {
                     const cmt = [response.data];
@@ -102,6 +90,16 @@ function BookDetail() {
                 .catch((err) => console.log(err));
         }
     };
+    const renderCmt = useCallback(
+        comment.map((cmt, index) => {
+            return (
+                <div key={index}>
+                    <Comment user={cmt._id} title={cmt.title} time={cmt.created_at} />
+                </div>
+            );
+        }),
+        [comment],
+    );
     const countPrice = (price) => {
         const oldPrice = (Number(price) + (Number(price) * 20) / 100).toString();
         return oldPrice.slice(0, oldPrice.length - 3) + '.000';
@@ -110,14 +108,38 @@ function BookDetail() {
         const str = num.toString();
         return str.slice(0, str.length - 3) + '.000';
     };
+
+    const addCart = async () => {
+        const data = {
+            nameBook: nameBook,
+            price: book.price,
+            quantity: 1,
+        };
+        await axios
+            .post('http://localhost:8086/users/cart/add', data, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${user.accessToken}`,
+                },
+            })
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
     return (
         <div>
             <Header user={user} />
             <div className={cx('container')}>
                 <div className={cx('separate')}></div>
                 <div className={cx('btn-back')}>
-                    <Link to="/library/books" state={{ user }}>
-                        <i className={cx('fa-solid fa-arrow-left')}></i>
+                    <Link to="/library/books" state={{ user: user }}>
+                        <span>
+                            <i className={cx('fa-solid fa-arrow-left')}></i>
+                        </span>
                         Quay lại
                     </Link>
                 </div>
@@ -130,7 +152,10 @@ function BookDetail() {
                             <div className={cx('col-8')}>
                                 <nav className={cx('container__book-heading')}>
                                     <div id="nameBook">{book.name}</div>
-                                    <div className={cx('book-author')}>Tác giả: {book.author}</div>
+                                    <div className={cx('book-author')}>
+                                        <p>Tác giả: {book.author}</p>
+                                        <p className={cx('sold')}>Đã bán {book.sold}</p>
+                                    </div>
                                 </nav>
                                 <div className={cx('container__book-content')}>
                                     <h3>OVERVIEW</h3>
@@ -161,7 +186,7 @@ function BookDetail() {
                                 </div>
                                 <div className={cx('container__book-feedback')}>
                                     <h3>Nhận xét - đánh giá từ độc giả</h3>
-                                    {comment.length ? (
+                                    {comment.length > 0 ? (
                                         renderCmt
                                     ) : (
                                         <div className={cx('not-cmt')}>Chưa có nhận xét đánh giá!</div>
@@ -206,7 +231,7 @@ function BookDetail() {
                                     </div>
                                     <div className={cx('bar-code-book')}></div>
                                     <div className={cx('container__book-cart-btn')}>
-                                        <button>Thêm vào giỏ hàng</button>
+                                        <button onClick={addCart}>Thêm vào giỏ hàng</button>
                                     </div>
                                 </div>
                             </div>

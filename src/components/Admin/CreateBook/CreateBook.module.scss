@@ -17,7 +17,7 @@
 .container__content {
     display: flex;
     &-field {
-        width: 60%;
+        width: 65%;
         &-name,
         &-author {
             display: flex;
@@ -127,7 +127,7 @@
         width: 100%;
     }
     &-upload {
-        width: 40%;
+        width: 35%;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -167,8 +167,8 @@
             align-items: center;
             justify-content: space-around;
             padding: 24px;
-            width: 320px;
-            height: 430px;
+            width: 310px;
+            height: 420px;
             border: 2px dashed rgba(209, 214, 255, 0.2);
             .btn-upload {
                 .button {

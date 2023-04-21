@@ -15,18 +15,18 @@ function HeaderAdmin() {
                 <span className={cx('header__admin-statistic-item')}>
                     <Link to="/admin/home">
                         <FcStatistics className={cx('icon-header')}></FcStatistics>
-                        Statistic
+                        Thống kê
                         <span className={cx('interact-click')}></span>
                     </Link>
                 </span>
 
                 <span className={cx('header__admin-statistic-item')}>
                     <FaSupple className={cx('icon-header')}></FaSupple>
-                    Supplier
+                    Nhà cung cấp
                 </span>
                 <span className={cx('header__admin-statistic-item')}>
                     <i className={cx('fa-solid fa-user-tie')}></i>
-                    Staff
+                    Nhân viên
                 </span>
             </div>
             <div className={cx('header__admin-interact')}>

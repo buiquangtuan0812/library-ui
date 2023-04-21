@@ -1,6 +1,6 @@
 .container__catergory ul {
     list-style-type: none;
-    padding-left: 20px;
+    padding-left: 0;
     font-size: 18px;
     font-weight: 600;
     padding-bottom: 8px;
@@ -19,7 +19,7 @@
 
 .item-catergory {
     padding-left: 20px;
-    margin: 16px 0;
+    margin: 20px 0;
     a {
         text-decoration: none;
         font-size: 18px;
@@ -27,22 +27,23 @@
         color: #000;
     }
     a:hover {
-        color: #f42535;
+        cursor: pointer;
+        opacity: 0.7;
     }
 }
 
-.getAuthor {
-    padding-left: 20px;
-    margin: 16px 0;
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: 400;
-    color: #000;
-}
 .link-author {
     text-decoration: none;
-}
-.getAuthor:hover {
-    cursor: pointer;
-    color: #f42535;
+    .getAuthor {
+        margin: 16px 0;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: 400;
+        color: #000;
+        padding: 4px 0 4px 20px;
+    }
+    &:hover {
+        cursor: pointer;
+        opacity: 0.7;
+    }
 }

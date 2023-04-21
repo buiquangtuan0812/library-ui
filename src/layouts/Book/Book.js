@@ -25,7 +25,7 @@ function BookPage() {
         if (location.state.user) {
             setUser(location.state.user);
         }
-    }, [location.state]);
+    }, []);
 
     useEffect(() => {
         axios
@@ -34,7 +34,7 @@ function BookPage() {
             .catch((err) => {
                 console.log(err);
             });
-    }, [id]);
+    }, []);
     const renderBook = useCallback(
         dataBook.map((book, index) => {
             if (index < 20 * (id - 1) || index >= 20 * id) {
@@ -129,7 +129,9 @@ function BookPage() {
                 <div className={cx('separate')}></div>
                 <div className={cx('btn-back')}>
                     <Link to="/home">
-                        <i className={cx('fa-solid fa-arrow-left')}></i>
+                        <span>
+                            <i className={cx('fa-solid fa-arrow-left')}></i>
+                        </span>
                         Quay lại
                     </Link>
                 </div>

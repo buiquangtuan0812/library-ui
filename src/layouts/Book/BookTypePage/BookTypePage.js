@@ -36,7 +36,7 @@ function BookTypePage() {
                     console.log(err);
                 });
         }
-    }, [dataBook]);
+    }, [location.state.type]);
 
     const renderBook = useCallback(
         dataBook.map((book, index) => {
@@ -80,8 +80,10 @@ function BookTypePage() {
             <div className={cx('container')}>
                 <div className={cx('separate')}></div>
                 <div className={cx('btn-back')}>
-                    <Link to="/library/books">
-                        <i className={cx('fa-solid fa-arrow-left')}></i>
+                    <Link to="/library/books" state={{ user }}>
+                        <span>
+                            <i className={cx('fa-solid fa-arrow-left')}></i>
+                        </span>
                         Quay lại
                     </Link>
                 </div>
