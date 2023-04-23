@@ -17,12 +17,24 @@ function Blog() {
     document.title = 'My Library | Blogs';
     const [blogs, setBlogs] = useState([]);
     const [dataUser, setUser] = useState([]);
+    const [numberCart, setNumberCart] = useState(0);
     const location = useLocation();
 
     useEffect(() => {
         if (location.state.user) {
             setUser(location.state.user);
         }
+        axios
+            .get('http://localhost:8086/users/cart', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${location.state.user.accessToken}`,
+                },
+            })
+            .then((res) => {
+                setNumberCart(res.data.length);
+            })
+            .catch((err) => console.error(err));
         axios
             .get('http://localhost:8086/library/blogs')
             .then((res) => setBlogs(res.data))
@@ -85,7 +97,7 @@ function Blog() {
 
     return (
         <div>
-            <Header user={dataUser} />
+            <Header user={dataUser} numberCart={numberCart} />
             <div className={cx('container')}>
                 <div className={cx('header-page')}>
                     <div>

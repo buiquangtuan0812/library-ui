@@ -34,7 +34,7 @@ function Notification(props) {
                 <div className={cx('confirm__success-content')}>{props.message}</div>
                 {props.check ? (
                     <Link
-                        to={props.count !== 0 ? '/library/login' : '/admin/manage/books'}
+                        to={props.count !== 0 ? '/user/login' : '/admin/manage/books'}
                         state={{ token: props.count === 0 ? 'token' : '' }}
                     >
                         <div className={cx(props.count !== 0 ? 'confirm__success-link' : 'confirm__success-create')}>

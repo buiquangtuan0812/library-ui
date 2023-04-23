@@ -38,7 +38,7 @@ function AccountReview() {
                     Feedback and help
                 </div>
 
-                <Link to={'/library/login'} className={cx('container__account-logout')}>
+                <Link to={'/user/login'} className={cx('container__account-logout')}>
                     <div>
                         <i className={cx('fa-solid fa-arrow-right-from-bracket')}></i>
                         Log out

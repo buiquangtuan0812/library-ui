@@ -1,10 +1,9 @@
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
 
-import AccountReview from '../AccountReview/AccountReview';
-
-import Tippy from '@tippyjs/react/headless';
 import { Link } from 'react-router-dom';
+import Tippy from '@tippyjs/react/headless';
+import AccountReview from '../AccountReview/AccountReview';
 
 const cx = classNames.bind(styles);
 
@@ -16,6 +15,7 @@ function Header(props) {
             </div>
         );
     };
+
     return (
         <div className={cx('header')}>
             <div className={cx('container__content')}>
@@ -50,18 +50,19 @@ function Header(props) {
                         </div>
                     </Tippy>
                 ) : (
-                    <Link to="/library/login">
-                        <div className={cx('container__account-user')}>Đăng nhập</div>
+                    <Link to="/user/login">
+                        <div className={cx('container__account-login')}>Đăng nhập</div>
                     </Link>
                 )}
                 <div className={cx('container__account-support')}>
-                    <a href="/">Hỗ trợ</a>
+                    <Link to="/">Hỗ trợ</Link>
                 </div>
-                <div className={cx('container__account-cash')}>
-                    <a href="/">
+                <Link to="/library/user/cart" state={{ user: props.user, numberCart: props.numberCart }}>
+                    <div className={cx('container__account-cash')}>
                         <i className={cx('fa-solid fa-cart-shopping')}></i>
-                    </a>
-                </div>
+                        {props.user.accessToken ? <span>{props.numberCart}</span> : ''}
+                    </div>
+                </Link>
             </div>
         </div>
     );

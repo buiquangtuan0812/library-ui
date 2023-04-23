@@ -5,6 +5,7 @@ import { IoBookSharp } from 'react-icons/io5';
 import { RiCalendarEventLine } from 'react-icons/ri';
 import { ImLibrary } from 'react-icons/im';
 import { BiChevronRight } from 'react-icons/bi';
+import { HiUserGroup } from 'react-icons/hi';
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -61,7 +62,7 @@ function Navigation() {
                         <li className={cx('item')}>
                             <div className={cx('nav-item-1')} onClick={() => handleClick(1)}>
                                 <ImLibrary className={cx('icon-navigation')}></ImLibrary>
-                                Library
+                                Thư viện
                                 <BiChevronRight className={cx('item-icon')}></BiChevronRight>
                             </div>
                             <div className={cx(item1 === true ? 'nav-item-2' : 'hide')}>
@@ -78,7 +79,7 @@ function Navigation() {
                         <li className={cx('item')}>
                             <div className={cx('nav-item-1')} onClick={() => handleClick(2)}>
                                 <i className={cx('fa-solid fa-user-tie')}></i>
-                                Users
+                                Account
                                 <BiChevronRight className={cx('item-icon')}></BiChevronRight>
                             </div>
                             <div className={cx(item2 === true ? 'nav-item-2' : 'hide')}>
@@ -95,7 +96,7 @@ function Navigation() {
                         <li className={cx('item')}>
                             <div className={cx('nav-item-1')} onClick={() => handleClick(3)}>
                                 <IoBookSharp className={cx('icon-navigation')}></IoBookSharp>
-                                Books
+                                Sách
                                 <BiChevronRight className={cx('item-icon')}></BiChevronRight>
                             </div>
                             <div className={cx(item3 === true ? 'nav-item-2' : 'hide')}>
@@ -116,7 +117,7 @@ function Navigation() {
                         <li className={cx('item')}>
                             <div className={cx('nav-item-1')} onClick={() => handleClick(4)}>
                                 <i className={cx('fa-solid fa-user-secret')}></i>
-                                Authors
+                                Tác giả
                                 <BiChevronRight className={cx('item-icon')}></BiChevronRight>
                             </div>
                             <div className={cx(item4 === true ? 'nav-item-2' : 'hide')}>
@@ -149,8 +150,25 @@ function Navigation() {
                         </li>
                         <li className={cx('item')}>
                             <div className={cx('nav-item-1')} onClick={() => handleClick(6)}>
+                                <HiUserGroup className={cx('icon-navigation')} />
+                                Khách hàng
+                                <BiChevronRight className={cx('item-icon')}></BiChevronRight>
+                            </div>
+                            <div className={cx(item6 === true ? 'nav-item-2' : 'hide')}>
+                                <ul className={cx('nav-item-library')}>
+                                    <li>
+                                        <Link to="">History</Link>
+                                    </li>
+                                    <li>
+                                        <Link to="">Rent</Link>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <li className={cx('item')}>
+                            <div className={cx('nav-item-1')} onClick={() => handleClick(6)}>
                                 <RiCalendarEventLine className={cx('icon-navigation')}></RiCalendarEventLine>
-                                Sales
+                                Bán hàng
                                 <BiChevronRight className={cx('item-icon')}></BiChevronRight>
                             </div>
                             <div className={cx(item6 === true ? 'nav-item-2' : 'hide')}>

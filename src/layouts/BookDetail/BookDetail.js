@@ -1,19 +1,21 @@
 import classNames from 'classnames/bind';
 import styles from './BookDetail.module.scss';
 
+import Comment from '~/components/Comment/Comment';
+import ConfirmCart from './ConfirmCart/ConfirmCart';
 import Header from '~/components/Display/Header/Header';
 import Footer from '~/components/Display/Footer/Footer';
 import CategoryBook from '../Book/CategoryBook/CategoryBook';
-import Comment from '~/components/Comment/Comment';
 
 import { BsFillSendFill } from 'react-icons/bs';
 
 import axios from 'axios';
 import remarkGfm from 'remark-gfm';
 import ReactMarkdown from 'react-markdown';
+
 import { useParams } from 'react-router-dom';
-import { useEffect, useState, useRef, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useEffect, useState, useRef, useCallback } from 'react';
 
 const cx = classNames.bind(styles);
 
@@ -22,16 +24,29 @@ function BookDetail() {
     const [book, setBook] = useState([]);
     document.title = 'Book | ' + nameBook;
     const [user, setUser] = useState([]);
+    const [check, setCheck] = useState(false);
     const [comment, setComment] = useState([]);
     const [cmtUser, setCmtUser] = useState('');
-    // const [stateCmt, setStateCmt] = useState(false);
-    const inputElement = useRef();
+    const [numberCart, setNumberCart] = useState(0);
 
+    const inputElement = useRef();
     const location = useLocation();
+
     useEffect(() => {
         if (location.state) {
             setUser(location.state.user);
         }
+        axios
+            .get('http://localhost:8086/users/cart', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${location.state.user.accessToken}`,
+                },
+            })
+            .then((res) => {
+                setNumberCart(res.data.length);
+            })
+            .catch((err) => console.error(err));
     }, []);
 
     useEffect(() => {
@@ -111,7 +126,7 @@ function BookDetail() {
 
     const addCart = async () => {
         const data = {
-            nameBook: nameBook,
+            book: book._id,
             price: book.price,
             quantity: 1,
         };
@@ -123,7 +138,8 @@ function BookDetail() {
                 },
             })
             .then((response) => {
-                console.log(response.data);
+                setNumberCart(numberCart + 1);
+                setCheck(true);
             })
             .catch((error) => {
                 console.log(error);
@@ -132,8 +148,9 @@ function BookDetail() {
 
     return (
         <div>
-            <Header user={user} />
+            <Header user={user} numberCart={numberCart} />
             <div className={cx('container')}>
+                <ConfirmCart check={check} user={user} numberCart={numberCart} />
                 <div className={cx('separate')}></div>
                 <div className={cx('btn-back')}>
                     <Link to="/library/books" state={{ user: user }}>

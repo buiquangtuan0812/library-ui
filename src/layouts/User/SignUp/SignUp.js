@@ -54,7 +54,7 @@ function SignUpForm() {
         } else {
             setState(true);
             axios
-                .post('http://localhost:8086/library/signup', dataUser, {
+                .post('http://localhost:8086/user/signup', dataUser, {
                     headers: {
                         'Content-Type': 'application/json',
                     },

@@ -14,9 +14,10 @@ import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
 const cx = classNames.bind(styles);
 
 function BookPage() {
+    const [id, setIndex] = useState(1);
+    const [numberCart, setNumberCart] = useState(0);
     const [dataBook, setdataBook] = useState([]);
     const [inputBook, setinputBook] = useState('');
-    const [id, setIndex] = useState(1);
     document.title = 'Book | My Library';
 
     const [user, setUser] = useState([]);
@@ -25,6 +26,17 @@ function BookPage() {
         if (location.state.user) {
             setUser(location.state.user);
         }
+        axios
+            .get('http://localhost:8086/users/cart', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${location.state.user.accessToken}`,
+                },
+            })
+            .then((res) => {
+                setNumberCart(res.data.length);
+            })
+            .catch((err) => console.error(err));
     }, []);
 
     useEffect(() => {
@@ -124,7 +136,7 @@ function BookPage() {
 
     return (
         <div>
-            <Header user={user} />
+            <Header user={user} numberCart={numberCart} />
             <div className={cx('container')}>
                 <div className={cx('separate')}></div>
                 <div className={cx('btn-back')}>

@@ -12,9 +12,10 @@ import { useLocation } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
 function BookTypePage() {
+    const [user, setUser] = useState([]);
     const [dataBook, setdataBook] = useState([]);
     const [inputBook, setinputBook] = useState('');
-    const [user, setUser] = useState([]);
+    const [numberCart, setNumberCart] = useState(0);
     const location = useLocation();
     document.title = 'Book | ' + location.state.type;
     const url = 'http://localhost:8086/library/books/' + location.state.title;
@@ -36,6 +37,17 @@ function BookTypePage() {
                     console.log(err);
                 });
         }
+        axios
+            .get('http://localhost:8086/users/cart', {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${location.state.user.accessToken}`,
+                },
+            })
+            .then((res) => {
+                setNumberCart(res.data.length);
+            })
+            .catch((err) => console.error(err));
     }, [location.state.type]);
 
     const renderBook = useCallback(
@@ -76,7 +88,7 @@ function BookTypePage() {
 
     return (
         <div>
-            <Header user={user} />
+            <Header user={user} numberCart={numberCart} />
             <div className={cx('container')}>
                 <div className={cx('separate')}></div>
                 <div className={cx('btn-back')}>

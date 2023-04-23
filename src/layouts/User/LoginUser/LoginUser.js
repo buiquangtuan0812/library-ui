@@ -20,7 +20,7 @@ function LoginUser() {
             password: password,
         };
         axios
-            .post('http://localhost:8086/library/signin', dataUser, {
+            .post('http://localhost:8086/user/signin', dataUser, {
                 headers: { 'Content-Type': 'application/json' },
             })
             .then((response) => {
@@ -72,7 +72,7 @@ function LoginUser() {
                 </form>
                 <div className={cx('btn')}>
                     <Link
-                        to={data.accessToken ? '/home' : '/library/login'}
+                        to={data.accessToken ? '/home' : '/user/login'}
                         state={data.accessToken ? { user: data } : ''}
                         className={cx('btn-submit')}
                         onClick={(e) => handleLogin(e)}
@@ -81,7 +81,7 @@ function LoginUser() {
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Đăng nhập&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         </button>
                     </Link>
-                    <Link to="/library/signup" className={cx('btn-signup')}>
+                    <Link to="/user/signup" className={cx('btn-signup')}>
                         <button className={cx('button2')}>Đăng ký</button>
                     </Link>
                 </div>
