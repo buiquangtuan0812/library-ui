@@ -3,6 +3,7 @@ import styles from './BookDetail.module.scss';
 
 import Comment from '~/components/Comment/Comment';
 import ConfirmCart from './ConfirmCart/ConfirmCart';
+import ConfirmLogin from './ConfirmLogin/ConfirmLogin';
 import Header from '~/components/Display/Header/Header';
 import Footer from '~/components/Display/Footer/Footer';
 import CategoryBook from '../Book/CategoryBook/CategoryBook';
@@ -25,6 +26,7 @@ function BookDetail() {
     document.title = 'Book | ' + nameBook;
     const [user, setUser] = useState([]);
     const [check, setCheck] = useState(false);
+    const [confirmLogin, setConfirmLogin] = useState(false);
     const [comment, setComment] = useState([]);
     const [cmtUser, setCmtUser] = useState('');
     const [numberCart, setNumberCart] = useState(0);
@@ -35,18 +37,18 @@ function BookDetail() {
     useEffect(() => {
         if (location.state) {
             setUser(location.state.user);
+            axios
+                .get('http://localhost:8086/users/cart', {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${location.state.user.accessToken}`,
+                    },
+                })
+                .then((res) => {
+                    setNumberCart(res.data.length);
+                })
+                .catch((err) => console.error(err));
         }
-        axios
-            .get('http://localhost:8086/users/cart', {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${location.state.user.accessToken}`,
-                },
-            })
-            .then((res) => {
-                setNumberCart(res.data.length);
-            })
-            .catch((err) => console.error(err));
     }, []);
 
     useEffect(() => {
@@ -69,7 +71,6 @@ function BookDetail() {
     }, []);
 
     const handleCmt = async () => {
-        console.log('success');
         const data = {
             book: book._id,
             title: cmtUser,
@@ -125,25 +126,29 @@ function BookDetail() {
     };
 
     const addCart = async () => {
-        const data = {
-            book: book._id,
-            price: book.price,
-            quantity: 1,
-        };
-        await axios
-            .post('http://localhost:8086/users/cart/add', data, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `Bearer ${user.accessToken}`,
-                },
-            })
-            .then((response) => {
-                setNumberCart(numberCart + 1);
-                setCheck(true);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        if (user.accessToken) {
+            const data = {
+                book: book._id,
+                price: book.price,
+                quantity: 1,
+            };
+            await axios
+                .post('http://localhost:8086/users/cart/add', data, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${user.accessToken}`,
+                    },
+                })
+                .then((response) => {
+                    setNumberCart(numberCart + 1);
+                    setCheck(true);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        } else {
+            setConfirmLogin(true);
+        }
     };
 
     return (
@@ -151,6 +156,7 @@ function BookDetail() {
             <Header user={user} numberCart={numberCart} />
             <div className={cx('container')}>
                 <ConfirmCart check={check} user={user} numberCart={numberCart} />
+                <ConfirmLogin check={confirmLogin} url={document.URL} />
                 <div className={cx('separate')}></div>
                 <div className={cx('btn-back')}>
                     <Link to="/library/books" state={{ user: user }}>

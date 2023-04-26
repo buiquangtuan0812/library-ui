@@ -15,6 +15,7 @@ import EditBlog from '~/components/CreateBlog/ConfirmPost/ConfirmPost';
 import HomeAdmin from '~/components/Admin/HomeAdmin/HomeAdmin';
 import LoginAdmin from '~/components/Admin/LoginAdmin/LoginAdmin';
 
+import ProfileUser from '~/components/Profile/Profile';
 import CartUser from './layouts/CartUser/CartUser';
 
 import { Route, Routes } from 'react-router-dom';
@@ -48,6 +49,8 @@ function App() {
             <Route path="admin/manage/book-create" element={<HomeAdmin page="Create" />}></Route>
             {/* Cart user */}
             <Route path="library/user/cart" element={<CartUser />}></Route>
+            {/* Profile User */}
+            <Route path="user/profile" element={<ProfileUser />}></Route>
         </Routes>
     );
 }

@@ -10,8 +10,8 @@ import { useEffect, useState } from 'react';
 import Tippy from '@tippyjs/react/headless';
 import { Link, useLocation } from 'react-router-dom';
 
-import { BsThreeDots } from 'react-icons/bs';
-import { FaBell, FaRegComment } from 'react-icons/fa';
+import { BsThreeDots, BsFillBookmarkFill } from 'react-icons/bs';
+import { FaBell } from 'react-icons/fa';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { MdOutlineArrowBackIosNew } from 'react-icons/md';
 import axios from 'axios';
@@ -96,7 +96,7 @@ function BlogDetail() {
                                         <AiOutlineHeart />
                                     </span>
                                     <span>
-                                        <FaRegComment />
+                                        <BsFillBookmarkFill />
                                     </span>
                                     <span>
                                         <BsThreeDots />
@@ -109,7 +109,14 @@ function BlogDetail() {
                                 <ReactMarkdown children={contentBlog.text} remarkPlugins={[remarkGfm]} />
                             </div>
                         </div>
-                        <div className={cx('col-3')}>3</div>
+                        <div className={cx('col-3')}>
+                            <div className={cx('container__cmtUser')}>
+                                <div className={cx('container__cmtUser-header')}>
+                                    <h3>Bình luận của độc giả</h3>
+                                </div>
+                                <div className={cx('container__cmtUser-notice')}>Chưa có bình luận từ độc giả!</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

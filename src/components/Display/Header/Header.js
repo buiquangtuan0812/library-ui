@@ -11,7 +11,7 @@ function Header(props) {
     const renderTippy = (prop) => {
         return (
             <div>
-                <AccountReview />
+                <AccountReview user={props.user} numberCart={props.numberCart} />
             </div>
         );
     };
@@ -57,12 +57,21 @@ function Header(props) {
                 <div className={cx('container__account-support')}>
                     <Link to="/">Hỗ trợ</Link>
                 </div>
-                <Link to="/library/user/cart" state={{ user: props.user, numberCart: props.numberCart }}>
-                    <div className={cx('container__account-cash')}>
-                        <i className={cx('fa-solid fa-cart-shopping')}></i>
-                        {props.user.accessToken ? <span>{props.numberCart}</span> : ''}
-                    </div>
-                </Link>
+                {props.user.accessToken ? (
+                    <Link to="/library/user/cart" state={{ user: props.user, numberCart: props.numberCart }}>
+                        <div className={cx('container__account-cash')}>
+                            <i className={cx('fa-solid fa-cart-shopping')}></i>
+                            {props.user.accessToken ? <span>{props.numberCart}</span> : ''}
+                        </div>
+                    </Link>
+                ) : (
+                    <Link to="/user/login" state={{ url: 'http://localhost:8088/library/user/cart' }}>
+                        <div className={cx('container__account-cash')}>
+                            <i className={cx('fa-solid fa-cart-shopping')}></i>
+                            {props.user.accessToken ? <span>{props.numberCart}</span> : ''}
+                        </div>
+                    </Link>
+                )}
             </div>
         </div>
     );

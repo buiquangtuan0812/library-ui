@@ -9,7 +9,7 @@ import { AiOutlineUser } from 'react-icons/ai';
 
 const cx = classNames.bind(styles);
 
-function AccountReview() {
+function AccountReview(props) {
     return (
         <div className={cx('ctn')}>
             <svg
@@ -23,10 +23,16 @@ function AccountReview() {
                 <path d="M0 8c7 0 10-8 12-8s5 8 12 8z"></path>
             </svg>
             <div className={cx('container__account')}>
-                <div className={cx('container__account-profile')}>
-                    <AiOutlineUser className={cx('icon')} />
-                    View profile
-                </div>
+                <Link
+                    to="/user/profile"
+                    state={{ user: props.user, numberCart: props.numberCart }}
+                    className={cx('container__account-profile')}
+                >
+                    <div>
+                        <AiOutlineUser className={cx('icon')} />
+                        View profile
+                    </div>
+                </Link>
 
                 <div className={cx('container__account-coin')}>
                     <BsCoin className={cx('icon')} />

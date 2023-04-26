@@ -1,6 +1,6 @@
 .header {
     display: flex;
-    padding: 16px 40px;
+    padding: 12px 40px;
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #ccc;
@@ -20,6 +20,7 @@
         &:hover {
             transform: scale(1.05);
             margin-left: 0px;
+            color: #ff424f;
         }
         .icon-back {
             font-size: 22px;
@@ -30,6 +31,9 @@
             a {
                 color: #ffffff;
                 text-decoration: none;
+                &:hover {
+                    color: #ff424f;
+                }
             }
         }
     }
@@ -60,6 +64,10 @@
             font-weight: 540;
             margin-left: 36px;
             padding: 8px;
+            &:hover {
+                cursor: pointer;
+                color: #ff424f;
+            }
         }
         .my-account {
             margin-left: 36px;
@@ -79,6 +87,10 @@
             font-weight: 600;
             margin-left: 36px;
             padding: 8px;
+            &:hover {
+                cursor: pointer;
+                color: #ff424f;
+            }
         }
     }
 }
@@ -97,6 +109,8 @@
                 padding: 20px 0;
                 border-bottom: 1px solid #ccc;
                 &-info {
+                    display: flex;
+                    justify-content: space-between;
                     cursor: pointer;
                     img {
                         width: 40px;
@@ -114,6 +128,7 @@
                 margin-top: 32px;
                 display: flex;
                 padding: 0 28px;
+                color: #757575;
                 justify-content: space-between;
                 span {
                     font-size: 24px;
@@ -143,6 +158,28 @@
                 line-height: 1.6;
                 text-align: justify;
                 margin-bottom: 4px;
+            }
+            img {
+                height: 600px;
+                margin: 20px 0;
+                filter: brightness(1.2);
+            }
+        }
+        &__cmtUser {
+            padding-left: 28px;
+            position: -webkit-sticky; /* Safari */
+            position: sticky;
+            top: 160px;
+            &-header {
+                margin-bottom: 24px;
+                h3 {
+                    padding: 12px 0 28px 0;
+                    font-size: 28px;
+                    border-bottom: 1px solid #ccc;
+                }
+            }
+            &-notice {
+                font-size: 20px;
             }
         }
     }

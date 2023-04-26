@@ -2,8 +2,8 @@ import classNames from 'classnames/bind';
 import styles from './LoginUser.module.scss';
 
 import axios from 'axios';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
@@ -13,6 +13,14 @@ function LoginUser() {
     const [password, setPassword] = useState('');
     const [data, setData] = useState([]);
     const [err, setErr] = useState('');
+    const [url, setUrl] = useState('');
+    const location = useLocation();
+
+    useEffect(() => {
+        if (location.state) {
+            setUrl(location.state.url);
+        }
+    }, []);
 
     const handleLogin = () => {
         const dataUser = {
@@ -71,16 +79,29 @@ function LoginUser() {
                     </div>
                 </form>
                 <div className={cx('btn')}>
-                    <Link
-                        to={data.accessToken ? '/home' : '/user/login'}
-                        state={data.accessToken ? { user: data } : ''}
-                        className={cx('btn-submit')}
-                        onClick={(e) => handleLogin(e)}
-                    >
-                        <button className={cx('button1')}>
-                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Đăng nhập&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        </button>
-                    </Link>
+                    {url ? (
+                        <Link
+                            to={data.accessToken ? url : '/user/login'}
+                            state={data.accessToken ? { user: data } : ''}
+                            className={cx('btn-submit')}
+                            onClick={(e) => handleLogin(e)}
+                        >
+                            <button className={cx('button1')}>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Đăng nhập&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </button>
+                        </Link>
+                    ) : (
+                        <Link
+                            to={data.accessToken ? '/home' : '/user/login'}
+                            state={data.accessToken ? { user: data } : ''}
+                            className={cx('btn-submit')}
+                            onClick={(e) => handleLogin(e)}
+                        >
+                            <button className={cx('button1')}>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Đăng nhập&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </button>
+                        </Link>
+                    )}
                     <Link to="/user/signup" className={cx('btn-signup')}>
                         <button className={cx('button2')}>Đăng ký</button>
                     </Link>
