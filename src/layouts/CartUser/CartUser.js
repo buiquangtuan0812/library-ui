@@ -10,7 +10,7 @@ import { FaTrashAlt } from 'react-icons/fa';
 import { AiTwotoneHome } from 'react-icons/ai';
 import { MdOutlineArrowBackIosNew } from 'react-icons/md';
 
-import CartItem from './CartItem/CartItem';
+import CartItem from '~/components/CartItem/CartItem';
 import Footer from '~/components/Display/Footer/Footer';
 import AccountReview from '~/components/Display/AccountReview/AccountReview';
 
@@ -21,7 +21,10 @@ function CartUser() {
     const location = useLocation();
     const [user, setUser] = useState({});
     const [carts, setCarts] = useState([]);
+    const [totalBill, setTotalBill] = useState(0);
     const [numberCart, setNumberCart] = useState(0);
+    const [selectAll, setSelectAll] = useState(false);
+    // const [cartPayment, setCartPayment] = useState([]);
 
     useEffect(() => {
         setUser(location.state.user);
@@ -41,10 +44,31 @@ function CartUser() {
             });
     }, []);
 
+    const handleChildData = (data) => {
+        if (data.state === true) {
+            if (data.type === 'Cong') {
+                setTotalBill(totalBill + data.value);
+                // setCartPayment([...data.data]);
+            } else {
+                setTotalBill(totalBill - data.value);
+                // setCartPayment([...data.data]);
+            }
+        } else {
+            setTotalBill(totalBill - data.value);
+        }
+    };
+
     const renderCart = carts.map((cart, index) => {
         return (
             <div key={index}>
-                <CartItem id={cart.book} quantity={cart.quantity} total={cart.total} state={cart.state} />
+                <CartItem
+                    select={selectAll}
+                    id={cart.book}
+                    quantity={cart.quantity}
+                    total={cart.total}
+                    stateCart={cart.state}
+                    onData={handleChildData}
+                />
             </div>
         );
     });
@@ -55,6 +79,27 @@ function CartUser() {
                 <AccountReview />
             </div>
         );
+    };
+
+    const solveString = (num) => {
+        if (num === 0) {
+            return '0';
+        } else {
+            const str = num.toString();
+            return str.slice(0, str.length - 3) + '.000';
+        }
+    };
+
+    const countSalse = (value) => {
+        if (value >= 200000) {
+            return value * 0.02;
+        } else if (value >= 500000) {
+            return value * 0.05;
+        } else if (value >= 1000000) {
+            return value * 0.1;
+        } else {
+            return 0;
+        }
     };
 
     return (
@@ -96,7 +141,7 @@ function CartUser() {
                             <div className={cx('container__left')}>
                                 <div className={cx('container__left-header')}>
                                     <div className={cx('check-box')}>
-                                        <input type="checkbox" />
+                                        <input type="checkbox" onChange={() => setSelectAll(!selectAll)} />
                                     </div>
                                     <div className={cx('product')}>Tất cả ({numberCart} sản phẩm)</div>
                                     <div className={cx('price')}>Đơn giá</div>
@@ -135,16 +180,20 @@ function CartUser() {
                                 <div className={cx('container__money')}>
                                     <div className={cx('container__money-anti')}>
                                         <span>Tạm tính</span>
-                                        <span className={cx('container__money-anti-value')}>100.000đ</span>
+                                        <span className={cx('container__money-anti-value')}>
+                                            {solveString(totalBill)} đ
+                                        </span>
                                     </div>
                                     <div className={cx('container__money-discount')}>
                                         <span>Giảm giá</span>
-                                        <span className={cx('container__money-discount-value')}>0đ</span>
+                                        <span className={cx('container__money-discount-value')}>
+                                            {solveString(countSalse(totalBill))} đ
+                                        </span>
                                     </div>
                                     <div className={cx('container__money-total')}>
                                         <span>Tổng tiền</span>
                                         <span className={cx('container__money-total-value')}>
-                                            100.000
+                                            {solveString(totalBill - countSalse(totalBill))}
                                             <span className={cx('unit')}>đ</span>
                                         </span>
                                     </div>

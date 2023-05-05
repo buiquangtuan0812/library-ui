@@ -44,7 +44,7 @@ function ViewBookComponent(props) {
             setDescription(location.state.book.description);
             setDataUser(location.state.data);
         }
-    }, []);
+    }, [dataBook]);
 
     const convertToBase64 = (e) => {
         var reader = new FileReader();
@@ -81,11 +81,13 @@ function ViewBookComponent(props) {
             region: region ? region : dataBook.region,
             price: price ? price : dataBook.price,
         };
+        setData(data);
         axios
             .put('http://localhost:8086/admin/update-book', data, {
                 headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${dataUser.token}` },
             })
             .then((res) => {
+                console.log(res.data);
                 setNotice(true);
                 setEdit(false);
             })

@@ -1,6 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './Profile.module.scss';
 
+import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { BsTelephone } from 'react-icons/bs';
@@ -14,9 +15,30 @@ const cx = classNames.bind(styles);
 
 function Profile() {
     const location = useLocation();
+    const [user, setUser] = useState({});
+    const [imgUser, setImgUser] = useState('');
+    const [numberCart, setNumberCart] = useState(0);
+
+    useEffect(() => {
+        setUser(location.state.user);
+        setNumberCart(location.state.numberCart);
+        setImgUser(location.state.user.imgDes);
+    }, [user]);
+
+    const convertToBase64 = (e) => {
+        var reader = new FileReader();
+        reader.readAsDataURL(e.target.files[0]);
+        reader.onload = () => {
+            setImgUser(reader.result);
+        };
+        reader.onerror = (err) => {
+            console.log(err);
+        };
+    };
+
     return (
         <div>
-            <Header user={location.state.user} numberCart={location.state.numberCart} />
+            <Header user={user} numberCart={numberCart} />
             <div className={cx('ctn')}>
                 <div className={cx('container')}>
                     <h3>Thông tin tài khoản</h3>
@@ -28,18 +50,25 @@ function Profile() {
                                         Thông tin cá nhân
                                     </div>
                                     <div className={cx('container__profile-infor-item')}>
-                                        <img alt="" src={location.state.user.imgDes} />
+                                        <label htmlFor="inputImg">
+                                            <div>
+                                                <img alt="" src={imgUser} />
+                                            </div>
+                                        </label>
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            id="inputImg"
+                                            style={{ display: 'none' }}
+                                            onChange={(e) => convertToBase64(e)}
+                                        />
                                         <div className={cx('title')}>
                                             <p>Họ & Tên</p>
                                             <p className={cx('title-2')}>Nickname</p>
                                         </div>
                                         <div className={cx('values')}>
-                                            <input
-                                                type="text"
-                                                value={location.state.user.fullName}
-                                                className={cx('value-1')}
-                                            />
-                                            <input type="text" value={location.state.user.username} />
+                                            <input type="text" placeholder={user.fullName} className={cx('value-1')} />
+                                            <input type="text" placeholder={user.username} />
                                         </div>
                                     </div>
 
@@ -47,15 +76,17 @@ function Profile() {
                                         <div className={cx('birthday')}>Ngày sinh</div>
                                         <select className={cx('date')}>
                                             <option>Ngày</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="6">6</option>
-                                            <option value="7">7</option>
-                                            <option value="8">8</option>
-                                            <option value="9">9</option>
+                                            <option value="1">01</option>
+                                            <option value="2">02</option>
+                                            <option value="3">03</option>
+                                            <option value="4">04</option>
+                                            <option value="5">05</option>
+                                            <option value="6">06</option>
+                                            <option value="7">07</option>
+                                            <option value="8" selected>
+                                                08
+                                            </option>
+                                            <option value="9">09</option>
                                             <option value="10">10</option>
                                             <option value="11">11</option>
                                             <option value="12">12</option>
@@ -93,7 +124,9 @@ function Profile() {
                                             <option value="9">9</option>
                                             <option value="10">10</option>
                                             <option value="11">11</option>
-                                            <option value="12">12</option>
+                                            <option value="12" selected>
+                                                12
+                                            </option>
                                         </select>
 
                                         <select className={cx('year')}>
@@ -112,7 +145,9 @@ function Profile() {
                                             <option value="1999">1999</option>
                                             <option value="2000">2000</option>
                                             <option value="2001">2001</option>
-                                            <option value="2002">2002</option>
+                                            <option value="2002" selected>
+                                                2002
+                                            </option>
                                             <option value="2003">2003</option>
                                             <option value="2004">2004</option>
                                             <option value="2005">2005</option>
@@ -122,9 +157,7 @@ function Profile() {
                                     <div className={cx('container__profile-infor-item')}>
                                         <div className={cx('address')}>
                                             <span>Địa chỉ</span>
-                                            <span className={classNames('address-value')}>
-                                                {location.state.user.address}
-                                            </span>
+                                            <span className={classNames('address-value')}>{user.address}</span>
                                         </div>
                                     </div>
 
@@ -145,7 +178,7 @@ function Profile() {
                                         </span>
                                         <span className={cx('phone')}>
                                             <p>Số điện thoại</p>
-                                            <p>{location.state.user.numberPhone}</p>
+                                            <p>{user.numberPhone}</p>
                                         </span>
                                         <span className={cx('btn-update')}>
                                             <button>Cập nhật</button>
@@ -158,7 +191,7 @@ function Profile() {
                                         </span>
                                         <span className={cx('mail')}>
                                             <p>Địa chỉ Email</p>
-                                            <p>{location.state.user.email}</p>
+                                            <p>{user.email}</p>
                                         </span>
                                         <span className={cx('btn-update')}>
                                             <button>Cập nhật</button>

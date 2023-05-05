@@ -15,6 +15,8 @@ import EditBlog from '~/components/CreateBlog/ConfirmPost/ConfirmPost';
 import HomeAdmin from '~/components/Admin/HomeAdmin/HomeAdmin';
 import LoginAdmin from '~/components/Admin/LoginAdmin/LoginAdmin';
 
+import HomeEmployee from '~/layouts/Employee/Home';
+
 import ProfileUser from '~/components/Profile/Profile';
 import CartUser from './layouts/CartUser/CartUser';
 
@@ -32,11 +34,13 @@ function App() {
             <Route path="library/book/:type" element={<BookTypePage />}></Route>
             <Route path="library/book/author/:author" element={<BookTypePage />}></Route>
             <Route path="library/book/detail/:nameBook" element={<BookDetail />}></Route>
+
             {/* Blog */}
             <Route path="library/blogs" element={<Blog />}></Route>
             <Route path="library/blog-detail/:title" element={<BlogDetail />}></Route>
             <Route path="library/blogs/create" element={<CreateBlog />}></Route>
             <Route path="library/blogs/create/edit" element={<EditBlog />}></Route>
+
             {/* Admin */}
             <Route path="admin/login" element={<LoginAdmin />}></Route>
             <Route path="admin/home" element={<HomeAdmin page="Statistic" />}></Route>
@@ -47,8 +51,12 @@ function App() {
             ></Route>
             <Route path="admin/manage/book/:nameBook" element={<HomeAdmin page="View" />}></Route>
             <Route path="admin/manage/book-create" element={<HomeAdmin page="Create" />}></Route>
+
+            {/* Employee */}
+            <Route path="employee/home" element={<HomeEmployee />}></Route>
+
             {/* Cart user */}
-            <Route path="library/user/cart" element={<CartUser />}></Route>
+            <Route path="user/cart" element={<CartUser />}></Route>
             {/* Profile User */}
             <Route path="user/profile" element={<ProfileUser />}></Route>
         </Routes>

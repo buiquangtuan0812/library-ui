@@ -58,14 +58,14 @@ function Header(props) {
                     <Link to="/">Hỗ trợ</Link>
                 </div>
                 {props.user.accessToken ? (
-                    <Link to="/library/user/cart" state={{ user: props.user, numberCart: props.numberCart }}>
+                    <Link to="/user/cart" state={{ user: props.user, numberCart: props.numberCart }}>
                         <div className={cx('container__account-cash')}>
                             <i className={cx('fa-solid fa-cart-shopping')}></i>
                             {props.user.accessToken ? <span>{props.numberCart}</span> : ''}
                         </div>
                     </Link>
                 ) : (
-                    <Link to="/user/login" state={{ url: 'http://localhost:8088/library/user/cart' }}>
+                    <Link to="/user/login" state={{ url: 'http://localhost:8088/user/cart' }}>
                         <div className={cx('container__account-cash')}>
                             <i className={cx('fa-solid fa-cart-shopping')}></i>
                             {props.user.accessToken ? <span>{props.numberCart}</span> : ''}

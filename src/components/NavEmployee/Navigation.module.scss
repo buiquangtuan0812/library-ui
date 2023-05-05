@@ -1,6 +1,7 @@
-.container__admin-navigation {
+.container__page-navigation {
     background-color: #1b1b29;
     position: sticky;
+    top: 0;
     width: 255px;
     min-height: 100vh;
 }
@@ -10,7 +11,7 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    height: 130px;
+    height: 120px;
 }
 .logo-library {
     width: 140px;
@@ -92,37 +93,22 @@
                 }
             }
         }
-        .hide {
-            display: none;
-        }
-        .nav-item-2 {
-            display: block;
-            ul {
-                list-style-type: none;
-                margin-top: 8px;
-                padding-left: 40px;
-                li {
-                    a {
-                        color: #939393;
-                        &:hover {
-                            color: #fff;
-                        }
-                    }
-                }
-            }
-        }
+
         .nav-item-library li {
-            margin-bottom: 12px;
+            margin-bottom: 4px;
             &:hover {
                 color: #fff;
             }
             a {
+                padding: 8px 116px 8px 40px;
                 text-decoration: none;
-                padding: 8px 20px 8px 28px;
             }
         }
     }
     .item i {
         margin-right: 18px;
+    }
+    .item:hover {
+        cursor: pointer;
     }
 }

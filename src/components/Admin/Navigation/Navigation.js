@@ -4,7 +4,7 @@ import styles from './Navigation.module.scss';
 import { IoBookSharp } from 'react-icons/io5';
 import { RiCalendarEventLine } from 'react-icons/ri';
 import { ImLibrary } from 'react-icons/im';
-import { BiChevronRight } from 'react-icons/bi';
+import { BiChevronRight, BiChevronDown } from 'react-icons/bi';
 import { HiUserGroup } from 'react-icons/hi';
 
 import { useState } from 'react';
@@ -19,19 +19,21 @@ function Navigation() {
     const [item4, setItem4] = useState(false);
     const [item5, setItem5] = useState(false);
     const [item6, setItem6] = useState(false);
+    const [item7, setItem7] = useState(false);
     const [currentItem, setCurrentItem] = useState(0);
 
     const handleClick = (value) => {
         setCurrentItem(value);
+        if (value === currentItem) {
+            return;
+        }
         setItem1(false);
         setItem2(false);
         setItem3(false);
         setItem4(false);
         setItem5(false);
         setItem6(false);
-        if (value === currentItem) {
-            return;
-        }
+        setItem7(false);
         if (value === 1) {
             setItem1(true);
         } else if (value === 2) {
@@ -42,8 +44,10 @@ function Navigation() {
             setItem4(true);
         } else if (value === 5) {
             setItem5(true);
-        } else {
+        } else if (value === 6) {
             setItem6(true);
+        } else {
+            setItem7(true);
         }
     };
     return (
@@ -60,124 +64,173 @@ function Navigation() {
                 <div className={cx('main__navigation-menu')}>
                     <ul className={cx('main__navigation-menu-items')}>
                         <li className={cx('item')}>
-                            <div className={cx('nav-item-1')} onClick={() => handleClick(1)}>
+                            <div
+                                className={cx(item1 ? 'nav-item-clicked' : 'nav-item-1')}
+                                onClick={() => handleClick(1)}
+                            >
                                 <ImLibrary className={cx('icon-navigation')}></ImLibrary>
                                 Thư viện
-                                <BiChevronRight className={cx('item-icon')}></BiChevronRight>
+                                {item1 ? (
+                                    <BiChevronDown className={cx('item-icon')} />
+                                ) : (
+                                    <BiChevronRight className={cx('item-icon')} />
+                                )}
                             </div>
                             <div className={cx(item1 === true ? 'nav-item-2' : 'hide')}>
                                 <ul className={cx('nav-item-library')}>
                                     <li>
-                                        <Link to="">Information</Link>
+                                        <Link to="">Thông tin</Link>
                                     </li>
                                     <li>
-                                        <Link to="">Fix</Link>
+                                        <Link to="">Chỉnh Sửa</Link>
                                     </li>
                                 </ul>
                             </div>
                         </li>
                         <li className={cx('item')}>
-                            <div className={cx('nav-item-1')} onClick={() => handleClick(2)}>
+                            <div
+                                className={cx(item2 ? 'nav-item-clicked' : 'nav-item-1')}
+                                onClick={() => handleClick(2)}
+                            >
                                 <i className={cx('fa-solid fa-user-tie')}></i>
                                 Account
-                                <BiChevronRight className={cx('item-icon')}></BiChevronRight>
+                                {item2 ? (
+                                    <BiChevronDown className={cx('item-icon')} />
+                                ) : (
+                                    <BiChevronRight className={cx('item-icon')} />
+                                )}
                             </div>
                             <div className={cx(item2 === true ? 'nav-item-2' : 'hide')}>
                                 <ul className={cx('nav-item-library')}>
                                     <li>
-                                        <Link to="">List</Link>
+                                        <Link to="">Danh sách</Link>
                                     </li>
                                     <li>
-                                        <Link to="">Delete</Link>
+                                        <Link to="">Chỉnh sửa</Link>
                                     </li>
                                 </ul>
                             </div>
                         </li>
                         <li className={cx('item')}>
-                            <div className={cx('nav-item-1')} onClick={() => handleClick(3)}>
+                            <div
+                                className={cx(item3 ? 'nav-item-clicked' : 'nav-item-1')}
+                                onClick={() => handleClick(3)}
+                            >
                                 <IoBookSharp className={cx('icon-navigation')}></IoBookSharp>
                                 Sách
-                                <BiChevronRight className={cx('item-icon')}></BiChevronRight>
+                                {item3 ? (
+                                    <BiChevronDown className={cx('item-icon')} />
+                                ) : (
+                                    <BiChevronRight className={cx('item-icon')} />
+                                )}
                             </div>
                             <div className={cx(item3 === true ? 'nav-item-2' : 'hide')}>
                                 <ul className={cx('nav-item-library')}>
                                     <li>
                                         <Link to="/admin/manage/books" state={{ page: 'ManagementBook' }}>
-                                            List
+                                            Danh sách
                                         </Link>
                                     </li>
                                     <li>
                                         <Link to="/admin/manage/book-create" state={{ page: 'book-create' }}>
-                                            Create
+                                            Thêm mới
                                         </Link>
                                     </li>
                                 </ul>
                             </div>
                         </li>
                         <li className={cx('item')}>
-                            <div className={cx('nav-item-1')} onClick={() => handleClick(4)}>
+                            <div
+                                className={cx(item4 ? 'nav-item-clicked' : 'nav-item-1')}
+                                onClick={() => handleClick(4)}
+                            >
                                 <i className={cx('fa-solid fa-user-secret')}></i>
                                 Tác giả
-                                <BiChevronRight className={cx('item-icon')}></BiChevronRight>
+                                {item4 ? (
+                                    <BiChevronDown className={cx('item-icon')} />
+                                ) : (
+                                    <BiChevronRight className={cx('item-icon')} />
+                                )}
                             </div>
                             <div className={cx(item4 === true ? 'nav-item-2' : 'hide')}>
                                 <ul className={cx('nav-item-library')}>
                                     <li>
-                                        <Link to="">List</Link>
+                                        <Link to="">Danh sách</Link>
                                     </li>
                                     <li>
-                                        <Link to="">Create</Link>
+                                        <Link to="">Thêm mới</Link>
                                     </li>
                                 </ul>
                             </div>
                         </li>
                         <li className={cx('item')}>
-                            <div className={cx('nav-item-1')} onClick={() => handleClick(5)}>
+                            <div
+                                className={cx(item5 ? 'nav-item-clicked' : 'nav-item-1')}
+                                onClick={() => handleClick(5)}
+                            >
                                 <i className={cx('fa-solid fa-blog')}></i>
                                 Blogs
-                                <BiChevronRight className={cx('item-icon')}></BiChevronRight>
+                                {item5 ? (
+                                    <BiChevronDown className={cx('item-icon')} />
+                                ) : (
+                                    <BiChevronRight className={cx('item-icon')} />
+                                )}
                             </div>
                             <div className={cx(item5 === true ? 'nav-item-2' : 'hide')}>
                                 <ul className={cx('nav-item-library')}>
                                     <li>
-                                        <Link to="">List</Link>
+                                        <Link to="">Danh sách</Link>
                                     </li>
                                     <li>
-                                        <Link to="">Create</Link>
+                                        <Link to="">Thêm mới</Link>
                                     </li>
                                 </ul>
                             </div>
                         </li>
                         <li className={cx('item')}>
-                            <div className={cx('nav-item-1')} onClick={() => handleClick(6)}>
+                            <div
+                                className={cx(item6 ? 'nav-item-clicked' : 'nav-item-1')}
+                                onClick={() => handleClick(6)}
+                            >
                                 <HiUserGroup className={cx('icon-navigation')} />
                                 Khách hàng
-                                <BiChevronRight className={cx('item-icon')}></BiChevronRight>
+                                {item6 ? (
+                                    <BiChevronDown className={cx('item-icon')} />
+                                ) : (
+                                    <BiChevronRight className={cx('item-icon')} />
+                                )}
                             </div>
                             <div className={cx(item6 === true ? 'nav-item-2' : 'hide')}>
                                 <ul className={cx('nav-item-library')}>
                                     <li>
-                                        <Link to="">History</Link>
+                                        <Link to="">Dannh sách</Link>
                                     </li>
                                     <li>
-                                        <Link to="">Rent</Link>
+                                        <Link to="">Chỉnh sửa</Link>
                                     </li>
                                 </ul>
                             </div>
                         </li>
                         <li className={cx('item')}>
-                            <div className={cx('nav-item-1')} onClick={() => handleClick(6)}>
+                            <div
+                                className={cx(item7 ? 'nav-item-clicked' : 'nav-item-1')}
+                                onClick={() => handleClick(7)}
+                            >
                                 <RiCalendarEventLine className={cx('icon-navigation')}></RiCalendarEventLine>
                                 Bán hàng
-                                <BiChevronRight className={cx('item-icon')}></BiChevronRight>
+                                {item7 ? (
+                                    <BiChevronDown className={cx('item-icon')} />
+                                ) : (
+                                    <BiChevronRight className={cx('item-icon')} />
+                                )}
                             </div>
-                            <div className={cx(item6 === true ? 'nav-item-2' : 'hide')}>
+                            <div className={cx(item7 === true ? 'nav-item-2' : 'hide')}>
                                 <ul className={cx('nav-item-library')}>
                                     <li>
-                                        <Link to="">History</Link>
+                                        <Link to="">Doanh thu</Link>
                                     </li>
                                     <li>
-                                        <Link to="">Rent</Link>
+                                        <Link to="">Thống kê</Link>
                                     </li>
                                 </ul>
                             </div>

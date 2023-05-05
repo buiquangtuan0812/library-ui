@@ -9,25 +9,35 @@ const cx = classNames.bind(styles);
 
 function LoginAdmin() {
     document.title = 'Admin | Log In';
-    const [nameAdmin, setUsername] = useState('');
+    const [name, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [err, setError] = useState('');
-    const [data, setData] = useState('');
+    const [url, setUrl] = useState('');
+    const [dataState, setDataState] = useState({});
 
     const handleLogin = () => {
-        const dataAdmin = {
-            nameAdmin: nameAdmin,
+        const data = {
+            name: name,
             password: password,
         };
         axios
-            .post('http://localhost:8086/admin/login', dataAdmin, {
+            .post('http://localhost:8086/admin/login', data, {
                 headers: { 'Content-Type': 'application/json' },
             })
             .then((response) => {
                 if (response.data.message) {
                     setError(response.data.message);
                 } else {
-                    setData(response.data);
+                    if (response.data.role === 'Admin') {
+                        setUrl('/admin/home');
+                        setDataState({ data: response.data, page: 'Statistic' });
+                    } else if (response.data.role === 'Employee') {
+                        setUrl('/employee/home');
+                        setDataState({ data: response.data, page: 'Home' });
+                    } else {
+                        setUrl('/admin/login');
+                        setDataState({});
+                    }
                     setError('');
                 }
             })
@@ -68,11 +78,7 @@ function LoginAdmin() {
                     </div>
                 </form>
                 <div className={cx('btn')}>
-                    <Link
-                        to={data ? '/admin/home' : '/admin/login'}
-                        state={data ? { data: data, page: 'Statistic' } : ''}
-                        className={cx('btn-submit')}
-                    >
+                    <Link to={url} state={dataState} className={cx('btn-submit')}>
                         <button className={cx('button1')} onClick={handleLogin}>
                             Log In
                         </button>

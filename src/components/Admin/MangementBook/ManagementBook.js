@@ -110,7 +110,7 @@ function ManagementBook(props) {
     return (
         <div className={cx('container__manage')}>
             <div className={cx('container__manage-header')}>
-                <div className={cx('container__manage-header-title')}>Library book list</div>
+                <div className={cx('container__manage-header-title')}>Danh sách</div>
                 <div className={cx('container__manage-header-search')}>
                     <form className={cx('d-flex')} action="/library/books/search" method="GET">
                         <input
@@ -123,7 +123,7 @@ function ManagementBook(props) {
                         />
                         <Link to={`/admin/manage/books/${nameBook}`}>
                             <button className={cx('btn')} type="submit" onClick={handleSearch}>
-                                Search
+                                Tìm kiếm
                             </button>
                         </Link>
                     </form>
@@ -137,19 +137,19 @@ function ManagementBook(props) {
                                 STT
                             </th>
                             <th scope="col" className={cx('header-title')}>
-                                Name
+                                Tên
                             </th>
                             <th scope="col" className={cx('header-title')}>
-                                Author
+                                Tác giả
                             </th>
                             <th scope="col" className={cx('header-title')}>
-                                Type
+                                Thể loại
                             </th>
                             <th scope="col" className={cx('header-title')}>
-                                Price
+                                Giá
                             </th>
                             <th scope="col" className={cx('header-title')}>
-                                Quantity
+                                Số lượng
                             </th>
                             <th scope="col" className={cx('header-title-option')}>
                                 Options

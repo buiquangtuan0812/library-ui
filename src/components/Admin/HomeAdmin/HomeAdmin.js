@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react';
 const cx = classNames.bind(styles);
 
 function HomeAdmin(props) {
-    const [data, setToken] = useState('');
+    const [data, setToken] = useState({});
     document.title = 'Admin | Books';
     const location = useLocation();
     useEffect(() => {
