@@ -1,0 +1,119 @@
+.container__sell {
+    padding: 40px;
+    position: relative;
+    &-heading {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 32px;
+        .item-1 {
+            font-size: 24px;
+            color: #ff9b44;
+            font-weight: lighter;
+        }
+        .item-2 {
+            padding: 6px 12px;
+            width: 280px;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            input {
+                width: 225px;
+                border: none;
+                outline: none;
+                margin-right: 5px;
+            }
+            .icon-search {
+                font-size: 20px;
+                cursor: pointer;
+            }
+            &:hover {
+                box-shadow: 0 1px 6px rgb(32 33 36 / 28%);
+            }
+        }
+        .item-3 {
+            button {
+                padding: 6px 12px;
+                border: 1px solid #ccc;
+                border-radius: 16px;
+                background-color: #fe7f5b;
+                color: #fff;
+                font-size: 16px;
+                &:hover {
+                    box-shadow: 0 1px 6px rgb(32 33 36 / 28%);
+                }
+                .icon-add {
+                    font-size: 20px;
+                    margin-right: 6px;
+                }
+            }
+        }
+    }
+    .container__customer {
+        .header {
+            &-title-index {
+                padding: 12px 0;
+                text-align: center;
+            }
+            &-title {
+                text-align: center;
+                padding: 12px 0;
+            }
+            &-title-option {
+                text-align: center;
+                padding: 12px 0;
+            }
+        }
+
+        .customer-item {
+            &:hover {
+                cursor: pointer;
+                background-color: #f2f2f2;
+            }
+            a {
+                text-decoration: none;
+                color: #000;
+            }
+            .title-index {
+                height: 48px;
+                line-height: 48px;
+                padding-left: 8px;
+                text-align: center;
+            }
+            .title-name,
+            .title-tel,
+            .title-buy,
+            .title-coin {
+                line-height: 48px;
+                height: 48px;
+                text-align: center;
+            }
+            .title-book {
+                width: 400px;
+                height: 48px;
+                line-height: 48px;
+            }
+            .title-option {
+                text-align: center;
+                padding: 8px 22px 8px 12px;
+                a {
+                    line-height: 48px;
+                    font-size: 28px;
+                    cursor: pointer;
+                    color: #fe7f5b;
+                }
+            }
+        }
+        .container__notice {
+            font-size: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 40px;
+            img {
+                width: 160px;
+                height: 100px;
+                margin-right: 16px;
+            }
+        }
+    }
+}

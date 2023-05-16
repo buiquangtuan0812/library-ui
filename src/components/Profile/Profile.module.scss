@@ -11,7 +11,6 @@
             border-radius: 4px;
             background-color: #fff;
             &-infor {
-                margin-right: -20px;
                 border-right: 1px solid rgb(235, 235, 240);
                 &-item {
                     display: flex;
@@ -79,6 +78,10 @@
                         padding: 8px 16px;
                         border-radius: 6px;
                         background-color: #ec535d;
+                        &:hover {
+                            opacity: 0.9;
+                            box-shadow: 0 0.2em 0.15em 0 rgb(255, 255, 245);
+                        }
                     }
                 }
             }
@@ -87,8 +90,8 @@
                 &-tel {
                     display: flex;
                     padding: 20px 0;
+                    justify-content: space-between;
                     .icon-phone {
-                        margin-right: 12px;
                         font-size: 18px;
                         color: #757575;
                     }
@@ -105,14 +108,18 @@
                             background-color: #fff;
                             border-radius: 4px;
                             padding: 2px 8px;
+                            &:hover {
+                                opacity: 0.8;
+                                box-shadow: 0 0.2em 0.15em 0 rgb(255, 255, 245);
+                            }
                         }
                     }
                 }
                 &-mail {
                     display: flex;
                     padding-bottom: 20px;
+                    justify-content: space-between;
                     .icon-mail {
-                        margin-right: 12px;
                         font-size: 18px;
                         color: #757575;
                     }
@@ -129,6 +136,10 @@
                             background-color: #fff;
                             border-radius: 4px;
                             padding: 2px 8px;
+                            &:hover {
+                                opacity: 0.8;
+                                box-shadow: 0 0.2em 0.15em 0 rgb(255, 255, 245);
+                            }
                         }
                     }
                 }
@@ -154,6 +165,10 @@
                             background-color: #fff;
                             border-radius: 4px;
                             padding: 2px 8px;
+                            &:hover {
+                                opacity: 0.8;
+                                box-shadow: 0 0.2em 0.15em 0 rgb(255, 255, 245);
+                            }
                         }
                     }
                 }

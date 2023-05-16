@@ -11,14 +11,17 @@ const cx = classNames.bind(styles);
 
 function CartItem(props) {
     const [state, setState] = useState(false);
-    const [data, setDate] = useState({});
+    const [data, setData] = useState({});
     const [price, setPrice] = useState(0);
     const [quantity, setQuantity] = useState(1);
+    const [notice, setNotice] = useState(false);
+    const [confirm, setConfirm] = useState(false);
+
     useEffect(() => {
         axios
             .get('http://localhost:8086/library/books/by', { params: { _id: props.id } })
             .then((response) => {
-                setDate(response.data);
+                setData(response.data);
                 setPrice(response.data.price);
             })
             .catch((err) => console.log(err));
@@ -35,49 +38,81 @@ function CartItem(props) {
 
     const handleReduce = () => {
         if (quantity == 1) {
+            setConfirm(true);
             return;
         } else {
             setQuantity(quantity - 1);
         }
         if (state) {
-            props.onData({
+            props.handleChildData({
                 type: 'Tru',
                 state: state,
-                value: (quantity - 1) * price,
+                value: price,
                 data: {
-                    quantity: quantity - 1,
                     state: true,
+                    _id: data._id,
+                    quantity: quantity - 1,
                 },
             });
         }
     };
     const handleIncrease = () => {
+        if (quantity === 3) {
+            setNotice(true);
+            return;
+        }
         setQuantity(quantity + 1);
         if (state) {
-            props.onData({
+            props.handleChildData({
                 type: 'Cong',
                 state: state,
-                value: (quantity + 1) * price,
+                value: price,
                 data: {
-                    quantity: quantity - 1,
                     state: true,
+                    _id: data._id,
+                    quantity: quantity - 1,
                 },
             });
         }
     };
 
     const handleCheck = () => {
-        setState(!state);
-        props.onData({
-            type: !state ? 'Cong' : 'Tru',
+        props.handleChildData({
+            type: !state === true ? 'Cong' : 'Tru',
             state: !state,
             value: quantity * price,
             data: {
-                quantity: quantity - 1,
                 state: true,
+                _id: data._id,
+                quantity: quantity - 1,
             },
         });
+        setState(!state);
     };
+
+    // if (props.select) {
+    //     props.handleChildData({
+    //         type: 'Cong',
+    //         state: true,
+    //         value: quantity * price,
+    //         data: {
+    //             quantity: quantity - 1,
+    //             state: true,
+    //         },
+    //     });
+    // }
+
+    if (notice) {
+        setTimeout(() => {
+            setNotice(false);
+        }, 3000);
+    }
+
+    if (confirm) {
+        setTimeout(() => {
+            setConfirm(false);
+        }, 3000);
+    }
 
     return (
         <div className={cx('container-item')}>
@@ -117,6 +152,8 @@ function CartItem(props) {
                 <span className={cx('summation')} onClick={handleIncrease}>
                     <IoIosAdd />
                 </span>
+                {confirm ? <span className={cx('notice')}>Ít nhất 1 quyển!</span> : ''}
+                {notice ? <span className={cx('notice')}>Tối đa 3 quyển!</span> : ''}
             </div>
             <div className={cx('money')}>
                 {solveString(price * quantity)}

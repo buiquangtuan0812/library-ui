@@ -49,7 +49,10 @@
     padding: 0;
     .item {
         font-size: 18px;
-        color: #939393;
+        a {
+            color: #939393;
+            text-decoration: none;
+        }
         .nav-item-1 {
             padding: 12px 32px;
             position: relative;

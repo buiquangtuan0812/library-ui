@@ -87,7 +87,6 @@ function ViewBookComponent(props) {
                 headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${dataUser.token}` },
             })
             .then((res) => {
-                console.log(res.data);
                 setNotice(true);
                 setEdit(false);
             })

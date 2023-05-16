@@ -3,7 +3,7 @@ import styles from './CartUser.module.scss';
 
 import axios from 'axios';
 import { Link, useLocation } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import Tippy from '@tippyjs/react/headless';
 import { FaTrashAlt } from 'react-icons/fa';
@@ -58,6 +58,13 @@ function CartUser() {
         }
     };
 
+    const handleSelect = () => {
+        if (selectAll) {
+            setTotalBill(0);
+        }
+        setSelectAll(!selectAll);
+    };
+
     const renderCart = carts.map((cart, index) => {
         return (
             <div key={index}>
@@ -67,7 +74,7 @@ function CartUser() {
                     quantity={cart.quantity}
                     total={cart.total}
                     stateCart={cart.state}
-                    onData={handleChildData}
+                    handleChildData={handleChildData}
                 />
             </div>
         );
@@ -141,7 +148,7 @@ function CartUser() {
                             <div className={cx('container__left')}>
                                 <div className={cx('container__left-header')}>
                                     <div className={cx('check-box')}>
-                                        <input type="checkbox" onChange={() => setSelectAll(!selectAll)} />
+                                        <input type="checkbox" onChange={handleSelect} />
                                     </div>
                                     <div className={cx('product')}>Tất cả ({numberCart} sản phẩm)</div>
                                     <div className={cx('price')}>Đơn giá</div>

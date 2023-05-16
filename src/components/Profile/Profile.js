@@ -1,6 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './Profile.module.scss';
 
+import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
@@ -10,6 +11,7 @@ import { GrShieldSecurity } from 'react-icons/gr';
 
 import Header from '../Display/Header/Header';
 import Footer from '../Display/Footer/Footer';
+import ConfirmSuccess from '~/components/ConfirmSuccess/ConfirmSuccess';
 
 const cx = classNames.bind(styles);
 
@@ -17,10 +19,21 @@ function Profile() {
     const location = useLocation();
     const [user, setUser] = useState({});
     const [imgUser, setImgUser] = useState('');
+    const [fullName, setFullName] = useState('');
+    const [username, setUsername] = useState('');
+    const [day, setDay] = useState('');
+    const [month, setMonth] = useState('');
+    const [year, setYear] = useState('');
+    const [state, setState] = useState(false);
     const [numberCart, setNumberCart] = useState(0);
 
     useEffect(() => {
         setUser(location.state.user);
+        setDay(location.state.user.birthDate.slice(0, 2));
+        setMonth(location.state.user.birthDate.slice(3, 5));
+        setYear(location.state.user.birthDate.slice(6, 10));
+        setUsername(location.state.user.username);
+        setFullName(location.state.user.fullName);
         setNumberCart(location.state.numberCart);
         setImgUser(location.state.user.imgDes);
     }, [user]);
@@ -36,10 +49,38 @@ function Profile() {
         };
     };
 
+    const handleUpdate = (e) => {
+        e.preventDefault();
+        user.username = username;
+        user.imgDes = imgUser;
+        user.fullName = fullName;
+        user.birthDate = day + '/' + month + '/' + year;
+        setUser(user);
+        axios
+            .put('http://localhost:8086/user/update', user, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${user.accessToken}`,
+                },
+            })
+            .then((res) => {
+                setUser(res.data);
+                setState(true);
+            })
+            .catch((err) => console.log(err));
+    };
+
+    if (state) {
+        setTimeout(() => {
+            setState(false);
+        }, 3000);
+    }
+
     return (
         <div>
             <Header user={user} numberCart={numberCart} />
             <div className={cx('ctn')}>
+                {state ? <ConfirmSuccess type={true} text="Cập nhật thông tin cá nhân thành công!" /> : ''}
                 <div className={cx('container')}>
                     <h3>Thông tin tài khoản</h3>
                     <div className={cx('container__profile')}>
@@ -67,26 +108,37 @@ function Profile() {
                                             <p className={cx('title-2')}>Nickname</p>
                                         </div>
                                         <div className={cx('values')}>
-                                            <input type="text" placeholder={user.fullName} className={cx('value-1')} />
-                                            <input type="text" placeholder={user.username} />
+                                            <input
+                                                type="text"
+                                                placeholder={fullName}
+                                                className={cx('value-1')}
+                                                onChange={(e) => setFullName(e.target.value)}
+                                            />
+                                            <input
+                                                type="text"
+                                                placeholder={username}
+                                                onChange={(e) => setUsername(e.target.value)}
+                                            />
                                         </div>
                                     </div>
 
                                     <div className={cx('container__profile-infor-item')}>
                                         <div className={cx('birthday')}>Ngày sinh</div>
-                                        <select className={cx('date')}>
-                                            <option>Ngày</option>
-                                            <option value="1">01</option>
-                                            <option value="2">02</option>
-                                            <option value="3">03</option>
-                                            <option value="4">04</option>
-                                            <option value="5">05</option>
-                                            <option value="6">06</option>
-                                            <option value="7">07</option>
-                                            <option value="8" selected>
-                                                08
-                                            </option>
-                                            <option value="9">09</option>
+                                        <select
+                                            className={cx('date')}
+                                            value={day}
+                                            onChange={(e) => setDay(e.target.value)}
+                                        >
+                                            <option value="">Ngày</option>
+                                            <option value="01">01</option>
+                                            <option value="02">02</option>
+                                            <option value="03">03</option>
+                                            <option value="04">04</option>
+                                            <option value="05">05</option>
+                                            <option value="06">06</option>
+                                            <option value="07">07</option>
+                                            <option value="08">08</option>
+                                            <option value="09">09</option>
                                             <option value="10">10</option>
                                             <option value="11">11</option>
                                             <option value="12">12</option>
@@ -111,26 +163,32 @@ function Profile() {
                                             <option value="31">21</option>
                                         </select>
 
-                                        <select className={cx('month')}>
-                                            <option>Tháng</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="6">6</option>
-                                            <option value="7">7</option>
-                                            <option value="8">8</option>
-                                            <option value="9">9</option>
+                                        <select
+                                            className={cx('month')}
+                                            value={month}
+                                            onChange={(e) => setMonth(e.target.value)}
+                                        >
+                                            <option value="">Tháng</option>
+                                            <option value="01">01</option>
+                                            <option value="02">02</option>
+                                            <option value="03">03</option>
+                                            <option value="04">04</option>
+                                            <option value="05">05</option>
+                                            <option value="06">06</option>
+                                            <option value="07">07</option>
+                                            <option value="08">08</option>
+                                            <option value="09">09</option>
                                             <option value="10">10</option>
                                             <option value="11">11</option>
-                                            <option value="12" selected>
-                                                12
-                                            </option>
+                                            <option value="12">12</option>
                                         </select>
 
-                                        <select className={cx('year')}>
-                                            <option>Năm</option>
+                                        <select
+                                            className={cx('year')}
+                                            value={year}
+                                            onChange={(e) => setYear(e.target.value)}
+                                        >
+                                            <option value="">Năm</option>
                                             <option value="1986">1986</option>
                                             <option value="1987">1987</option>
                                             <option value="1989">1989</option>
@@ -145,9 +203,7 @@ function Profile() {
                                             <option value="1999">1999</option>
                                             <option value="2000">2000</option>
                                             <option value="2001">2001</option>
-                                            <option value="2002" selected>
-                                                2002
-                                            </option>
+                                            <option value="2002">2002</option>
                                             <option value="2003">2003</option>
                                             <option value="2004">2004</option>
                                             <option value="2005">2005</option>
@@ -162,7 +218,7 @@ function Profile() {
                                     </div>
 
                                     <div className={cx('btn-save')}>
-                                        <button>Lưu thay đổi</button>
+                                        <button onClick={handleUpdate}>Lưu thay đổi</button>
                                     </div>
                                 </div>
                             </div>

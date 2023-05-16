@@ -22,12 +22,14 @@
 .form-serach {
     display: flex;
     align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
 }
 .btn-search {
     width: 100px;
     color: #ffffff;
     cursor: pointer;
-    border-radius: 8px;
+    border-radius: 16px;
     border: none;
     padding: 8px 16px;
     background-color: #252730;
@@ -46,9 +48,12 @@
 }
 .input__value {
     width: 100%;
-    border-radius: 6px;
+    border-radius: 16px;
     padding: 6px 12px;
     border: 1px solid #ccc;
+    &:hover {
+        box-shadow: 0 1px 6px rgb(32 33 36 / 28%);
+    }
 }
 
 .container__book {

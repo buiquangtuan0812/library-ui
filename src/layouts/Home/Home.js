@@ -8,6 +8,7 @@ import { useLocation } from 'react-router-dom';
 
 function Home() {
     document.title = 'My Library';
+
     const [user, setUser] = useState([]);
     const [numberCart, setNumberCart] = useState(0);
     const location = useLocation();
@@ -27,6 +28,7 @@ function Home() {
                 .catch((err) => console.error(err));
         }
     }, []);
+
     return (
         <div>
             <Header user={user} numberCart={numberCart} />

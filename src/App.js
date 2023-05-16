@@ -53,7 +53,10 @@ function App() {
             <Route path="admin/manage/book-create" element={<HomeAdmin page="Create" />}></Route>
 
             {/* Employee */}
-            <Route path="employee/home" element={<HomeEmployee />}></Route>
+            <Route path="employee/home" element={<HomeEmployee page="" />}></Route>
+            <Route path="employee/sell" element={<HomeEmployee page="Sell" />}></Route>
+            <Route path="employee/lend" element={<HomeEmployee page="Lend" />}></Route>
+            <Route path="employee/return" element={<HomeEmployee page="Return" />}></Route>
 
             {/* Cart user */}
             <Route path="user/cart" element={<CartUser />}></Route>

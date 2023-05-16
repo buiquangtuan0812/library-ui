@@ -82,6 +82,7 @@ function CategoryBook(props) {
             <li className={cx('item-catergory')} key={index} onClick={() => changeColor(index)}>
                 <Link
                     to={`/library/book/${type.title}`}
+                    onClick={() => changeColor(index)}
                     style={state[index] ? { color: '#f05123' } : { color: '#000' }}
                     state={{ title: type.title, user: props.user, type: handleTitle(type.title) }}
                 >

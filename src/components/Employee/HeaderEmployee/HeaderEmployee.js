@@ -3,9 +3,7 @@ import styles from './Styles.module.scss';
 
 import { FiMessageCircle } from 'react-icons/fi';
 import { AiFillSetting } from 'react-icons/ai';
-import { GrUserAdmin } from 'react-icons/gr';
 import { BsBell } from 'react-icons/bs';
-import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 

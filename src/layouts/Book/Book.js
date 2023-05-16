@@ -52,30 +52,32 @@ function BookPage() {
             if (index < 20 * (id - 1) || index >= 20 * id) {
                 return '';
             } else {
-                return (
-                    <div className={cx('col-3')} key={index}>
-                        <Link
-                            className={cx('link-item')}
-                            to={`/library/book/detail/${book.name}`}
-                            state={{ user: user }}
-                        >
-                            <div className={cx('book-item')}>
-                                <div className={cx('card')}>
-                                    <img src={book.imgDes} className={cx('card-img-top')} alt="..." />
-                                    <div className={cx('card-body')}>
-                                        <div className={cx('card-title')}>
-                                            <span className={cx('card-name')}>{book.name}</span>
-                                            <span className={cx('card-text')}> ({book.author})</span>
+                if (book.name.includes(inputBook)) {
+                    return (
+                        <div className={cx('col-3')} key={index}>
+                            <Link
+                                className={cx('link-item')}
+                                to={`/library/book/detail/${book.name}`}
+                                state={{ user: user }}
+                            >
+                                <div className={cx('book-item')}>
+                                    <div className={cx('card')}>
+                                        <img src={book.imgDes} className={cx('card-img-top')} alt="..." />
+                                        <div className={cx('card-body')}>
+                                            <div className={cx('card-title')}>
+                                                <span className={cx('card-name')}>{book.name}</span>
+                                                <span className={cx('card-text')}> ({book.author})</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </Link>
-                    </div>
-                );
+                            </Link>
+                        </div>
+                    );
+                }
             }
         }),
-        [dataBook, id],
+        [dataBook, id, inputBook],
     );
 
     const searchBook = () => {
