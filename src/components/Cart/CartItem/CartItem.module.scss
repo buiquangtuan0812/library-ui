@@ -1,0 +1,278 @@
+.container-item {
+    display: flex;
+    align-items: center;
+    padding: 9px 16px;
+    font-size: 17px;
+    background-color: #fff;
+    margin-bottom: 12px;
+    .check-box {
+        input {
+            width: 16px;
+            height: 16px;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+        height: 16px;
+        margin-bottom: 3px;
+        margin-right: 8px;
+    }
+    .product {
+        width: 320px;
+        margin: 0 8px;
+        display: flex;
+        &-img {
+            margin-right: 12px;
+            img {
+                width: 76px;
+                height: 80px;
+                object-fit: contain;
+            }
+        }
+        &-name {
+            .name {
+                color: #000;
+                text-decoration: none;
+                max-height: 52px;
+                font-size: 15px;
+                word-wrap: break-word;
+                white-space: normal;
+                overflow: hidden;
+                display: -webkit-box;
+                text-overflow: ellipsis;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+                margin-bottom: 4px;
+                &:hover {
+                    cursor: pointer;
+                    color: #ff424f;
+                }
+            }
+            .state {
+                font-size: 13px;
+                color: rgb(11, 116, 229);
+            }
+        }
+    }
+    .price {
+        margin: 0 8px;
+        width: 200px;
+        span {
+            font-size: 15px;
+            color: #242424;
+            .unit {
+                font-size: 14px;
+                margin-left: 4px;
+                text-decoration: underline;
+            }
+        }
+        .sales {
+            color: rgb(153, 153, 153);
+            margin-left: 12px;
+            font-size: 13px;
+            span {
+                margin-left: 4px;
+                text-decoration: underline;
+                font-size: 13px;
+                color: rgb(153, 153, 153);
+            }
+        }
+    }
+    .quantity {
+        margin: 0 8px;
+        width: 100px;
+        padding: 0 4px;
+        display: flex;
+        position: relative;
+        align-items: center;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        justify-content: space-between;
+        .summation,
+        .subtraction {
+            padding: 2px 4px;
+            color: rgb(153, 153, 153);
+            &:hover {
+                cursor: pointer;
+                color: #333;
+            }
+        }
+        .number {
+            border-left: 1px solid #ccc;
+            border-right: 1px solid #ccc;
+            padding: 3px 8px;
+            margin: 0 4px;
+        }
+        .notice {
+            position: absolute;
+            font-size: 13px;
+            color: #ff424f;
+            width: 200px;
+            top: 36px;
+            right: -108px;
+        }
+    }
+    .money {
+        width: 140px;
+        margin: 0 8px;
+        color: #ff424f;
+        text-align: center;
+        font-size: 15px;
+        .unit {
+            font-size: 14px;
+            margin-left: 4px;
+            text-decoration: underline;
+        }
+    }
+    .trash {
+        margin-left: 32px;
+        margin-bottom: 1px;
+        padding: 4px 8px;
+        .icon-trash {
+            font-size: 16px;
+            color: #838181;
+            &:hover {
+                cursor: pointer;
+                color: #333;
+            }
+        }
+    }
+}
+
+.container-item-payed {
+    display: flex;
+    align-items: center;
+    padding: 9px 16px;
+    font-size: 17px;
+    background-color: #fff;
+    opacity: 0.6;
+    margin-bottom: 12px;
+    .check-box {
+        input {
+            width: 16px;
+            height: 16px;
+            &:hover {
+                cursor: not-allowed;
+            }
+        }
+        height: 16px;
+        margin-bottom: 3px;
+        margin-right: 8px;
+    }
+    .product {
+        width: 320px;
+        margin: 0 8px;
+        display: flex;
+        &-img {
+            margin-right: 12px;
+            img {
+                width: 76px;
+                height: 80px;
+                object-fit: contain;
+            }
+        }
+        &-name {
+            .name {
+                color: #000;
+                text-decoration: none;
+                max-height: 52px;
+                font-size: 15px;
+                word-wrap: break-word;
+                white-space: normal;
+                overflow: hidden;
+                display: -webkit-box;
+                text-overflow: ellipsis;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+                margin-bottom: 4px;
+                &:hover {
+                    cursor: pointer;
+                    color: #ff424f;
+                }
+            }
+            .state {
+                font-size: 13px;
+                color: #ff424f;
+            }
+        }
+    }
+    .price {
+        margin: 0 8px;
+        width: 200px;
+        span {
+            font-size: 15px;
+            color: #242424;
+            .unit {
+                font-size: 14px;
+                margin-left: 4px;
+                text-decoration: underline;
+            }
+        }
+        .sales {
+            color: rgb(153, 153, 153);
+            margin-left: 12px;
+            font-size: 13px;
+            span {
+                margin-left: 4px;
+                text-decoration: underline;
+                font-size: 13px;
+                color: rgb(153, 153, 153);
+            }
+        }
+    }
+    .quantity {
+        margin: 0 8px;
+        width: 100px;
+        padding: 0 4px;
+        display: flex;
+        position: relative;
+        align-items: center;
+        border-radius: 4px;
+        justify-content: space-between;
+        .summation,
+        .subtraction {
+            color: rgb(153, 153, 153);
+            &:hover {
+                cursor: pointer;
+                color: #333;
+            }
+        }
+        .number {
+            border-left: 1px solid #ccc;
+            border-right: 1px solid #ccc;
+            padding: 0 12px;
+        }
+        .notice {
+            position: absolute;
+            font-size: 13px;
+            color: #ff424f;
+            width: 200px;
+            top: 36px;
+        }
+    }
+    .money {
+        width: 140px;
+        margin: 0 8px;
+        color: #ff424f;
+        text-align: center;
+        font-size: 15px;
+        .unit {
+            font-size: 14px;
+            margin-left: 4px;
+            text-decoration: underline;
+        }
+    }
+    .trash {
+        margin-left: 32px;
+        margin-bottom: 1px;
+        padding: 4px 8px;
+        .icon-trash {
+            font-size: 16px;
+            color: #838181;
+            &:hover {
+                cursor: pointer;
+                color: #333;
+            }
+        }
+    }
+}

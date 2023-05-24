@@ -27,7 +27,7 @@ function Home() {
                 })
                 .catch((err) => console.error(err));
         }
-    }, []);
+    }, [location.state]);
 
     return (
         <div>

@@ -1,0 +1,120 @@
+.container {
+    margin: 100px 0;
+    padding: 40px 168px;
+    .header-page {
+        margin: 20px 0 60px 0;
+        display: flex;
+        justify-content: space-between;
+        h1 {
+            color: #242424;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+        p {
+            font-size: 20px;
+        }
+        .btn-create {
+            button {
+                font-size: 20px;
+                border-radius: 20px;
+                padding: 8px 16px;
+                .icon-pen {
+                    margin-right: 8px;
+                }
+                &:hover {
+                    opacity: 0.7;
+                }
+            }
+        }
+    }
+    &_list-blog {
+        .blog-detail {
+            text-decoration: none;
+            color: #000;
+        }
+        .container__blog {
+            width: 720px;
+            padding: 24px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            border: 2px solid rgb(232, 232, 232);
+            &-header {
+                font-size: 18px;
+                font-weight: 600;
+                color: rgb(43, 41, 41);
+                display: flex;
+                justify-content: space-between;
+                img {
+                    widows: 32px;
+                    height: 32px;
+                    border-radius: 50%;
+                    margin-right: 12px;
+                }
+            }
+            &-title {
+                margin-top: 20px;
+                display: flex;
+                justify-content: space-between;
+                .nav-left {
+                    padding-right: 32px;
+                    .title {
+                        font-size: 24px;
+                        color: rgb(41, 41, 41);
+                        font-weight: 600;
+                        line-height: 1.6;
+                        margin-bottom: 4px;
+                    }
+                    .shortDes {
+                        line-height: 1.6;
+                        font-size: 18px;
+                        text-align: justify;
+                    }
+                }
+                .nav-right {
+                    img {
+                        width: 250px;
+                        border-radius: 16px;
+                    }
+                }
+                .time-post {
+                    font-size: 18px;
+                    font-weight: 500;
+                }
+            }
+        }
+        .container_suggest {
+            h1 {
+                font-weight: 600;
+            }
+            div {
+                margin-top: 24px;
+                p {
+                    text-align: center;
+                    max-width: 162px;
+                    font-size: 20px;
+                    margin: 24px 0;
+                    padding: 10px 16px;
+                    border-radius: 30px;
+                    background-color: #f2f2f2;
+                    &:hover {
+                        cursor: pointer;
+                        opacity: 0.7;
+                    }
+                }
+                span {
+                    text-align: center;
+                    font-size: 20px;
+                    padding: 10px 22px;
+                    border-radius: 30px;
+                    background-color: #f2f2f2;
+                    margin: 0 24px 12px 0;
+                    &:hover {
+                        cursor: pointer;
+                        opacity: 0.7;
+                    }
+                }
+            }
+        }
+    }
+}

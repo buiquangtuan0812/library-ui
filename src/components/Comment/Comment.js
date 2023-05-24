@@ -30,7 +30,7 @@ function Comment(props) {
                 setUser(res.data.user);
             })
             .catch((err) => console.error(err));
-    }, []);
+    }, [props.user]);
     return (
         <div className={cx('container__comment')}>
             <div className={cx('container__comment-content')}>

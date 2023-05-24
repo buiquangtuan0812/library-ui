@@ -1,0 +1,55 @@
+.show {
+    position: absolute;
+    top: 0px;
+    right: 52%;
+    transform: translateX(50%);
+    z-index: 3;
+    animation: show 0.5s ease-in-out;
+    .container__confirm {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-self: center;
+        padding: 10px 16px;
+        border: none;
+        top: -16px;
+        border-radius: 12px;
+        background-color: #fff;
+        color: #000;
+        box-shadow: rgb(179, 179, 179) 1px 1px 15px;
+        .icon-success {
+            font-size: 32px;
+            color: #4caf50;
+            text-align: center;
+            border-radius: 50%;
+        }
+        .text {
+            font-size: 18px;
+            margin-top: 8px;
+        }
+        .btn {
+            text-align: center;
+            margin: 12px 0;
+            button {
+                font-size: 16px;
+                color: #fff;
+                background-color: #f55f69;
+                border: none;
+                border-radius: 14px;
+                padding: 4px 12px;
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+        }
+    }
+}
+
+@keyframes show {
+    from {
+        top: -31%;
+    }
+    to {
+        top: 0;
+    }
+}

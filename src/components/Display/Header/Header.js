@@ -3,7 +3,7 @@ import styles from './Header.module.scss';
 
 import { Link } from 'react-router-dom';
 import Tippy from '@tippyjs/react/headless';
-import AccountReview from '../AccountReview/AccountReview';
+import AccountReview from '../../AccountReview/AccountReview';
 
 const cx = classNames.bind(styles);
 
@@ -58,14 +58,21 @@ function Header(props) {
                     <Link to="/">Hỗ trợ</Link>
                 </div>
                 {props.user.accessToken ? (
-                    <Link to="/user/cart" state={{ user: props.user, numberCart: props.numberCart }}>
+                    <Link to="/user/carts" state={{ user: props.user, numberCart: props.numberCart }}>
                         <div className={cx('container__account-cash')}>
                             <i className={cx('fa-solid fa-cart-shopping')}></i>
                             {props.user.accessToken ? <span>{props.numberCart}</span> : ''}
                         </div>
                     </Link>
                 ) : (
-                    <Link to="/user/login" state={{ url: 'http://localhost:8088/user/cart' }}>
+                    <Link
+                        to="/user/login"
+                        state={{
+                            url: '/users/cart',
+                            user: props.user,
+                            numberCart: props.numberCart,
+                        }}
+                    >
                         <div className={cx('container__account-cash')}>
                             <i className={cx('fa-solid fa-cart-shopping')}></i>
                             {props.user.accessToken ? <span>{props.numberCart}</span> : ''}

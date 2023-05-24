@@ -9,7 +9,7 @@ const cx = classNames.bind(styles);
 
 function LoginUser() {
     document.title = 'My Library | Log In';
-    const [userNamme, setUsername] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [data, setData] = useState([]);
     const [err, setErr] = useState('');
@@ -20,11 +20,11 @@ function LoginUser() {
         if (location.state) {
             setUrl(location.state.url);
         }
-    }, []);
+    }, [location.state]);
 
-    const handleLogin = () => {
+    const handleLogin = (e) => {
         const dataUser = {
-            username: userNamme,
+            username: username,
             password: password,
         };
         axios
@@ -34,6 +34,7 @@ function LoginUser() {
             .then((response) => {
                 if (response.data.message) {
                     setErr(response.data.message);
+                    e.preventDefault();
                 } else {
                     setData(response.data);
                     setErr('');
@@ -43,11 +44,9 @@ function LoginUser() {
                 console.log(err);
             });
     };
+
     return (
         <div className={cx('container__signin')}>
-            <Link to="/admin/login">
-                <div className={cx('btn-loginAdmin')}>Admin</div>
-            </Link>
             <div className={cx('form')}>
                 <p className={cx('heading')}>Đăng nhập</p>
                 <form>
@@ -84,7 +83,7 @@ function LoginUser() {
                             to={data.accessToken ? url : '/user/login'}
                             state={data.accessToken ? { user: data } : ''}
                             className={cx('btn-submit')}
-                            onClick={(e) => handleLogin(e)}
+                            onClick={handleLogin}
                         >
                             <button className={cx('button1')}>
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Đăng nhập&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -95,7 +94,7 @@ function LoginUser() {
                             to={data.accessToken ? '/home' : '/user/login'}
                             state={data.accessToken ? { user: data } : ''}
                             className={cx('btn-submit')}
-                            onClick={(e) => handleLogin(e)}
+                            onClick={handleLogin}
                         >
                             <button className={cx('button1')}>
                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Đăng nhập&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

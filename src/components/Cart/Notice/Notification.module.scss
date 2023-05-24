@@ -1,0 +1,45 @@
+.ctn {
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    position: fixed;
+    background-color: rgb(39 39 42 / 70%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .container-notice {
+        padding: 9px 16px;
+        background-color: #fff;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+        &-header {
+            .icon {
+                font-size: 28px;
+                text-align: center;
+                color: #fde826;
+                margin-bottom: 20px;
+            }
+            .text {
+                font-weight: 500;
+                margin-bottom: 20px;
+            }
+        }
+        &-body {
+            text-align: center;
+            button {
+                border: none;
+                padding: 6px 12px;
+                background-color: #ffeb3b;
+                border-radius: 14px;
+                margin-bottom: 12px;
+                font-size: 15px;
+                &:hover {
+                    cursor: pointer;
+                    opacity: 0.8;
+                }
+            }
+        }
+    }
+}
