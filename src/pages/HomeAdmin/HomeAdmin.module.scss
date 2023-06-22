@@ -1,0 +1,159 @@
+.container__admin {
+    display: flex;
+}
+.container__admin-conent {
+    width: calc(100% - 255px);
+    .header__admin {
+        padding: 20px 24px;
+        display: flex;
+        align-items: center;
+        padding-bottom: 24px;
+        border-bottom: 1px solid #ccc;
+        justify-content: space-between;
+        &-statistic {
+            &-item {
+                a {
+                    text-decoration: none;
+                    color: #000;
+                }
+                position: relative;
+                padding: 20px 18px;
+                font-size: 18px;
+                margin-right: 32px;
+                i {
+                    margin-right: 8px;
+                    font-size: 20px;
+                }
+                .icon-header {
+                    font-size: 28px;
+                    margin-right: 8px;
+                    margin-bottom: 8px;
+                }
+            }
+        }
+        &-interact {
+            &-item {
+                padding: 16px 20px;
+                font-size: 18px;
+                margin-left: 32px;
+                cursor: pointer;
+                position: relative;
+                &:hover {
+                    opacity: 0.8;
+                }
+                i {
+                    font-size: 20px;
+                }
+                span {
+                    top: 8px;
+                    right: 16px;
+                    font-size: 14px;
+                    text-align: center;
+                    line-height: 18px;
+                    width: 18px;
+                    height: 18px;
+                    position: absolute;
+                    border-radius: 50%;
+                    background-color: rgb(244, 89, 89);
+                }
+                .icon-admin {
+                    margin-right: 8px;
+                    font-size: 20px;
+                    margin-bottom: 8px;
+                }
+            }
+        }
+        .border-bottom-red {
+            border-bottom: 1px solid #f2125e;
+        }
+    }
+
+    .introduction {
+        padding: 12px 24px;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #ccc;
+        .img-admin {
+            margin-right: 16px;
+            img {
+                width: 64px;
+                height: 64px;
+                object-fit: cover;
+                border-radius: 12px;
+            }
+        }
+        .infor {
+            display: flex;
+            flex-direction: column;
+            .fullName {
+                font-size: 28px;
+                font-weight: 500;
+            }
+            .time {
+                color: #777777;
+            }
+        }
+    }
+    .body__admin {
+        margin-top: 0;
+        padding: 40px;
+        background-color: #e8eff9;
+        .container__statistic {
+            &-item {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 40px;
+                .pie-chart {
+                    position: relative;
+                    padding: 16px 28px 16px 16px;
+                    background-color: #fff;
+                    border-radius: 8px;
+                }
+                .chart__book-details {
+                    position: relative;
+                    padding: 16px;
+                    background-color: #fff;
+                    border-radius: 8px;
+                    span {
+                        font-size: 14px;
+                        margin-top: 12px;
+                        line-height: 48px;
+                    }
+                    .title {
+                        position: absolute;
+                        font-size: 20px;
+                        font-weight: 500;
+                        line-height: 24px;
+                    }
+                }
+            }
+            .statistic__sales {
+                display: flex;
+                justify-content: space-between;
+                .chart__sales {
+                    position: relative;
+                    padding: 24px;
+                    background-color: #fff;
+                    border-radius: 8px;
+                }
+                .statistical__sales {
+                    min-height: 400px;
+                    width: calc(100% - 820px);
+                    background-color: #fff;
+                    padding: 24px 0 32px 40px;
+                    border-radius: 8px;
+                    .total__money {
+                        font-size: 18px;
+                        font-weight: 600;
+                        color: #2b80ff;
+                        p {
+                            color: #000;
+                            font-size: 20px;
+                            margin: 12px 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

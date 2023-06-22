@@ -14,6 +14,7 @@ import CartItem from '~/components/Cart/CartItem/CartItem';
 import Footer from '~/components/Display/Footer/Footer';
 import Notification from '~/components/Cart/Notice/Notification';
 import AccountReview from '~/components/AccountReview/AccountReview';
+import FormUpdate from './AddAddress';
 
 const cx = classNames.bind(styles);
 
@@ -23,6 +24,8 @@ function CartUser() {
     const [user, setUser] = useState({});
     const [carts, setCarts] = useState([]);
     const [notice, setNotice] = useState(false);
+    const [show, setShow] = useState(false);
+    const [success, setSuccess] = useState(false);
     const [totalBill, setTotalBill] = useState(0);
     const [numberCart, setNumberCart] = useState(0);
     const [selectAll, setSelectAll] = useState(false);
@@ -44,7 +47,7 @@ function CartUser() {
             .catch((err) => {
                 console.log(err);
             });
-    }, [location.state]);
+    }, [location.state, success, user]);
 
     const handleChildData = (data) => {
         if (data.state === true) {
@@ -79,16 +82,22 @@ function CartUser() {
         setSelectAll(!selectAll);
     };
 
+    const confirm = (value) => {
+        setSuccess(value);
+    };
+
     const renderCart = carts.map((cart, index) => {
         return (
             <div key={index}>
                 <CartItem
+                    user={user}
                     select={selectAll}
                     idCart={cart._id}
                     idBook={cart.book}
                     quantity={cart.quantity}
                     total={cart.total}
                     stateCart={cart.state}
+                    confirm={confirm}
                     handleChildData={handleChildData}
                 />
             </div>
@@ -133,14 +142,25 @@ function CartUser() {
             e.preventDefault();
             setNotice(true);
         } else {
-            return;
+            if (user.address === '') {
+                e.preventDefault();
+                setShow(true);
+            } else {
+                return;
+            }
         }
+    };
+
+    const child = (value) => {
+        setShow(value.show);
+        setUser(value.user);
     };
 
     return (
         <div>
             <div className={cx('container__page')}>
                 {notice ? <Notification handleProps={handleProps} /> : ''}
+                {show ? <FormUpdate child={child} user={user} /> : ''}
                 <div className={cx('container__page-header')}>
                     <div className={cx('btn-back')}>
                         <span className={cx('icon-back')}>
@@ -195,7 +215,21 @@ function CartUser() {
                                             <span>Xóa mục đã chọn</span>
                                         </div>
                                     </div>
-                                    <div className={cx('container__cart-item')}>{renderCart}</div>
+                                    <div className={cx('container__cart-item')}>
+                                        {carts.length > 0 ? (
+                                            renderCart
+                                        ) : (
+                                            <div className={cx('confirm-notice')}>
+                                                <span>
+                                                    <img
+                                                        src="https://frontend.tikicdn.com/_desktop-next/static/img/account/empty-order.png"
+                                                        alt=""
+                                                    />
+                                                </span>
+                                                <span>Chưa có đơn hàng</span>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                             <div className={cx('col-3')}>
@@ -203,13 +237,15 @@ function CartUser() {
                                     <div className={cx('container__infor')}>
                                         <div className={cx('container__infor-header')}>
                                             <span>Giao tới</span>
-                                            <span className={cx('btn-change')}>Thay đổi</span>
+                                            <span className={cx('btn-change')} onClick={() => setShow(true)}>
+                                                {user.address ? 'Thay đổi' : 'Thêm'}
+                                            </span>
                                         </div>
 
                                         <div className={cx('container__infor-content')}>
                                             <div className={cx('information-user')}>
-                                                <span className={cx('fullName')}>{user.fullName}</span>
-                                                <span>{user.numberPhone}</span>
+                                                <span className={cx('fullName')}>{user.fullName || user.username}</span>
+                                                <span>{user.tel}</span>
                                             </div>
                                             <div className={cx('address')}>
                                                 <span className={cx('address-icon')}>

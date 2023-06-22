@@ -11,7 +11,7 @@ function LoginUser() {
     document.title = 'My Library | Log In';
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [data, setData] = useState([]);
+    const [data, setData] = useState({});
     const [err, setErr] = useState('');
     const [url, setUrl] = useState('');
     const location = useLocation();
@@ -34,7 +34,6 @@ function LoginUser() {
             .then((response) => {
                 if (response.data.message) {
                     setErr(response.data.message);
-                    e.preventDefault();
                 } else {
                     setData(response.data);
                     setErr('');
@@ -91,7 +90,7 @@ function LoginUser() {
                         </Link>
                     ) : (
                         <Link
-                            to={data.accessToken ? '/home' : '/user/login'}
+                            to={data.accessToken ? (data.role === 'User' ? '/home' : '/admin/home') : '/user/login'}
                             state={data.accessToken ? { user: data } : ''}
                             className={cx('btn-submit')}
                             onClick={handleLogin}

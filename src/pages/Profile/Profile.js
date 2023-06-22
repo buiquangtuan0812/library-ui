@@ -11,11 +11,13 @@ import { GrShieldSecurity } from 'react-icons/gr';
 
 import Header from '../../components/Display/Header/Header';
 import Footer from '../../components/Display/Footer/Footer';
+import FormUpdate from './FormUpdate/FormUpdate';
 import ConfirmSuccess from '~/components/ConfirmPayment/ConfirmSuccess';
 
 const cx = classNames.bind(styles);
 
 function Profile() {
+    document.title = 'Profile';
     const location = useLocation();
     const [user, setUser] = useState({});
     const [imgUser, setImgUser] = useState('');
@@ -27,6 +29,8 @@ function Profile() {
     const [year, setYear] = useState('');
     const [state, setState] = useState(false);
     const [numberCart, setNumberCart] = useState(0);
+    const [type, setType] = useState('');
+    const [show, setShow] = useState(false);
 
     useEffect(() => {
         setUser(location.state.user);
@@ -50,16 +54,22 @@ function Profile() {
         };
     };
 
+    const handleProps = (data) => {
+        setShow(data.show);
+        setUser(data.user);
+        setState(data.state);
+    };
+
     const handleUpdate = (e) => {
         e.preventDefault();
         user.username = username;
         user.imgDes = imgUser;
         user.fullName = fullName;
-        user.address = address;
-        user.birthDate = day + '/' + month + '/' + year;
+        user.address = address || user.address;
+        user.birthDate = day + '/' + month + '/' + year || user.birthDate;
         setUser(user);
         axios
-            .put('http://localhost:8086/user/update', user, {
+            .put('http://localhost:8086/user/update/profile', user, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${user.accessToken}`,
@@ -78,9 +88,19 @@ function Profile() {
         }, 3000);
     }
 
+    const handleClick = (value) => {
+        setType(value);
+        setShow(true);
+    };
+
     return (
         <div>
             <Header user={user} numberCart={numberCart} />
+            {show ? (
+                <FormUpdate user={user} tel={user.tel} email={user.email} type={type} handleProps={handleProps} />
+            ) : (
+                ''
+            )}
             <div className={cx('ctn')}>
                 {state ? <ConfirmSuccess type={true} text="Cập nhật thông tin cá nhân thành công!" /> : ''}
                 <div className={cx('container')}>
@@ -213,20 +233,22 @@ function Profile() {
                                     </div>
 
                                     <div className={cx('container__profile-infor-item')}>
-                                        <div className={cx('address')}>
-                                            <span>Địa chỉ</span>
-                                            <span className={classNames('address-value')}>{user.address}</span>
-                                        </div>
-                                        {!user.address ? (
-                                            <div className={cx('form-add')}>
-                                                <input
-                                                    type="text"
-                                                    placeholder="Nhập địa chỉ"
-                                                    onChange={(e) => setAddress(e.target.value)}
-                                                />
+                                        {user.address !== '' ? (
+                                            <div className={cx('address')}>
+                                                <span>Địa chỉ</span>
+                                                <span className={classNames('address-value')}>{user.address}</span>
                                             </div>
                                         ) : (
-                                            ''
+                                            <div className={cx('address')}>
+                                                <span>Địa chỉ</span>
+                                                <div className={cx('form-add')}>
+                                                    <input
+                                                        type="text"
+                                                        placeholder="Nhập địa chỉ"
+                                                        onChange={(e) => setAddress(e.target.value)}
+                                                    />
+                                                </div>
+                                            </div>
                                         )}
                                     </div>
 
@@ -247,10 +269,10 @@ function Profile() {
                                         </span>
                                         <span className={cx('phone')}>
                                             <p>Số điện thoại</p>
-                                            <p>{user.numberPhone}</p>
+                                            <p>{user.tel}</p>
                                         </span>
                                         <span className={cx('btn-update')}>
-                                            <button>Cập nhật</button>
+                                            <button onClick={() => handleClick('tel')}>Cập nhật</button>
                                         </span>
                                     </div>
 
@@ -263,7 +285,7 @@ function Profile() {
                                             <p>{user.email}</p>
                                         </span>
                                         <span className={cx('btn-update')}>
-                                            <button>Cập nhật</button>
+                                            <button onClick={() => handleClick('email')}>Cập nhật</button>
                                         </span>
                                     </div>
                                 </div>
@@ -276,7 +298,7 @@ function Profile() {
                                             Đổi mật khẩu
                                         </span>
                                         <span className={cx('btn-update')}>
-                                            <button>Cập nhật</button>
+                                            <button onClick={handleClick}>Cập nhật</button>
                                         </span>
                                     </div>
                                 </div>

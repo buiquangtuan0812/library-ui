@@ -37,7 +37,7 @@ function BookPage() {
                 setNumberCart(res.data.length);
             })
             .catch((err) => console.error(err));
-    }, [location.state]);
+    }, [location.state, id]);
 
     useEffect(() => {
         axios

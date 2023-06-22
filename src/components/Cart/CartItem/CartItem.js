@@ -1,6 +1,8 @@
 import classNames from 'classnames/bind';
 import styles from './CartItem.module.scss';
 
+import Remove from '~/pages/CartUser/ConfirmDelCarrt/index';
+
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { IoIosAdd } from 'react-icons/io';
@@ -12,6 +14,7 @@ const cx = classNames.bind(styles);
 
 function CartItem(props) {
     const [state, setState] = useState(false);
+    const [show, setShow] = useState(false);
     const [data, setData] = useState({});
     const [price, setPrice] = useState(0);
     const [quantity, setQuantity] = useState(1);
@@ -103,71 +106,83 @@ function CartItem(props) {
         }, 3000);
     }
 
+    const handleClick = () => {
+        setShow(true);
+    };
+
+    const handleChild = (value) => {
+        setShow(value.show);
+        props.confirm(value.success);
+    };
+
     return (
-        <div className={cx(props.stateCart ? 'container-item-payed' : 'container-item')}>
-            {props.stateCart ? (
-                <div className={cx('check-box')}>
-                    <input type="checkbox" onClick={handleCheck} disabled={props.stateCart ? true : false} />
+        <div>
+            {show ? <Remove handleChild={handleChild} user={props.user} idCart={props.idCart} /> : ''}
+            <div className={cx(props.stateCart ? 'container-item-payed' : 'container-item')}>
+                {props.stateCart ? (
+                    <div className={cx('check-box')}>
+                        <input type="checkbox" onClick={handleCheck} disabled={props.stateCart ? true : false} />
+                    </div>
+                ) : (
+                    <div className={cx('check-box')}>
+                        {props.select ? (
+                            <input type="checkbox" onClick={handleCheck} checked />
+                        ) : (
+                            <input type="checkbox" onClick={handleCheck} />
+                        )}
+                    </div>
+                )}
+                <div className={cx('product')}>
+                    <span className={cx('product-img')}>
+                        <img src={data.imgDes} alt="Cart" />
+                    </span>
+                    <span className={cx('product-name')}>
+                        <Link className={cx('name')}>
+                            <p>{data.name}</p>
+                        </Link>
+                        <p className={cx('state')}>{props.stateCart ? 'Đã thanh toán' : 'Chưa thanh toán'}</p>
+                    </span>
                 </div>
-            ) : (
-                <div className={cx('check-box')}>
-                    {props.select ? (
-                        <input type="checkbox" onClick={handleCheck} checked />
+                <div className={cx('price')}>
+                    <span>
+                        {solveString(`${data.price}`)}
+                        <span className={cx('unit')}>đ</span>
+                    </span>
+                    <del className={cx('sales')}>
+                        {countPrice(data.price)}
+                        <span>đ</span>
+                    </del>
+                </div>
+                <div className={cx('quantity')}>
+                    {!props.stateCart ? (
+                        <div>
+                            <span className={cx('subtraction')} onClick={handleReduce}>
+                                <RiSubtractFill />
+                            </span>
+                            <span className={cx('number')}>{quantity}</span>
+                            <span className={cx('summation')} onClick={handleIncrease}>
+                                <IoIosAdd />
+                            </span>
+                            {confirm ? <span className={cx('notice')}>Ít nhất 1 quyển!</span> : ''}
+                            {notice ? <span className={cx('notice')}>Tối đa 3 quyển!</span> : ''}
+                        </div>
                     ) : (
-                        <input type="checkbox" onClick={handleCheck} />
+                        ''
                     )}
                 </div>
-            )}
-            <div className={cx('product')}>
-                <span className={cx('product-img')}>
-                    <img src={data.imgDes} alt="Cart" />
-                </span>
-                <span className={cx('product-name')}>
-                    <Link className={cx('name')}>
-                        <p>{data.name}</p>
-                    </Link>
-                    <p className={cx('state')}>{props.stateCart ? 'Đã thanh toán' : 'Chưa thanh toán'}</p>
-                </span>
-            </div>
-            <div className={cx('price')}>
-                <span>
-                    {solveString(`${data.price}`)}
-                    <span className={cx('unit')}>đ</span>
-                </span>
-                <del className={cx('sales')}>
-                    {countPrice(data.price)}
-                    <span>đ</span>
-                </del>
-            </div>
-            <div className={cx('quantity')}>
-                {!props.stateCart ? (
-                    <div>
-                        <span className={cx('subtraction')} onClick={handleReduce}>
-                            <RiSubtractFill />
-                        </span>
-                        <span className={cx('number')}>{quantity}</span>
-                        <span className={cx('summation')} onClick={handleIncrease}>
-                            <IoIosAdd />
-                        </span>
-                        {confirm ? <span className={cx('notice')}>Ít nhất 1 quyển!</span> : ''}
-                        {notice ? <span className={cx('notice')}>Tối đa 3 quyển!</span> : ''}
-                    </div>
-                ) : (
-                    ''
-                )}
-            </div>
-            <div className={cx('money')}>
-                {!props.stateCart ? (
-                    <div>
-                        {solveString(price * quantity)}
-                        <span className={cx('unit')}>đ</span>
-                    </div>
-                ) : (
-                    ''
-                )}
-            </div>
-            <div className={cx('trash')}>
-                <FaTrashAlt className={cx('icon-trash')} />
+                <div className={cx('money')}>
+                    {!props.stateCart ? (
+                        <div>
+                            {solveString(price * quantity)}
+                            <span className={cx('unit')}>đ</span>
+                        </div>
+                    ) : (
+                        ''
+                    )}
+                </div>
+                <div className={cx('trash')}>
+                    <FaTrashAlt className={cx('icon-trash')} onClick={handleClick} />
+                </div>
             </div>
         </div>
     );

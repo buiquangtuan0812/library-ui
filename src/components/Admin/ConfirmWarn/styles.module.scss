@@ -1,0 +1,38 @@
+.show {
+    position: absolute;
+    top: 0px;
+    right: 40px;
+    z-index: 3;
+    animation: show 0.5s ease-in-out;
+    .container__confirm {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 16px;
+        border: none;
+        top: -72px;
+        border-radius: 10px;
+        position: relative;
+        background-color: #fff;
+        color: #000;
+        box-shadow: rgb(179, 179, 179) 1px 1px 15px;
+        .icon-warn {
+            font-size: 20px;
+            color: #ffeb3b;
+            border-radius: 50%;
+        }
+        .text {
+            margin-left: 12px;
+            font-size: 16px;
+        }
+    }
+}
+
+@keyframes show {
+    from {
+        right: 0px;
+    }
+    to {
+        right: 40px;
+    }
+}

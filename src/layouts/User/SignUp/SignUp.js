@@ -19,6 +19,7 @@ function SignUpForm() {
     const [errEmail, setErrorEmail] = useState(false);
     const [errTel, setErrorTel] = useState(false);
     const [errpassword, setErrorPassword] = useState(false);
+    const [warnName, setWarningName] = useState(false);
     const [warnTel, setWarningTel] = useState(false);
     const [warnEmail, setWarningEmail] = useState(false);
     const [warnPassword, setWarningPassword] = useState(false);
@@ -33,7 +34,7 @@ function SignUpForm() {
         const dataUser = {
             username: username,
             email: email,
-            numberPhone: tel,
+            tel: tel,
             password: password,
         };
         if (
@@ -47,6 +48,8 @@ function SignUpForm() {
             setErrorName(true);
             setErrorTel(true);
             setErrorPassword(true);
+        } else if (username.length < 6) {
+            setWarningName(true);
         } else if (email.slice(email.length - 10, email.length) !== '@gmail.com') {
             setWarningEmail(true);
         } else if (password.length < 6) {
@@ -109,6 +112,7 @@ function SignUpForm() {
                     <div className={cx(errName ? 'err-username' : 'hide-content')}>
                         Tên đăng nhập không được bỏ tróng!
                     </div>
+                    <div className={cx(warnName ? 'err-mail' : 'hide-content')}>Tên đăng nhập ít nhất 6 ký tự!</div>
                     <div className={cx('field')}>
                         <i className={cx('fa-solid fa-envelope')}></i>
                         <label htmlFor="email"></label>

@@ -43,16 +43,31 @@ function Blog() {
     const countTime = (time) => {
         const currentTime = new Date();
         const timePost = new Date(time);
-        if (currentTime.getFullYear() - timePost.getFullYear() > 0) {
-            return (currentTime.getFullYear() - timePost.getFullYear()).toString() + ' năm trước';
-        } else if (currentTime.getMonth() - timePost.getMonth() > 1) {
-            return (currentTime.getMonth() - timePost.getMonth()).toString() + ' tháng trước';
-        } else if (currentTime.getMonth() - timePost.getMonth() === 1 && currentTime.getDate() >= timePost.getDate()) {
-            return '1 tháng trước';
-        } else if (currentTime.getMonth() - timePost.getMonth() > 0 && currentTime.getDate() < timePost.getDate()) {
-            return (currentTime.getDate() + (30 - timePost.getDate())).toString() + ' ngày trước';
+        const seconds = Math.floor((currentTime - timePost) / 1000);
+        const minutes = Math.floor((currentTime - timePost) / (1000 * 60));
+        const hours = Math.floor((currentTime - timePost) / (1000 * 60 * 60));
+        const days = Math.floor((currentTime - timePost) / (1000 * 60 * 60 * 24));
+        var months =
+            (currentTime.getFullYear() - timePost.getFullYear()) * 12 + (currentTime.getMonth() - timePost.getMonth());
+        if (currentTime.getDate() < timePost.getDate()) {
+            months--;
+        }
+        if (months === 0) {
+            if (days === 0) {
+                if (hours === 0) {
+                    if (minutes === 0) {
+                        return seconds + ' giây trước';
+                    } else {
+                        return minutes + ' phút trước';
+                    }
+                } else {
+                    return hours + ' giờ trước';
+                }
+            } else {
+                return days + ' ngày trước';
+            }
         } else {
-            return (currentTime.getDate() - timePost.getDate()).toString() + ' ngày trước';
+            return months + ' tháng trước';
         }
     };
 

@@ -48,7 +48,7 @@ function BookTypePage() {
                 setNumberCart(res.data.length);
             })
             .catch((err) => console.error(err));
-    }, [location.state, url]);
+    }, [location.state.user, url, location.state.author, user]);
 
     const renderBook = useCallback(
         dataBook.map((book, index) => {

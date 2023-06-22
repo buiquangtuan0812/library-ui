@@ -29,7 +29,7 @@ function BlogDetail() {
             setUser(location.state.user);
         }
         axios
-            .get('http://localhost:8086/library/blog/details', { params: { _id } })
+            .get('http://localhost:8086/library/blogs/details', { params: { _id } })
             .then((res) => {
                 setAuthor(res.data.author);
                 setContentBlog(res.data.content);
@@ -37,7 +37,7 @@ function BlogDetail() {
             .catch((err) => {
                 console.log(err);
             });
-    }, []);
+    }, [location.state, _id]);
 
     const renderTippy = (prop) => {
         return (
@@ -47,9 +47,9 @@ function BlogDetail() {
         );
     };
 
-    const sovleString = (string) => {
-        return string.slice(0, 1).toUpperCase() + string.slice(1, string.length);
-    };
+    // const sovleString = (string) => {
+    //     return string.slice(0, 1).toUpperCase() + string.slice(1, string.length);
+    // };
     return (
         <div>
             <div className={cx('header')}>
@@ -83,7 +83,7 @@ function BlogDetail() {
             <div className={cx('mt')}>
                 <div className={cx('container')}>
                     <div className={cx('row')}>
-                        <div className={cx('col-3')}>
+                        <div className={cx('col-2')}>
                             <div className={cx('container__left')}>
                                 <div className={cx('container__left-user')}>
                                     <div className={cx('container__left-user-info')}>
@@ -104,7 +104,7 @@ function BlogDetail() {
                                 </div>
                             </div>
                         </div>
-                        <div className={cx('col-6')}>
+                        <div className={cx('col-7')}>
                             <div className={cx('container__content')}>
                                 <ReactMarkdown children={contentBlog.text} remarkPlugins={[remarkGfm]} />
                             </div>

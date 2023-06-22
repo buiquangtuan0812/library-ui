@@ -190,6 +190,19 @@
             &__cart-item {
                 padding: 8px 0;
                 background-color: #fff;
+                .confirm-notice {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    background-color: #fff;
+                    padding: 36px;
+                    flex-direction: column;
+                    min-height: calc(100vh - 400px);
+                    img {
+                        height: 200px;
+                        width: 200px;
+                    }
+                }
             }
             &__right {
                 position: relative;
@@ -203,6 +216,10 @@
                         margin-bottom: 12px;
                         .btn-change {
                             color: rgb(11, 116, 229);
+                            &:hover {
+                                cursor: pointer;
+                                opacity: 0.8;
+                            }
                         }
                     }
                     &-content {

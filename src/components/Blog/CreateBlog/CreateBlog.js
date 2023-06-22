@@ -17,7 +17,7 @@ import 'react-markdown-editor-lite/lib/index.css';
 
 import Tippy from '@tippyjs/react/headless';
 
-import { MdClear } from 'react-icons/md';
+// import { MdClear } from 'react-icons/md';
 import { MdOutlineArrowBackIosNew } from 'react-icons/md';
 
 const cx = classNames.bind(styles);
@@ -75,7 +75,7 @@ function CreateBlog() {
                 })
                 .catch((err) => console.error(err));
         }
-    }, [user]);
+    }, [user, location.state]);
 
     const renderTippy = (prop) => {
         return (
@@ -150,9 +150,9 @@ function CreateBlog() {
                 <Footer />
             </div>
 
-            <div className={cx(!state ? 'hide' : '')}>
-                <div className={cx('btn-back')} onClick={handleHide}>
-                    <MdClear className={cx('icon-back')} />
+            <div className={cx(!state ? 'hide' : 'ctn__confirm')}>
+                <div className={cx('btn-close')} onClick={handleHide}>
+                    <i className={cx('fa-solid fa-xmark')}></i>
                 </div>
                 <ConfirmPost title={title} markdownVal={markdownVal} user={user} />
             </div>

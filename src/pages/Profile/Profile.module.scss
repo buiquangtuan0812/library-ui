@@ -58,22 +58,25 @@
                     }
 
                     .address {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
                         margin: 12px 0 24px 0;
                         span {
-                            margin-right: 80px;
+                            margin-right: 84px;
                         }
                         &-value {
                             margin-right: 0;
                         }
-                    }
-                    .form-add {
-                        margin-bottom: 12px;
-                        input {
-                            width: 326px;
-                            padding: 6px 12px;
-                            border: 1px solid #ccc;
-                            border-radius: 4px;
-                            outline: none;
+                        .form-add {
+                            margin-bottom: 12px;
+                            input {
+                                width: 404px;
+                                padding: 6px 12px;
+                                border: 1px solid #ccc;
+                                border-radius: 4px;
+                                outline: none;
+                            }
                         }
                     }
                 }
@@ -135,7 +138,7 @@
                         color: #757575;
                     }
                     .mail {
-                        margin-right: 45px;
+                        min-width: 252px;
                         p {
                             margin-bottom: 0;
                         }

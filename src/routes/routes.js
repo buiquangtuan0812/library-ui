@@ -13,6 +13,12 @@ import BlogDetail from '~/pages/BlogDetail/BlogDetail';
 import Profile from '~/pages/Profile/Profile';
 import CartUser from '~/pages/CartUser/CartUser';
 import PayCart from '~/components/Cart/Paycart/PayCart';
+import Order from '~/pages/Order/Order';
+
+import HomeAdmin from '~/pages/HomeAdmin/HomeAdmin';
+import ManagementBook from '~/components/Admin/MangementBook/ManagementBook';
+import ViewBookComponent from '~/components/Admin/ViewBook/ViewBook';
+import CreateBook from '~/components/Admin/CreateBook/CreateBook';
 
 // Public routes
 const publicRoutes = [
@@ -20,6 +26,7 @@ const publicRoutes = [
     { path: config.routes.homePage, component: Home },
     { path: config.routes.book, component: Book },
     { path: config.routes.bookType, component: BookTypePage },
+    { path: config.routes.bookAuthor, component: BookTypePage },
     { path: config.routes.bookdetail, component: BookDetail },
     { path: config.routes.login, component: LoginUser },
     {
@@ -49,6 +56,26 @@ const publicRoutes = [
     {
         path: config.routes.createBlog,
         component: CreateBlog,
+    },
+    {
+        path: config.routes.homeAdmin,
+        component: HomeAdmin,
+    },
+    {
+        path: config.routes.manageBook,
+        component: ManagementBook,
+    },
+    {
+        path: config.routes.viewBook,
+        component: ViewBookComponent,
+    },
+    {
+        path: config.routes.createBook,
+        component: CreateBook,
+    },
+    {
+        path: config.routes.order,
+        component: Order,
     },
 ];
 

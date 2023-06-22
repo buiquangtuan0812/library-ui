@@ -3,7 +3,7 @@ import styles from './AccountReview.module.scss';
 
 import { Link } from 'react-router-dom';
 
-import { BiHelpCircle } from 'react-icons/bi';
+import { BiHelpCircle, BiPackage } from 'react-icons/bi';
 import { BsCoin } from 'react-icons/bs';
 import { AiOutlineUser } from 'react-icons/ai';
 
@@ -38,6 +38,17 @@ function AccountReview(props) {
                     <BsCoin className={cx('icon')} />
                     My coin
                 </div>
+
+                <Link
+                    to="/user/order"
+                    state={{ user: props.user, numberCart: props.numberCart }}
+                    className={cx('container__account-coin')}
+                >
+                    <div>
+                        <BiPackage className={cx('icon')} />
+                        My Order
+                    </div>
+                </Link>
 
                 <div className={cx('container__account-feedback')}>
                     <BiHelpCircle className={cx('icon')} />

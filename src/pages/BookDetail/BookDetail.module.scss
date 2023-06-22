@@ -142,11 +142,13 @@
     .comment__user {
         display: flex;
         padding-top: 8px;
-        margin-top: 20px;
+        margin-top: 28px;
         .imgDes-user img {
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
+            margin-right: 16px;
+            border: 1px solid #c31d2a;
         }
         &-text {
             margin-left: 16px;
@@ -187,6 +189,17 @@
                 font-size: 14px;
                 margin-left: 12px;
                 font-weight: 500;
+            }
+        }
+        button {
+            padding: 4px 12px;
+            border: none;
+            color: #000;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 12px;
+            &:hover {
+                opacity: 0.8;
             }
         }
     }

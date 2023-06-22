@@ -120,3 +120,19 @@
         }
     }
 }
+.ctn__confirm {
+    position: relative;
+    .btn-close {
+        position: absolute;
+        top: 8px;
+        left: 12px;
+        z-index: 2;
+        i {
+            padding: 8px;
+            font-size: 24px;
+        }
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}

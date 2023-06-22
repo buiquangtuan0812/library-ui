@@ -289,7 +289,7 @@ function PayCart() {
                                     <div className={cx('container__infor-content')}>
                                         <div className={cx('information-user')}>
                                             <span className={cx('fullName')}>{user.fullName}</span>
-                                            <span>{user.numberPhone}</span>
+                                            <span>{user.tel}</span>
                                         </div>
                                         <div className={cx('address')}>
                                             <span className={cx('address-icon')}>

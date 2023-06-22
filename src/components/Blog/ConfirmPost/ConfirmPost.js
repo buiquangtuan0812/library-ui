@@ -45,13 +45,14 @@ function ConfirmPost(props) {
                 headers: { 'Content-Type': 'application/json' },
             })
             .then((response) => {
+                console.log(response.data);
                 setCheck(true);
             })
             .catch((err) => console.log(err));
     };
     return (
         <div className={cx('container')}>
-            <div className={cx(check ? 'confirm-success' : 'hide')}>
+            <div className={cx(!check ? 'confirm-success' : 'hide')}>
                 <span className={cx('icon-success')}>
                     <i className={cx('fa-solid fa-circle-check')}></i>
                 </span>

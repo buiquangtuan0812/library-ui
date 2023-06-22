@@ -7,8 +7,7 @@ import ConfirmLogin from '~/components/ConfirmLogin/ConfirmLogin';
 import Header from '~/components/Display/Header/Header';
 import Footer from '~/components/Display/Footer/Footer';
 import CategoryBook from '../Book/CategoryBook/CategoryBook';
-
-import { BsFillSendFill } from 'react-icons/bs';
+import RatingStar from './RatingStar/index';
 
 import axios from 'axios';
 import remarkGfm from 'remark-gfm';
@@ -16,22 +15,23 @@ import ReactMarkdown from 'react-markdown';
 
 import { useParams } from 'react-router-dom';
 import { Link, useLocation } from 'react-router-dom';
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 const cx = classNames.bind(styles);
 
 function BookDetail() {
     let { nameBook } = useParams();
-    const [book, setBook] = useState([]);
     document.title = 'Book | ' + nameBook;
+    const [book, setBook] = useState([]);
     const [user, setUser] = useState([]);
     const [check, setCheck] = useState(false);
     const [confirmLogin, setConfirmLogin] = useState(false);
     const [comment, setComment] = useState([]);
-    const [cmtUser, setCmtUser] = useState('');
     const [numberCart, setNumberCart] = useState(0);
+    const [showRating, setShowRating] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const [checkLike, setCheckLike] = useState(false);
 
-    const inputElement = useRef();
     const location = useLocation();
 
     useEffect(() => {
@@ -49,7 +49,7 @@ function BookDetail() {
                 })
                 .catch((err) => console.error(err));
         }
-    }, [location.state]);
+    }, [location.state, success]);
 
     useEffect(() => {
         axios
@@ -68,49 +68,30 @@ function BookDetail() {
                 setComment(cmts.data);
             })
             .catch((err) => console.log(err));
-    }, [nameBook]);
+    }, [nameBook, success, checkLike]);
 
-    const handleCmt = async () => {
-        const data = {
-            book: book._id,
-            title: cmtUser,
-        };
-        await axios
-            .post('http://localhost:8086/users/cmt/create', data, {
-                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${user.accessToken}` },
-            })
-            .then((response) => {
-                const cmt = [response.data];
-                setComment(comment.concat(cmt));
-                inputElement.current.focus();
-                inputElement.current.value = '';
-            })
-            .catch((err) => console.log(err));
+    const handleRatingChange = (value) => {
+        setShowRating(value.state);
+        setSuccess(value.success);
     };
-    document.onkeyup = async (e) => {
-        const data = {
-            book: book._id,
-            title: cmtUser,
-        };
-        if (e.key === 'Enter' && cmtUser !== '') {
-            await axios
-                .post('http://localhost:8086/users/cmt/create', data, {
-                    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${user.accessToken}` },
-                })
-                .then((response) => {
-                    const cmt = [response.data];
-                    setComment(comment.concat(cmt));
-                    inputElement.current.focus();
-                    inputElement.current.value = '';
-                })
-                .catch((err) => console.log(err));
-        }
+
+    const handleLike = (value) => {
+        setCheckLike(value);
     };
+
     const renderCmt = useCallback(
         comment.map((cmt, index) => {
             return (
                 <div key={index}>
-                    <Comment user={cmt._id} title={cmt.title} time={cmt.created_at} />
+                    <Comment
+                        user={user}
+                        id={cmt._id}
+                        title={cmt.title}
+                        time={cmt.created_at}
+                        rating={cmt.rating}
+                        like={cmt.like}
+                        handleLike={handleLike}
+                    />
                 </div>
             );
         }),
@@ -157,6 +138,7 @@ function BookDetail() {
             <div className={cx('container')}>
                 <ConfirmCart check={check} user={user} numberCart={numberCart} />
                 <ConfirmLogin check={confirmLogin} url={document.URL} />
+                {showRating ? <RatingStar onChange={handleRatingChange} book={book} user={user} /> : ''}
                 <div className={cx('separate')}></div>
                 <div className={cx('btn-back')}>
                     <Link to="/library/books" state={{ user: user }}>
@@ -218,22 +200,7 @@ function BookDetail() {
                                         <div className={cx('imgDes-user')}>
                                             <img src={user.imgDes} alt="" />
                                         </div>
-                                        <div className={cx('comment__user-text')}>
-                                            <form>
-                                                <textarea
-                                                    className={cx('input-cmt')}
-                                                    type="text"
-                                                    placeholder="Viết nhận xét - đánh giá!"
-                                                    name="comment"
-                                                    spellCheck={false}
-                                                    maxLength="200"
-                                                    onChange={(e) => setCmtUser(e.target.value)}
-                                                    ref={inputElement}
-                                                />
-                                                <BsFillSendFill className={cx('icon-send')} onClick={handleCmt} />
-                                            </form>
-                                            <span>Nhấn Enter để đăng.</span>
-                                        </div>
+                                        <button onClick={setShowRating}>Viết nhận xét - đánh giá</button>
                                     </div>
                                 </div>
                             </div>
@@ -268,3 +235,32 @@ function BookDetail() {
 }
 
 export default BookDetail;
+
+// import React, { useState } from 'react';
+// import RatingStar from './RatingStar';
+
+// const ProductReview = () => {
+//     const [rating, setRating] = useState(0);
+
+//     const handleRatingChange = (value) => {
+//         setRating(value);
+//     };
+
+//     const handleSubmit = (event) => {
+//         event.preventDefault();
+//         // Gửi đánh giá sản phẩm lên máy chủ hoặc thực hiện hành động khác
+//         console.log('Đánh giá sản phẩm:', rating);
+//     };
+
+//     return (
+//         <div>
+// <h2>Đánh giá sản phẩm</h2>
+// <form onSubmit={handleSubmit}>
+//     <RatingStar onChange={handleRatingChange} />
+//     <button type="submit">Gửi đánh giá</button>
+// </form>
+//         </div>
+//     );
+// };
+
+// export default ProductReview;
