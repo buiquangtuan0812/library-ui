@@ -29,10 +29,10 @@ function BlogDetail() {
             setUser(location.state.user);
         }
         axios
-            .get('http://localhost:8086/library/blogs/details', { params: { _id } })
+            .get('http://localhost:8086/library/blogs/details', { params: { _id: location.state.idBlog } })
             .then((res) => {
-                setAuthor(res.data.author);
-                setContentBlog(res.data.content);
+                setAuthor(res.data.blog.author);
+                setContentBlog(res.data.blog.content);
             })
             .catch((err) => {
                 console.log(err);
