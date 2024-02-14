@@ -14,7 +14,8 @@ function Home() {
     const location = useLocation();
     useEffect(() => {
         if (location.state) {
-            setUser(location.state.user);
+            const user = location.state.user;
+            setUser(user);
             axios
                 .get('http://localhost:8086/users/cart', {
                     headers: {
@@ -31,7 +32,7 @@ function Home() {
 
     return (
         <div>
-            <Header user={user} numberCart={numberCart} />
+            <Header user={user} numberCart={numberCart} page="home" />
             <Body />
             <Footer />
         </div>

@@ -1,6 +1,6 @@
 .footer {
     font-family: 'Calibre', Helvetica, Arial, sans-serif;
-    background-color: #000;
+    background-color: #1b3764;
     display: flex;
     justify-content: space-around;
     padding: 0 200px;
@@ -9,7 +9,7 @@
     list-style-type: none;
     height: 160px;
     color: #ffffff;
-    border-right: 1px solid #333;
+    border-right: 1px solid #ffca42;
     ul {
         cursor: pointer;
         padding: 24px 0 0 0;
@@ -29,7 +29,7 @@
     align-items: center;
     height: 160px;
     color: #ffffff;
-    border-left: 1px solid #333;
+    border-left: 1px solid #ffca42;
     li {
         color: #ffffff;
         padding: 0 12px;

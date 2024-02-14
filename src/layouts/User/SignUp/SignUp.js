@@ -1,9 +1,10 @@
-import classNames from 'classnames/bind';
-import styles from './SignUp.module.scss';
-import Notification from '~/components/Display/Notification/Notification';
-
 import axios from 'axios';
 import { useState } from 'react';
+import classNames from 'classnames/bind';
+
+import styles from './SignUp.module.scss';
+import Loading from '~/components/FormLoading/Loading';
+import Notification from '~/components/Display/Notification/Notification';
 
 const cx = classNames.bind(styles);
 
@@ -23,6 +24,7 @@ function SignUpForm() {
     const [warnTel, setWarningTel] = useState(false);
     const [warnEmail, setWarningEmail] = useState(false);
     const [warnPassword, setWarningPassword] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const [checkRegister, setCheckRegister] = useState(false);
     const [message, setMessage] = useState('');
@@ -31,6 +33,7 @@ function SignUpForm() {
 
     const handleSignup = () => {
         setCount(count + 1);
+        setIsLoading(true);
         const dataUser = {
             username: username,
             email: email,
@@ -48,31 +51,39 @@ function SignUpForm() {
             setErrorName(true);
             setErrorTel(true);
             setErrorPassword(true);
+            setIsLoading(false);
         } else if (username.length < 6) {
             setWarningName(true);
+            setIsLoading(false);
         } else if (email.slice(email.length - 10, email.length) !== '@gmail.com') {
             setWarningEmail(true);
+            setIsLoading(false);
         } else if (password.length < 6) {
             setWarningPassword(true);
+            setIsLoading(false);
         } else {
-            setState(true);
-            axios
-                .post('http://localhost:8086/user/signup', dataUser, {
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                })
-                .then((res) => {
-                    setToken(res.data);
-                    setMessage('You have successfully registered !');
-                    setMessageLink('Login now!');
-                    setCheckRegister(true);
-                })
-                .catch((err) => {
-                    setMessage(err.request.response);
-                    setMessageLink('Try re-entering !');
-                    setCheckRegister(false);
-                });
+            setTimeout(() => {
+                axios
+                    .post('http://localhost:8086/user/signup', dataUser, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    })
+                    .then((res) => {
+                        setState(true);
+                        setIsLoading(false);
+                        setToken(res.data);
+                        setMessage('You have successfully registered !');
+                        setMessageLink('Login now!');
+                        setCheckRegister(true);
+                    })
+                    .catch((err) => {
+                        setIsLoading(false);
+                        setMessage(err.request.response);
+                        setMessageLink('Try re-entering !');
+                        setCheckRegister(false);
+                    });
+            }, 800);
         }
     };
 
@@ -201,6 +212,14 @@ function SignUpForm() {
                     </button>
                 </div>
             </div>
+
+            {isLoading ? (
+                <div className={cx('form-loading')}>
+                    <Loading props="Đang đăng ký" />
+                </div>
+            ) : (
+                ''
+            )}
         </div>
     );
 }

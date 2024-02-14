@@ -4,7 +4,7 @@
     right: 0;
     left: 0;
     top: 0;
-    background-color: #000;
+    background-color: #1b3764;
     height: 80px;
     justify-content: space-between;
     align-items: center;
@@ -25,11 +25,11 @@
 .container__content-book,
 .container__content-author,
 .container__content-blog {
-    font-size: 22px;
+    font-size: 18px;
     padding: 6px 12px;
     margin-right: 16px;
     :hover {
-        color: #ff424f;
+        color: #ffca42;
     }
 }
 .container__content-book {
@@ -82,16 +82,16 @@
 .container__account-cash,
 .container__account-user {
     position: relative;
-    font-size: 22px;
+    font-size: 18px;
     padding: 6px 12px;
     margin-left: 16px;
     color: #ffffff;
 }
 .container__account-support:hover a {
-    color: #ff424f;
+    color: #ffca42;
 }
 .container__account-login:hover {
-    color: #ff424f;
+    color: #ffca42;
 }
 .iconUser {
     width: 36px;
@@ -120,7 +120,7 @@
         border-radius: 20px;
     }
     &:hover {
-        color: #ff424f;
+        color: #ffca42;
         span {
             color: #ffffff;
         }

@@ -117,11 +117,12 @@
             button {
                 width: 218px;
                 padding: 12px;
-                background-color: #f42535;
-                color: #fff;
-                border: none;
+                background-color: #ffca42;
+                color: #000;
+                border: 2px solid #ffca42;
                 &:hover {
-                    background-color: #c31d2a;
+                    border: 2px solid #ffca42;
+                    background-color: transparent;
                 }
             }
         }

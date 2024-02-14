@@ -21,15 +21,21 @@ function Header(props) {
             <div className={cx('container__content')}>
                 <div className={cx('container__content-book')}>
                     <Link to="/library/books" state={props.user ? { user: props.user } : ''}>
-                        Sách
+                        {props.page === 'book' ? <span style={{ color: '#ffca42' }}>Sách</span> : <span>Sách</span>}
                     </Link>
                 </div>
                 <div className={cx('container__content-author')}>
-                    <Link to="/library/authors">Tác giả</Link>
+                    <Link to="/library/authors" state={props.user ? { user: props.user } : ''}>
+                        {props.page === 'author' ? (
+                            <span style={{ color: '#ffca42' }}>Tác giả</span>
+                        ) : (
+                            <span>Tác giả</span>
+                        )}
+                    </Link>
                 </div>
                 <div className={cx('container__content-blog')}>
                     <Link to="/library/blogs" state={props.user ? { user: props.user } : ''}>
-                        Blogs
+                        {props.page === 'blog' ? <span style={{ color: '#ffca42' }}>Blogs</span> : <span>Blogs</span>}
                     </Link>
                 </div>
             </div>

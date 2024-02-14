@@ -112,7 +112,7 @@ function Blog() {
 
     return (
         <div>
-            <Header user={dataUser} numberCart={numberCart} />
+            <Header user={dataUser} numberCart={numberCart} page="blog" />
             <div className={cx('container')}>
                 <div className={cx('header-page')}>
                     <div>

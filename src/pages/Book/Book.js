@@ -138,7 +138,7 @@ function BookPage() {
 
     return (
         <div>
-            <Header user={user} numberCart={numberCart} />
+            <Header user={user} numberCart={numberCart} page="book" />
             <div className={cx('container')}>
                 <div className={cx('separate')}></div>
                 <div className={cx('btn-back')}>

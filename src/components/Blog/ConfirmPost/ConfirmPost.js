@@ -52,7 +52,7 @@ function ConfirmPost(props) {
     };
     return (
         <div className={cx('container')}>
-            <div className={cx(!check ? 'confirm-success' : 'hide')}>
+            <div className={cx(check ? 'confirm-success' : 'hide')}>
                 <span className={cx('icon-success')}>
                     <i className={cx('fa-solid fa-circle-check')}></i>
                 </span>
