@@ -51,29 +51,31 @@ function CategoryBook(props) {
 
     const listAuthor = ['Dale Carnegie', 'Paulo Coelho', 'Thích Nhất Hạnh', 'Tony Buổi Sáng', 'Nguyễn Nhật Ánh'];
 
-    const changeColor = (index) => {
-        const arr = [false, false, false, false, false, false, false, false];
-        setStateAuthor([false, false, false, false, false]);
-        setArea([false, false]);
-        setState(arr);
-        arr[index] = true;
-        setState(arr);
+    const generateFalseArray = (size) => {
+        return new Array(size).fill(false);
     };
-    const changeColorAuthor = (index) => {
-        const arr = [false, false, false, false, false];
-        setState([false, false, false, false, false, false, false, false]);
-        setArea([false, false]);
-        setStateAuthor(arr);
+
+    const changeColor = (index) => {
+        const arr = generateFalseArray(8);
         arr[index] = true;
+        setState(arr);
+        setStateAuthor(generateFalseArray(5));
+        setArea(generateFalseArray(2));
+    };
+
+    const changeColorAuthor = (index) => {
+        const arr = generateFalseArray(5);
+        arr[index] = true;
+        setState(generateFalseArray(8));
         setStateAuthor(arr);
+        setArea(generateFalseArray(2));
     };
 
     const changeColorArea = (index) => {
-        const arr = [false, false];
-        setState([false, false, false, false, false, false, false, false]);
-        setStateAuthor([false, false, false, false, false]);
-        setArea(arr);
+        const arr = generateFalseArray(2);
         arr[index] = true;
+        setState(generateFalseArray(8));
+        setStateAuthor(generateFalseArray(5));
         setArea(arr);
     };
 

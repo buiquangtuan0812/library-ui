@@ -27,7 +27,7 @@
             }
             .back {
                 margin-left: 8px;
-                font-size: 20px;
+                font-size: 18px;
                 a {
                     color: #ffffff;
                     text-decoration: none;
@@ -57,7 +57,7 @@
             align-items: center;
             color: #ffffff;
             .support {
-                font-size: 22px;
+                font-size: 18px;
                 font-weight: 540;
                 margin-right: 40px;
                 padding: 8px;
@@ -70,8 +70,8 @@
                 margin-right: 40px;
                 padding: 8px;
                 .icon-user {
-                    width: 36px;
-                    height: 36px;
+                    width: 32px;
+                    height: 32px;
                     border-radius: 50%;
                 }
                 &:hover {
@@ -80,13 +80,13 @@
             }
             .cart {
                 color: #ffffff;
-                font-size: 22px;
+                font-size: 18px;
                 font-weight: 600;
                 padding: 8px 12px;
                 margin-right: 8px;
                 position: relative;
                 span {
-                    font-size: 16px;
+                    font-size: 14px;
                     top: -2px;
                     position: absolute;
                     right: -2px;
@@ -95,7 +95,7 @@
                     padding: 4px;
                     height: 18px;
                     justify-content: center;
-                    width: 24px;
+                    width: 20px;
                     background-color: #ff424f;
                     border-radius: 20px;
                 }
@@ -108,11 +108,11 @@
     }
 
     &-body {
-        padding: 120px 146px;
+        padding: 120px 140px;
         background-color: #f5f5fa;
         .container {
             h2 {
-                font-size: 24px;
+                font-size: 20px;
                 font-weight: 600;
                 margin: 24px 0;
             }
@@ -127,6 +127,7 @@
                     position: sticky;
                     z-index: 99;
                     top: 81px;
+                    font-size: 14px;
                     .check-box {
                         input {
                             width: 16px;
@@ -214,6 +215,7 @@
                         display: flex;
                         justify-content: space-between;
                         margin-bottom: 12px;
+                        font-size: 15px;
                         .btn-change {
                             color: rgb(11, 116, 229);
                             &:hover {
@@ -226,6 +228,7 @@
                         .information-user {
                             margin-bottom: 12px;
                             font-weight: 550;
+                            font-size: 14px;
                             .fullName {
                                 padding-right: 12px;
                                 margin-right: 12px;

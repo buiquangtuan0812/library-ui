@@ -88,19 +88,18 @@ function CartUser() {
 
     const renderCart = carts.map((cart, index) => {
         return (
-            <div key={index}>
-                <CartItem
-                    user={user}
-                    select={selectAll}
-                    idCart={cart._id}
-                    idBook={cart.book}
-                    quantity={cart.quantity}
-                    total={cart.total}
-                    stateCart={cart.state}
-                    confirm={confirm}
-                    handleChildData={handleChildData}
-                />
-            </div>
+            <CartItem
+                user={user}
+                select={selectAll}
+                idCart={cart._id}
+                idBook={cart.book}
+                quantity={cart.quantity}
+                total={cart.total}
+                stateCart={cart.state}
+                confirm={confirm}
+                handleChildData={handleChildData}
+                key={index}
+            />
         );
     });
 
@@ -157,149 +156,141 @@ function CartUser() {
     };
 
     return (
-        <div>
-            <div className={cx('container__page')}>
-                {notice ? <Notification handleProps={handleProps} /> : ''}
-                {show ? <FormUpdate child={child} user={user} /> : ''}
-                <div className={cx('container__page-header')}>
-                    <div className={cx('btn-back')}>
-                        <span className={cx('icon-back')}>
-                            <MdOutlineArrowBackIosNew />
-                        </span>
-                        <span className={cx('back')}>
-                            <Link to="/library/books" state={{ user }}>
-                                Quay lại
-                            </Link>
-                        </span>
-                    </div>
-                    <div className={cx('logo')}>
-                        <Link to="/home" state={{ user }}>
-                            <span className={cx('icon')}></span>
+        <div className={cx('container__page')}>
+            {notice ? <Notification handleProps={handleProps} /> : ''}
+            {show ? <FormUpdate child={child} user={user} /> : ''}
+            <div className={cx('container__page-header')}>
+                <div className={cx('btn-back')}>
+                    <span className={cx('icon-back')}>
+                        <MdOutlineArrowBackIosNew />
+                    </span>
+                    <span className={cx('back')}>
+                        <Link to="/library/books" state={{ user }}>
+                            Quay lại
                         </Link>
-                    </div>
-                    <div className={cx('container__page-header-item')}>
-                        <span className={cx('support')}>Hỗ trợ</span>
-                        <Tippy
-                            render={renderTippy}
-                            interactive
-                            delay={[200, 100]}
-                            offset={[-85, 12]}
-                            placement="bottom"
-                        >
-                            <span className={cx('my-account')}>
-                                <img className={cx('icon-user')} src={user.imgDes} alt="" />
-                            </span>
-                        </Tippy>
-                        <span className={cx('cart')}>
-                            <i className={cx('fa-solid fa-cart-shopping')}></i>
-                            {user.accessToken ? <span>{numberCart}</span> : ''}
-                        </span>
-                    </div>
+                    </span>
                 </div>
-                <div className={cx('container__page-body')}>
-                    <div className={cx('container')}>
-                        <h2>GIỎ HÀNG</h2>
-                        <div className={cx('row')}>
-                            <div className={cx('col-9')}>
-                                <div className={cx('container__left')}>
-                                    <div className={cx('container__left-header')}>
-                                        <div className={cx('check-box')}>
-                                            <input type="checkbox" onChange={handleSelect} />
-                                        </div>
-                                        <div className={cx('product')}>Tất cả ({numberCart} sản phẩm)</div>
-                                        <div className={cx('price')}>Đơn giá</div>
-                                        <div className={cx('quantity')}>Số lượng</div>
-                                        <div className={cx('money')}>Thành tiền</div>
-                                        <div className={cx('trash')}>
-                                            <FaTrashAlt className={cx('icon-trash')} />
-                                            <span>Xóa mục đã chọn</span>
-                                        </div>
+                <div className={cx('logo')}>
+                    <Link to="/home" state={{ user }}>
+                        <span className={cx('icon')}></span>
+                    </Link>
+                </div>
+                <div className={cx('container__page-header-item')}>
+                    <span className={cx('support')}>Hỗ trợ</span>
+                    <Tippy render={renderTippy} interactive delay={[200, 100]} offset={[-85, 12]} placement="bottom">
+                        <span className={cx('my-account')}>
+                            <img className={cx('icon-user')} src={user.imgDes} alt="" />
+                        </span>
+                    </Tippy>
+                    <span className={cx('cart')}>
+                        <i className={cx('fa-solid fa-cart-shopping')}></i>
+                        {user.accessToken ? <span>{numberCart}</span> : ''}
+                    </span>
+                </div>
+            </div>
+            <div className={cx('container__page-body')}>
+                <div className={cx('container')}>
+                    <h2>GIỎ HÀNG</h2>
+                    <div className={cx('row')}>
+                        <div className={cx('col-9')}>
+                            <div className={cx('container__left')}>
+                                <div className={cx('container__left-header')}>
+                                    <div className={cx('check-box')}>
+                                        <input type="checkbox" onChange={handleSelect} />
                                     </div>
-                                    <div className={cx('container__cart-item')}>
-                                        {carts.length > 0 ? (
-                                            renderCart
-                                        ) : (
-                                            <div className={cx('confirm-notice')}>
-                                                <span>
-                                                    <img
-                                                        src="https://frontend.tikicdn.com/_desktop-next/static/img/account/empty-order.png"
-                                                        alt=""
-                                                    />
-                                                </span>
-                                                <span>Chưa có đơn hàng</span>
-                                            </div>
-                                        )}
+                                    <div className={cx('product')}>Tất cả ({numberCart} sản phẩm)</div>
+                                    <div className={cx('price')}>Đơn giá</div>
+                                    <div className={cx('quantity')}>Số lượng</div>
+                                    <div className={cx('money')}>Thành tiền</div>
+                                    <div className={cx('trash')}>
+                                        <FaTrashAlt className={cx('icon-trash')} />
+                                        <span>Xóa mục đã chọn</span>
                                     </div>
                                 </div>
+                                <div className={cx('container__cart-item')}>
+                                    {carts.length > 0 ? (
+                                        renderCart
+                                    ) : (
+                                        <div className={cx('confirm-notice')}>
+                                            <span>
+                                                <img
+                                                    src="https://frontend.tikicdn.com/_desktop-next/static/img/account/empty-order.png"
+                                                    alt=""
+                                                />
+                                            </span>
+                                            <span>Chưa có đơn hàng</span>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
-                            <div className={cx('col-3')}>
-                                <div className={cx('container__right')}>
-                                    <div className={cx('container__infor')}>
-                                        <div className={cx('container__infor-header')}>
-                                            <span>Giao tới</span>
-                                            <span className={cx('btn-change')} onClick={() => setShow(true)}>
-                                                {user.address ? 'Thay đổi' : 'Thêm'}
-                                            </span>
-                                        </div>
-
-                                        <div className={cx('container__infor-content')}>
-                                            <div className={cx('information-user')}>
-                                                <span className={cx('fullName')}>{user.fullName || user.username}</span>
-                                                <span>{user.tel}</span>
-                                            </div>
-                                            <div className={cx('address')}>
-                                                <span className={cx('address-icon')}>
-                                                    <AiTwotoneHome className={cx('icon-address')} />
-                                                </span>
-                                                <span className={cx('address-detail')}>{user.address}</span>
-                                            </div>
-                                        </div>
+                        </div>
+                        <div className={cx('col-3')}>
+                            <div className={cx('container__right')}>
+                                <div className={cx('container__infor')}>
+                                    <div className={cx('container__infor-header')}>
+                                        <span>Giao tới</span>
+                                        <span className={cx('btn-change')} onClick={() => setShow(true)}>
+                                            {user.address ? 'Thay đổi' : 'Thêm'}
+                                        </span>
                                     </div>
 
-                                    <div className={cx('container__money')}>
-                                        <div className={cx('container__money-notice')}>
-                                            * Trên 200.000đ sẽ được giảm giá!
+                                    <div className={cx('container__infor-content')}>
+                                        <div className={cx('information-user')}>
+                                            <span className={cx('fullName')}>{user.fullName || user.username}</span>
+                                            <span>{user.tel}</span>
                                         </div>
-                                        <div className={cx('container__money-anti')}>
-                                            <span>Tạm tính</span>
-                                            <span className={cx('container__money-anti-value')}>
-                                                {solveString(totalBill)} đ
+                                        <div className={cx('address')}>
+                                            <span className={cx('address-icon')}>
+                                                <AiTwotoneHome className={cx('icon-address')} />
                                             </span>
+                                            <span className={cx('address-detail')}>{user.address}</span>
                                         </div>
-                                        <div className={cx('container__money-discount')}>
-                                            <span>Giảm giá</span>
-                                            <span className={cx('container__money-discount-value')}>
-                                                {solveString(countSalse(totalBill))} đ
-                                            </span>
-                                        </div>
-                                        <div className={cx('container__money-total')}>
-                                            <span>Tổng tiền</span>
-                                            <span className={cx('container__money-total-value')}>
-                                                {solveString(totalBill - countSalse(totalBill))}
-                                                <span className={cx('unit')}>đ</span>
-                                            </span>
-                                        </div>
-                                        <Link
-                                            to="/user/payment"
-                                            className={cx('container__btn-buy')}
-                                            state={{
-                                                user: user,
-                                                numberCart: numberCart,
-                                                card: cardPayment,
-                                                totalBill: totalBill,
-                                            }}
-                                            onClick={handleClick}
-                                        >
-                                            <div>Đặt mua</div>
-                                        </Link>
                                     </div>
+                                </div>
+
+                                <div className={cx('container__money')}>
+                                    <div className={cx('container__money-notice')}>
+                                        * Trên 200.000đ sẽ được giảm giá!
+                                    </div>
+                                    <div className={cx('container__money-anti')}>
+                                        <span>Tạm tính</span>
+                                        <span className={cx('container__money-anti-value')}>
+                                            {solveString(totalBill)} đ
+                                        </span>
+                                    </div>
+                                    <div className={cx('container__money-discount')}>
+                                        <span>Giảm giá</span>
+                                        <span className={cx('container__money-discount-value')}>
+                                            {solveString(countSalse(totalBill))} đ
+                                        </span>
+                                    </div>
+                                    <div className={cx('container__money-total')}>
+                                        <span>Tổng tiền</span>
+                                        <span className={cx('container__money-total-value')}>
+                                            {solveString(totalBill - countSalse(totalBill))}
+                                            <span className={cx('unit')}>đ</span>
+                                        </span>
+                                    </div>
+                                    <Link
+                                        to="/user/payment"
+                                        className={cx('container__btn-buy')}
+                                        state={{
+                                            user: user,
+                                            numberCart: numberCart,
+                                            card: cardPayment,
+                                            totalBill: totalBill,
+                                        }}
+                                        onClick={handleClick}
+                                    >
+                                        <div>Đặt mua</div>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <Footer />
             </div>
+            <Footer />
         </div>
     );
 }

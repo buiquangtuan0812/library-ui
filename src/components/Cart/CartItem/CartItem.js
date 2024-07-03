@@ -153,23 +153,21 @@ function CartItem(props) {
                         <span>đ</span>
                     </del>
                 </div>
-                <div className={cx('quantity')}>
-                    {!props.stateCart ? (
-                        <div>
-                            <span className={cx('subtraction')} onClick={handleReduce}>
-                                <RiSubtractFill />
-                            </span>
-                            <span className={cx('number')}>{quantity}</span>
-                            <span className={cx('summation')} onClick={handleIncrease}>
-                                <IoIosAdd />
-                            </span>
-                            {confirm ? <span className={cx('notice')}>Ít nhất 1 quyển!</span> : ''}
-                            {notice ? <span className={cx('notice')}>Tối đa 3 quyển!</span> : ''}
-                        </div>
-                    ) : (
-                        ''
-                    )}
-                </div>
+                {!props.stateCart ? (
+                    <div className={cx('quantity')}>
+                        <span className={cx('subtraction')} onClick={handleReduce}>
+                            <RiSubtractFill />
+                        </span>
+                        <span className={cx('number')}>{quantity}</span>
+                        <span className={cx('summation')} onClick={handleIncrease}>
+                            <IoIosAdd />
+                        </span>
+                        {confirm ? <span className={cx('notice')}>Ít nhất 1 quyển!</span> : ''}
+                        {notice ? <span className={cx('notice')}>Tối đa 3 quyển!</span> : ''}
+                    </div>
+                ) : (
+                    ''
+                )}
                 <div className={cx('money')}>
                     {!props.stateCart ? (
                         <div>

@@ -25,36 +25,46 @@ function LoginUser() {
         }
     }, [location.state]);
 
-    const handleLogin = (e) => {
+    const API_URL = 'http://localhost:8086/user/signin';
+
+    const handleLogin = async (e) => {
         e.preventDefault();
         setIsLoading(true);
         const dataUser = {
             username: username,
             password: password,
         };
-        setTimeout(() => {
-            axios
-                .post('http://localhost:8086/user/signin', dataUser)
-                .then((response) => {
-                    if (response.data.message) {
-                        setIsLoading(false);
-                        setErr(response.data.message);
-                    } else {
-                        // setData(response.data);
-                        setErr('');
-                        setIsLoading(false);
-                        if (response.data.accessToken) {
-                            let newUrl = url.replace('localhost:3000/', '').replace('http://', '');
-                            const newPath = `/${newUrl}` || '/home';
-                            navigate(newPath, { state: { user: response.data } });
-                        }
-                    }
-                })
-                .catch((err) => {
-                    setIsLoading(false);
-                    console.log(err);
-                });
-        }, 1000);
+
+        try {
+            const response = await loginUser(dataUser);
+            handleResponse(response);
+        } catch (err) {
+            setIsLoading(false);
+            setErr('An error occurred. Please try again.');
+        }
+    };
+
+    const loginUser = (dataUser) => {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                axios.post(API_URL, dataUser).then(resolve).catch(reject);
+            }, 1000);
+        });
+    };
+
+    const handleResponse = (response) => {
+        if (response.data.message) {
+            setIsLoading(false);
+            setErr(response.data.message);
+        } else {
+            setErr('');
+            setIsLoading(false);
+            if (response.data.accessToken) {
+                let newUrl = url.replace('localhost:3000/', '').replace('http://', '');
+                const newPath = `/${newUrl}` || '/home';
+                navigate(newPath, { state: { user: response.data } });
+            }
+        }
     };
 
     return (
