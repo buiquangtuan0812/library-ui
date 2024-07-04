@@ -60,7 +60,7 @@ function LoginUser() {
             setErr('');
             setIsLoading(false);
             if (response.data.accessToken) {
-                let newUrl = url.replace('localhost:3000/', '').replace('http://', '');
+                let newUrl = url.replace('my-library-ecru-one.vercel.app/', '').replace('https://', '');
                 const newPath = `/${newUrl}` || '/home';
                 navigate(newPath, { state: { user: response.data } });
             }
