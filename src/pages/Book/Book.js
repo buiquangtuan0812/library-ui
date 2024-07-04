@@ -55,11 +55,7 @@ function BookPage() {
                 if (book.name.includes(inputBook)) {
                     return (
                         <div className={cx('col-3')} key={index}>
-                            <Link
-                                className={cx('link-item')}
-                                to={`/library/book/detail/${book.name}`}
-                                state={{ user: user }}
-                            >
+                            <Link className={cx('link-item')} to={`/book/detail/${book.name}`} state={{ user: user }}>
                                 <div className={cx('book-item')}>
                                     <div className={cx('card')}>
                                         <img src={book.imgDes} className={cx('card-img-top')} alt="..." />
