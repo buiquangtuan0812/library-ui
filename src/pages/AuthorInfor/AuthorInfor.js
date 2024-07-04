@@ -21,7 +21,7 @@ const AuthorInfor = () => {
         if (location.state) {
             setUser(location.state.user);
             axios
-                .get('http://localhost:8086/users/cart', {
+                .get('https://be-library.vercel.app/users/cart', {
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${location.state.user.accessToken}`,
@@ -36,7 +36,7 @@ const AuthorInfor = () => {
 
     useEffect(() => {
         axios
-            .get('http://localhost:8086/library/author/get_literary', {
+            .get('https://be-library.vercel.app/library/author/get_literary', {
                 params: {
                     name: location.state.name,
                 },

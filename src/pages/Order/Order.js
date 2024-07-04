@@ -33,7 +33,7 @@ function Order() {
             setUser(location.state.user);
             setNumberCart(location.state.numberCart);
             axios
-                .get('http://localhost:8086/users/order', {
+                .get('https://be-library.vercel.app/users/order', {
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${location.state.user.accessToken}`,

@@ -18,8 +18,8 @@ function BookTypePage() {
     const [numberCart, setNumberCart] = useState(0);
     const location = useLocation();
     document.title = 'Book | ' + location.state.type;
-    const url = 'http://localhost:8086/library/books/' + location.state.title;
-    const urlAuthor = 'http://localhost:8086/library/books/author';
+    const url = 'https://be-library.vercel.app/library/books/' + location.state.title;
+    const urlAuthor = 'https://be-library.vercel.app/library/books/author';
     useEffect(() => {
         setUser(location.state.user);
         if (location.state.author) {
@@ -38,7 +38,7 @@ function BookTypePage() {
                 });
         }
         axios
-            .get('http://localhost:8086/users/cart', {
+            .get('https://be-library.vercel.app/users/cart', {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${location.state.user.accessToken}`,
@@ -75,7 +75,7 @@ function BookTypePage() {
 
     const searchBook = () => {
         axios
-            .get('http://localhost:8086/library/books/search', { params: { name: inputBook } })
+            .get('https://be-library.vercel.app/library/books/search', { params: { name: inputBook } })
             .then((response) => {
                 if (response.data.length > 1) {
                     setdataBook(response.data);

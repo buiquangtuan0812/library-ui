@@ -64,7 +64,7 @@ function SignUpForm() {
         } else {
             setTimeout(() => {
                 axios
-                    .post('http://localhost:8086/user/signup', dataUser, {
+                    .post('https://be-library.vercel.app/user/signup', dataUser, {
                         headers: {
                             'Content-Type': 'application/json',
                         },

@@ -31,7 +31,7 @@ function ManagementBook() {
             setIndex(location.state.index);
         }
         axios
-            .get('http://localhost:8086/library/books')
+            .get('https://be-library.vercel.app/library/books')
             .then((res) => setdataBook(res.data))
             .catch((err) => {
                 console.error(err);
@@ -69,7 +69,7 @@ function ManagementBook() {
 
     const handleSearch = () => {
         axios
-            .get('http://localhost:8086/library/books/search', { params: { name: nameBook } })
+            .get('https://be-library.vercel.app/library/books/search', { params: { name: nameBook } })
             .then((response) => {
                 if (response.data.length > 1) {
                     setdataBook(response.data);
@@ -129,14 +129,14 @@ function ManagementBook() {
     const handleFilter = (e) => {
         if (e === '') {
             axios
-                .get('http://localhost:8086/library/books')
+                .get('https://be-library.vercel.app/library/books')
                 .then((response) => {
                     setdataBook(response.data);
                 })
                 .catch((err) => console.error(err));
         } else {
             axios
-                .get('http://localhost:8086/library/books/get-by-type', { params: { type: e } })
+                .get('https://be-library.vercel.app/library/books/get-by-type', { params: { type: e } })
                 .then((response) => {
                     setdataBook(response.data);
                 })

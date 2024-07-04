@@ -26,7 +26,7 @@ function FormUpdate(props) {
         e.preventDefault();
         props.user.address = inputValue;
         axios
-            .put('http://localhost:8086/user/update/profile', props.user, {
+            .put('https://be-library.vercel.app/user/update/profile', props.user, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${props.user.accessToken}`,

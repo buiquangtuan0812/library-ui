@@ -66,7 +66,7 @@ function FormUpdate(props) {
             }
         }
         axios
-            .put('http://localhost:8086/user/update/profile', user, {
+            .put('https://be-library.vercel.app/user/update/profile', user, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${user.accessToken}`,
@@ -118,7 +118,7 @@ function FormUpdate(props) {
                 },
             };
             axios
-                .put('http://localhost:8086/user/update/password', data, config)
+                .put('https://be-library.vercel.app/user/update/password', data, config)
                 .then((res) => {
                     if (res.status === 200 && res.data.message === 'Password updated successfully!') {
                         setWarn([false, false, false, false]);

@@ -98,7 +98,7 @@ function PayCart() {
             listCart: data,
         };
         axios
-            .post('http://localhost:8086/user/pay', dataBill, {
+            .post('https://be-library.vercel.app/user/pay', dataBill, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${user.accessToken}`,

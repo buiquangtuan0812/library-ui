@@ -38,7 +38,7 @@ function BookDetail() {
         if (location.state) {
             setUser(location.state.user);
             axios
-                .get('http://localhost:8086/users/cart', {
+                .get('https://be-library.vercel.app/users/cart', {
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${location.state.user.accessToken}`,
@@ -53,7 +53,7 @@ function BookDetail() {
 
     useEffect(() => {
         axios
-            .get('http://localhost:8086/library/books/detail', { params: { name: nameBook } })
+            .get('https://be-library.vercel.app/library/books/detail', { params: { name: nameBook } })
             .then((res) => {
                 setBook(res.data);
             })
@@ -63,7 +63,7 @@ function BookDetail() {
     }, [nameBook]);
     useEffect(() => {
         axios
-            .get('http://localhost:8086/users/cmt', { params: { name: nameBook } })
+            .get('https://be-library.vercel.app/users/cmt', { params: { name: nameBook } })
             .then((cmts) => {
                 setComment(cmts.data);
             })
@@ -114,7 +114,7 @@ function BookDetail() {
                 quantity: 1,
             };
             await axios
-                .post('http://localhost:8086/users/cart/add', data, {
+                .post('https://be-library.vercel.app/users/cart/add', data, {
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${user.accessToken}`,

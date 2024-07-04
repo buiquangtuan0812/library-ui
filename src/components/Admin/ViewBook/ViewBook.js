@@ -102,7 +102,7 @@ function ViewBookComponent() {
         };
         setData(data);
         axios
-            .put('http://localhost:8086/admin/update-book', data, {
+            .put('https://be-library.vercel.app/admin/update-book', data, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${dataUser.accessToken}`,

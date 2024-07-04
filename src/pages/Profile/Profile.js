@@ -69,7 +69,7 @@ function Profile() {
         user.birthDate = day + '/' + month + '/' + year || user.birthDate;
         setUser(user);
         axios
-            .put('http://localhost:8086/user/update/profile', user, {
+            .put('https://be-library.vercel.app/user/update/profile', user, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${user.accessToken}`,

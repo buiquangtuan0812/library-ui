@@ -37,7 +37,7 @@ const RatingStar = (props) => {
             rating: rating,
         };
         await axios
-            .post('http://localhost:8086/users/cmt/create', data, {
+            .post('https://be-library.vercel.app/users/cmt/create', data, {
                 headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${props.user.accessToken}` },
             })
             .then((response) => {

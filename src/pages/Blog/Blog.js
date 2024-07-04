@@ -25,7 +25,7 @@ function Blog() {
             setUser(location.state.user);
         }
         axios
-            .get('http://localhost:8086/users/cart', {
+            .get('https://be-library.vercel.app/users/cart', {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${location.state.user.accessToken}`,
@@ -36,7 +36,7 @@ function Blog() {
             })
             .catch((err) => console.error(err));
         axios
-            .get('http://localhost:8086/library/blogs')
+            .get('https://be-library.vercel.app/library/blogs')
             .then((res) => setBlogs(res.data))
             .catch((err) => console.error(err));
     }, [location.state]);

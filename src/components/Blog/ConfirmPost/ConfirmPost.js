@@ -41,7 +41,7 @@ function ConfirmPost(props) {
             },
         };
         axios
-            .post('http://localhost:8086/library/blogs/create', data, {
+            .post('https://be-library.vercel.app/library/blogs/create', data, {
                 headers: { 'Content-Type': 'application/json' },
             })
             .then((response) => {

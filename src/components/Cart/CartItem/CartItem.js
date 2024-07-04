@@ -23,7 +23,7 @@ function CartItem(props) {
 
     useEffect(() => {
         axios
-            .get('http://localhost:8086/library/books/by', { params: { _id: props.idBook } })
+            .get('https://be-library.vercel.app/library/books/by', { params: { _id: props.idBook } })
             .then((response) => {
                 setData(response.data);
                 setPrice(response.data.price);
