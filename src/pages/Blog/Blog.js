@@ -79,7 +79,7 @@ function Blog() {
         return (
             <Link
                 key={index}
-                to={`/library/blog-detail/${blog._id}`}
+                to={`/blog-detail/${blog._id}`}
                 state={dataUser ? { user: dataUser, idBlog: blog._id } : { idBlog: blog._id }}
                 className={cx('blog-detail')}
             >
@@ -120,7 +120,7 @@ function Blog() {
                         <p>Tổng hợp các bài viết chia sẻ về sách.</p>
                     </div>
                     <div className={cx('btn-create')}>
-                        <Link to={'/library/blogs/create'} state={dataUser ? { user: dataUser } : ''}>
+                        <Link to={'/blogs/create'} state={dataUser ? { user: dataUser } : ''}>
                             <button>
                                 <FaPen className={cx('icon-pen')} /> Viết blog
                             </button>

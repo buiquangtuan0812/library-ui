@@ -165,7 +165,7 @@ function CartUser() {
                         <MdOutlineArrowBackIosNew />
                     </span>
                     <span className={cx('back')}>
-                        <Link to="/library/books" state={{ user }}>
+                        <Link to="/books" state={{ user }}>
                             Quay lại
                         </Link>
                     </span>

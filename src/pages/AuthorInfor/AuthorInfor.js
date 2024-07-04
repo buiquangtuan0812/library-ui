@@ -66,7 +66,7 @@ const AuthorInfor = () => {
             <Header user={user} numberCart={numberCart} page="home" />
             <div className={cx('container')}>
                 <div className={cx('btn-back')}>
-                    <Link to="/library/authors">
+                    <Link to="/authors">
                         <span>
                             <i className={cx('fa-solid fa-arrow-left')}></i>
                         </span>

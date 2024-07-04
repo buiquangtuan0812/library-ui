@@ -83,7 +83,7 @@ function CategoryBook(props) {
         return (
             <li className={cx('item-catergory')} key={index} onClick={() => changeColor(index)}>
                 <Link
-                    to={`/library/book/${type.title}`}
+                    to={`/book/${type.title}`}
                     onClick={() => changeColor(index)}
                     style={state[index] ? { color: '#f05123' } : { color: '#000' }}
                     state={{ title: type.title, user: props.user, type: handleTitle(type.title) }}
@@ -99,7 +99,7 @@ function CategoryBook(props) {
             <Link
                 key={index}
                 className={cx('link-author')}
-                to={`/library/book/author/${author}`}
+                to={`/book/author/${author}`}
                 onClick={() => changeColorAuthor(index)}
                 state={{ author: author, user: props.user, type: handleTitle(author) }}
             >
@@ -126,7 +126,7 @@ function CategoryBook(props) {
                 Phạm vi
                 <li className={cx('item-catergory')} onClick={() => changeColorArea(0)}>
                     <Link
-                        to={`/library/book/${'domestic'}`}
+                        to={`/book/${'domestic'}`}
                         style={stateArea[0] ? { color: '#f05123' } : { color: '#000' }}
                         state={{ title: 'domestic', user: props.user, type: handleTitle('domestic') }}
                     >
@@ -135,7 +135,7 @@ function CategoryBook(props) {
                 </li>
                 <li className={cx('item-catergory')} onClick={() => changeColorArea(1)}>
                     <Link
-                        to={`/library/book/${'foreign'}`}
+                        to={`/book/${'foreign'}`}
                         style={stateArea[1] ? { color: '#f05123' } : { color: '#000' }}
                         state={{ title: 'foreign', user: props.user, type: handleTitle('foreign') }}
                     >

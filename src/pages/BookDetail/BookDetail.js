@@ -141,7 +141,7 @@ function BookDetail() {
                 {showRating ? <RatingStar onChange={handleRatingChange} book={book} user={user} /> : ''}
                 <div className={cx('separate')}></div>
                 <div className={cx('btn-back')}>
-                    <Link to="/library/books" state={{ user: user }}>
+                    <Link to="/books" state={{ user: user }}>
                         <span>
                             <i className={cx('fa-solid fa-arrow-left')}></i>
                         </span>

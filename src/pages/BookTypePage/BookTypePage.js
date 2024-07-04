@@ -92,7 +92,7 @@ function BookTypePage() {
             <div className={cx('container')}>
                 <div className={cx('separate')}></div>
                 <div className={cx('btn-back')}>
-                    <Link to="/library/books" state={{ user }}>
+                    <Link to="/books" state={{ user }}>
                         <span>
                             <i className={cx('fa-solid fa-arrow-left')}></i>
                         </span>

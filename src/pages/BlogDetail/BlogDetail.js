@@ -58,7 +58,7 @@ function BlogDetail() {
                         <MdOutlineArrowBackIosNew />
                     </span>
                     <span className={cx('back')}>
-                        <Link to="/library/blogs" state={{ user }}>
+                        <Link to="/blogs" state={{ user }}>
                             Quay lại
                         </Link>
                     </span>

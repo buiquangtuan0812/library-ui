@@ -58,7 +58,7 @@ function ConfirmPost(props) {
                 </span>
                 <span className={cx('separate')}></span>
                 <span className={cx('text')}>Bạn đã đăng blog thành công!</span>
-                <Link to="/library/blogs" state={{ user: props.user }}>
+                <Link to="/blogs" state={{ user: props.user }}>
                     <button>Quay lại</button>
                 </Link>
             </div>
