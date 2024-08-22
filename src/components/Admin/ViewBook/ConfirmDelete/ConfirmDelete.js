@@ -18,7 +18,7 @@ function ConfirmDelete(props) {
     const handleDelete = () => {
         axios
             .post(
-                'https://be-library.vercel.app/admin/delete-book',
+                'https://library-be-wine.vercel.app/admin/delete-book',
                 { _id: props.id },
                 {
                     headers: {

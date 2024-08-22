@@ -1,4 +1,15 @@
 .container__page {
+    .confirm__form {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 100;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
     &-header {
         height: 96px;
         border-bottom: 1px solid #ccc;
@@ -11,25 +22,18 @@
             justify-content: center;
             .text {
                 font-size: 26px;
-                color: #e6515b;
+                color: #0a68ff;
                 font-weight: 500;
             }
         }
-        .logo {
+        .home {
+            color: #0a68ff;
+            a {
+                text-decoration: none;
+            }
             .icon {
-                width: 140px;
-                height: 52px;
-                margin-top: 5px;
-                background-repeat: no-repeat;
-                display: inline-block;
-                min-width: 16px;
-                min-height: 16px;
-                vertical-align: middle;
-                background-position: 50%;
-                background-color: transparent;
-                border: 0 none;
-                cursor: pointer;
-                background-image: url(data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22120%22%20height%3D%2253%22%20viewBox%3D%220%200%20120%2053%22%3E%3Cg%20fill%3D%22%23F42535%22%3E%3Cpath%20d%3D%22M81.167%2011.151l1.293%202.909.645-3.07%203.071-.323-2.746-1.616.646-2.908-2.264%201.939-2.583-1.455%201.13%202.747-2.261%202.101zM98.456%2028.117l2.101-2.424%202.748%201.293-1.455-2.585%201.938-2.424-2.908.647-1.616-2.586-.325%203.07-3.068.646%202.908%201.293zM57.738%207.597l2.585-1.939%202.424%201.939-.97-3.07%202.584-1.777h-3.068l-.97-2.909-.969%202.909h-3.07l2.424%201.777zM37.379%2010.99l.646%203.07%201.293-2.909%203.07.324-2.424-2.101%201.293-2.747-2.586%201.455-2.423-1.939.646%202.908-2.585%201.616zM17.182%2026.986l2.746-1.293%202.101%202.424-.323-3.07%202.747-1.293-2.909-.646-.323-3.07-1.616%202.586-3.07-.647%202.101%202.424zM119.784%2049.932l-1.454-2.425H62.585c0-1.938%202.101-1.938%203.231-1.938h51.543l-1.453-2.424H67.109c-1.293%200-3.555.162-4.201.322.646-2.262%204.361-2.424%209.533-2.424h42.172l-1.454-2.423H73.411c-4.04%200-8.079.161-10.181%201.614%201.938-2.745%205.334-3.555%2013.572-3.555h35.225l-1.453-2.424H76.966C64.848%2034.257%2060%2037.328%2060%2047.021c0-9.693-4.847-12.766-16.966-12.766H9.426L7.972%2036.68h35.062c8.24%200%2011.634.81%2013.573%203.555-2.101-1.453-5.979-1.614-10.18-1.614H6.841l-1.454%202.423h42.171c5.333%200%208.887.162%209.533%202.424-.646-.16-2.908-.322-4.201-.322H4.094l-1.454%202.42h51.543c1.131%200%203.232%200%203.232%201.939H1.67L.216%2049.93h57.36v1.454h5.009V49.93h57.199v.002z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E);
+                font-size: 24px;
+                margin-right: 8px;
             }
         }
         .item-header2 {
@@ -37,14 +41,14 @@
             display: flex;
             border-radius: 48px;
             align-items: center;
-            background-color: #f5eeee;
-            border: 1.5px solid #e6515b;
-            color: #e6515b;
+            background-color: #fff;
+            border: 1.5px solid #0a68ff;
+            color: #0a68ff;
             .icon-tel {
                 font-size: 20px;
                 padding: 4px 8px;
                 border-radius: 50%;
-                background-color: #e6515b;
+                background-color: #0a68ff;
                 color: #fff;
                 margin-right: 12px;
             }
@@ -81,7 +85,7 @@
                         background-color: #f5eeee;
                         padding: 16px;
                         border-radius: 16px;
-                        border: 1px solid #da7c82;
+                        border: 1px solid #0a68ff;
                         .item-1 {
                             padding: 6px;
                             font-size: 14px;
@@ -126,7 +130,7 @@
                                     border-radius: 50%;
                                     padding: 4px;
                                     background-color: #fff;
-                                    border: 1px solid #e6515b;
+                                    border: 1px solid #0a68ff;
                                 }
                                 input {
                                     display: none;
@@ -138,7 +142,7 @@
                                     left: 5px;
                                     top: 5px;
                                     border-radius: 50%;
-                                    background-color: #e6515b;
+                                    background-color: #0a68ff;
                                     position: absolute;
                                 }
                                 &:hover {
@@ -158,7 +162,7 @@
                                     border: 1px solid #ccc;
                                     &:hover {
                                         cursor: pointer;
-                                        border: 1px solid #e6515b;
+                                        border: 1px solid #0a68ff;
                                     }
                                 }
                                 input {
@@ -195,7 +199,7 @@
                                 width: 60px;
                             }
                             .name {
-                                min-width: 400px;
+                                min-width: 360px;
                                 margin: 0 12px;
                                 color: #808089;
                             }
@@ -250,7 +254,7 @@
                                 border-radius: 50%;
                                 padding: 4px;
                                 background-color: #fff;
-                                border: 1px solid #e6515b;
+                                border: 1px solid #0a68ff;
                             }
                             input {
                                 display: none;
@@ -262,7 +266,7 @@
                                 left: 5px;
                                 top: 5px;
                                 border-radius: 50%;
-                                background-color: #e6515b;
+                                background-color: #0a68ff;
                                 position: absolute;
                             }
                             &:hover {
@@ -282,7 +286,7 @@
                                 border: 1px solid #ccc;
                                 &:hover {
                                     cursor: pointer;
-                                    border: 1px solid #e6515b;
+                                    border: 1px solid #0a68ff;
                                 }
                             }
                             input {
@@ -310,7 +314,7 @@
                         margin-bottom: 12px;
                         color: #808089;
                         .btn-change {
-                            color: #e6515b;
+                            color: #0a68ff;
                         }
                     }
                     &-content {
@@ -382,7 +386,7 @@
                         color: #000;
                         justify-content: space-between;
                         &-value {
-                            color: #ff424f;
+                            color: #0a68ff;
                             font-size: 26px;
                             font-weight: 50;
                             .unit {
@@ -403,7 +407,7 @@
                         font-size: 20px;
                         border-radius: 4px;
                         text-align: center;
-                        background-color: rgb(255, 66, 78);
+                        background-color: #0a68ff;
                         &:hover {
                             cursor: pointer;
                             opacity: 0.8;

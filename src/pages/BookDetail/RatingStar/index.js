@@ -20,10 +20,7 @@ const RatingStar = (props) => {
         }
     };
     const handleClose = () => {
-        props.onChange({
-            state: false,
-            success: false,
-        });
+        props.close();
     };
     const handleCmt = async (e) => {
         if (rating === 0) {
@@ -37,14 +34,13 @@ const RatingStar = (props) => {
             rating: rating,
         };
         await axios
-            .post('https://be-library.vercel.app/users/cmt/create', data, {
+            .post('https://library-be-wine.vercel.app/users/cmt/create', data, {
                 headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${props.user.accessToken}` },
             })
             .then((response) => {
-                props.onChange({
-                    state: false,
-                    success: true,
-                });
+                if (response.status === 200) {
+                    props.onChange(response.data);
+                }
             })
             .catch((err) => console.log(err));
     };

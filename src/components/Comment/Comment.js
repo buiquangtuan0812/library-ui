@@ -44,7 +44,7 @@ function Comment(props) {
     useEffect(() => {
         setLike(props.like);
         axios
-            .get('https://be-library.vercel.app/users/cmt/by', { params: { _id: props.id } })
+            .get('https://library-be-wine.vercel.app/users/cmt/by', { params: { _id: props.id } })
             .then((res) => {
                 setUser(res.data.user);
             })
@@ -129,7 +129,7 @@ function Comment(props) {
         if (state) {
             axios
                 .post(
-                    'https://be-library.vercel.app/users/cmt/unlike',
+                    'https://library-be-wine.vercel.app/users/cmt/unlike',
                     { _id: props.id },
                     {
                         headers: {
@@ -149,7 +149,7 @@ function Comment(props) {
         } else {
             axios
                 .post(
-                    'https://be-library.vercel.app/users/cmt/like',
+                    'https://library-be-wine.vercel.app/users/cmt/like',
                     { _id: props.id },
                     {
                         headers: {

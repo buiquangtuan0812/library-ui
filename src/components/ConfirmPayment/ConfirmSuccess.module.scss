@@ -1,60 +1,34 @@
-.show {
-    position: absolute;
-    top: 0px;
-    right: 40px;
-    z-index: 3;
-    animation: show 0.5s ease-in-out;
-    .container__confirm {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 10px 16px;
+.container__confirm {
+    padding: 16px 16px;
+    border: none;
+    border-radius: 10px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #000;
+    width: 320px;
+    box-shadow: rgb(179, 179, 179) 1px 1px 15px;
+    .icon-success {
+        font-size: 36px;
+        color: #4caf50;
+        border-radius: 50%;
+    }
+    .text {
+        margin-top: 12px;
+        font-size: 16px;
+    }
+    .button {
+        margin-top: 24px;
+        padding: 8px 16px;
         border: none;
-        top: -72px;
-        border-radius: 10px;
-        position: relative;
-        background-color: #fff;
-        color: #000;
-        box-shadow: rgb(179, 179, 179) 1px 1px 15px;
-        .icon-success {
-            font-size: 20px;
-            color: #4caf50;
-            border-radius: 50%;
+        border-radius: 5px;
+        background-color: #4caf50;
+        font-size: 16px;
+        cursor: pointer;
+        a {
+            color: #fff;
+            text-decoration: none;
         }
-        .text {
-            margin-left: 12px;
-            font-size: 16px;
-        }
-    }
-    .container__confirm-user {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 10px 16px;
-        border: none;
-        top: 104px;
-        border-radius: 10px;
-        position: relative;
-        background-color: #fff;
-        color: #000;
-        box-shadow: rgb(179, 179, 179) 1px 1px 15px;
-        .icon-success {
-            font-size: 20px;
-            color: #4caf50;
-            border-radius: 50%;
-        }
-        .text {
-            margin-left: 12px;
-            font-size: 16px;
-        }
-    }
-}
-
-@keyframes show {
-    from {
-        right: 0px;
-    }
-    to {
-        right: 40px;
     }
 }

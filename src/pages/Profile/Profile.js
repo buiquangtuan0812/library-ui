@@ -1,6 +1,5 @@
 import classNames from 'classnames/bind';
 import styles from './Profile.module.scss';
-
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
@@ -12,97 +11,149 @@ import { GrShieldSecurity } from 'react-icons/gr';
 import Header from '../../components/Display/Header/Header';
 import Footer from '../../components/Display/Footer/Footer';
 import FormUpdate from './FormUpdate/FormUpdate';
-import ConfirmSuccess from '~/components/ConfirmPayment/ConfirmSuccess';
+import ConfirmUpdate from '~/components/ConfirmUpdate/ConfirmUpdate';
 
 const cx = classNames.bind(styles);
 
 function Profile() {
     document.title = 'Profile';
     const location = useLocation();
-    const [user, setUser] = useState({});
-    const [imgUser, setImgUser] = useState('');
-    const [fullName, setFullName] = useState('');
-    const [username, setUsername] = useState('');
-    const [address, setAddress] = useState('');
-    const [day, setDay] = useState('');
-    const [month, setMonth] = useState('');
-    const [year, setYear] = useState('');
+    const user = location.state?.user;
+    const accessToken = user?.accessToken;
+
+    // Group related states into a single object
+    const [profile, setProfile] = useState({
+        accessToken: accessToken,
+        imgUser: '',
+        fullName: '',
+        username: '',
+        tel: '',
+        email: '',
+        address: '',
+        day: '',
+        month: '',
+        year: '',
+    });
+
     const [state, setState] = useState(false);
-    const [numberCart, setNumberCart] = useState(0);
     const [type, setType] = useState('');
     const [show, setShow] = useState(false);
+    const [objectImg, setObjectImg] = useState({});
 
+    // Fetch user profile on mount
     useEffect(() => {
-        setUser(location.state.user);
-        setDay(location.state.user.birthDate.slice(0, 2));
-        setMonth(location.state.user.birthDate.slice(3, 5));
-        setYear(location.state.user.birthDate.slice(6, 10));
-        setUsername(location.state.user.username);
-        setFullName(location.state.user.fullName);
-        setNumberCart(location.state.numberCart);
-        setImgUser(location.state.user.imgDes);
-    }, [user, location.state]);
+        if (!accessToken) {
+            console.error('Access token is missing.');
+            return;
+        }
 
+        const fetchUserProfile = async () => {
+            try {
+                const { data } = await axios.get('https://library-be-wine.vercel.app/user/get-profile', {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${accessToken}`,
+                    },
+                });
+
+                setProfile({
+                    ...profile,
+                    imgUser: data.imgDes,
+                    fullName: data.fullName,
+                    username: data.username,
+                    address: data.address,
+                    tel: data.tel,
+                    email: data.email,
+                    day: data.birthDate.slice(0, 2),
+                    month: data.birthDate.slice(3, 5),
+                    year: data.birthDate.slice(6, 10),
+                });
+            } catch (error) {
+                console.error('Failed to fetch user profile:', error.message);
+            }
+        };
+
+        fetchUserProfile();
+    }, [accessToken]);
+
+    // Convert file to base64
     const convertToBase64 = (e) => {
-        var reader = new FileReader();
-        reader.readAsDataURL(e.target.files[0]);
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
         reader.onload = () => {
-            setImgUser(reader.result);
+            const base64 = reader.result.split(',')[1];
+            setObjectImg({ uri: base64, name: file.name, type: file.type });
+            setProfile((prev) => ({ ...prev, imgUser: reader.result }));
         };
-        reader.onerror = (err) => {
-            console.log(err);
-        };
+        reader.onerror = (err) => console.error(err);
     };
 
-    const handleProps = (data) => {
-        setShow(data.show);
-        setUser(data.user);
-        setState(data.state);
-    };
-
-    const handleUpdate = (e) => {
+    // Handle update profile
+    const handleUpdate = async (e) => {
         e.preventDefault();
-        user.username = username;
-        user.imgDes = imgUser;
-        user.fullName = fullName;
-        user.address = address || user.address;
-        user.birthDate = day + '/' + month + '/' + year || user.birthDate;
-        setUser(user);
-        axios
-            .put('https://be-library.vercel.app/user/update/profile', user, {
+        const updatedUser = {
+            username: profile.username,
+            imgDes: objectImg.uri ? objectImg : profile.imgUser,
+            fullName: profile.fullName,
+            address: profile.address || user?.address,
+            birthDate: `${profile.day}/${profile.month}/${profile.year}` || user?.birthDate,
+        };
+        try {
+            const res = await axios.put('https://library-be-wine.vercel.app/user/update/profile', updatedUser, {
                 headers: {
                     'Content-Type': 'application/json',
-                    Authorization: `Bearer ${user.accessToken}`,
+                    Authorization: `Bearer ${accessToken}`,
                 },
-            })
-            .then((res) => {
-                setUser(res.data);
+            });
+            if (res.status === 200) {
                 setState(true);
-            })
-            .catch((err) => console.log(err));
+            } else {
+                console.error('Failed to update profile:', res.data);
+            }
+        } catch (err) {
+            console.error('Failed to update profile:', err);
+        }
     };
 
-    if (state) {
-        setTimeout(() => {
-            setState(false);
-        }, 3000);
-    }
+    // Reset state message
+    useEffect(() => {
+        if (state) {
+            const timer = setTimeout(() => setState(false), 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [state]);
 
+    // Handle update type and form visibility
     const handleClick = (value) => {
         setType(value);
         setShow(true);
     };
 
+    const renderOptions = (count, pad = 2, start = 1) => {
+        return Array.from({ length: count }, (_, i) => (
+            <option key={start + i} value={String(start + i).padStart(pad, '0')}>
+                {String(start + i).padStart(pad, '0')}
+            </option>
+        ));
+    };
+
     return (
         <div>
-            <Header user={user} numberCart={numberCart} />
-            {show ? (
-                <FormUpdate user={user} tel={user.tel} email={user.email} type={type} handleProps={handleProps} />
-            ) : (
-                ''
+            <Header user={user} numberCart={location.state.numberCart} />
+            {show && (
+                <FormUpdate
+                    user={profile}
+                    type={type}
+                    handleProps={(data) => {
+                        setProfile(data.user);
+                        setShow(data.show);
+                        setState(data.state);
+                    }}
+                />
             )}
             <div className={cx('ctn')}>
-                {state ? <ConfirmSuccess type={true} text="Cập nhật thông tin cá nhân thành công!" /> : ''}
+                {state && <ConfirmUpdate type={true} text="Cập nhật thông tin cá nhân thành công!" />}
                 <div className={cx('container')}>
                     <h3>Thông tin tài khoản</h3>
                     <div className={cx('container__profile')}>
@@ -115,7 +166,7 @@ function Profile() {
                                     <div className={cx('container__profile-infor-item')}>
                                         <label htmlFor="inputImg">
                                             <div>
-                                                <img alt="" src={imgUser} />
+                                                <img alt="User Avatar" src={profile.imgUser} />
                                             </div>
                                         </label>
                                         <input
@@ -123,7 +174,7 @@ function Profile() {
                                             accept="image/*"
                                             id="inputImg"
                                             style={{ display: 'none' }}
-                                            onChange={(e) => convertToBase64(e)}
+                                            onChange={convertToBase64}
                                         />
                                         <div className={cx('title')}>
                                             <p>Họ & Tên</p>
@@ -132,14 +183,18 @@ function Profile() {
                                         <div className={cx('values')}>
                                             <input
                                                 type="text"
-                                                placeholder={fullName}
+                                                placeholder={profile.fullName}
                                                 className={cx('value-1')}
-                                                onChange={(e) => setFullName(e.target.value)}
+                                                onChange={(e) =>
+                                                    setProfile((prev) => ({ ...prev, fullName: e.target.value }))
+                                                }
                                             />
                                             <input
                                                 type="text"
-                                                placeholder={username}
-                                                onChange={(e) => setUsername(e.target.value)}
+                                                placeholder={profile.username}
+                                                onChange={(e) =>
+                                                    setProfile((prev) => ({ ...prev, username: e.target.value }))
+                                                }
                                             />
                                         </div>
                                     </div>
@@ -148,108 +203,52 @@ function Profile() {
                                         <div className={cx('birthday')}>Ngày sinh</div>
                                         <select
                                             className={cx('date')}
-                                            value={day}
-                                            onChange={(e) => setDay(e.target.value)}
+                                            value={profile.day}
+                                            onChange={(e) => setProfile((prev) => ({ ...prev, day: e.target.value }))}
                                         >
                                             <option value="">Ngày</option>
-                                            <option value="01">01</option>
-                                            <option value="02">02</option>
-                                            <option value="03">03</option>
-                                            <option value="04">04</option>
-                                            <option value="05">05</option>
-                                            <option value="06">06</option>
-                                            <option value="07">07</option>
-                                            <option value="08">08</option>
-                                            <option value="09">09</option>
-                                            <option value="10">10</option>
-                                            <option value="11">11</option>
-                                            <option value="12">12</option>
-                                            <option value="13">13</option>
-                                            <option value="14">14</option>
-                                            <option value="15">15</option>
-                                            <option value="16">16</option>
-                                            <option value="17">17</option>
-                                            <option value="18">18</option>
-                                            <option value="19">19</option>
-                                            <option value="20">20</option>
-                                            <option value="21">21</option>
-                                            <option value="22">22</option>
-                                            <option value="23">23</option>
-                                            <option value="24">24</option>
-                                            <option value="25">25</option>
-                                            <option value="26">26</option>
-                                            <option value="27">27</option>
-                                            <option value="28">28</option>
-                                            <option value="29">29</option>
-                                            <option value="30">30</option>
-                                            <option value="31">21</option>
+                                            {renderOptions(31)}
                                         </select>
 
                                         <select
                                             className={cx('month')}
-                                            value={month}
-                                            onChange={(e) => setMonth(e.target.value)}
+                                            value={profile.month}
+                                            onChange={(e) => setProfile((prev) => ({ ...prev, month: e.target.value }))}
                                         >
                                             <option value="">Tháng</option>
-                                            <option value="01">01</option>
-                                            <option value="02">02</option>
-                                            <option value="03">03</option>
-                                            <option value="04">04</option>
-                                            <option value="05">05</option>
-                                            <option value="06">06</option>
-                                            <option value="07">07</option>
-                                            <option value="08">08</option>
-                                            <option value="09">09</option>
-                                            <option value="10">10</option>
-                                            <option value="11">11</option>
-                                            <option value="12">12</option>
+                                            {renderOptions(12)}
                                         </select>
 
                                         <select
                                             className={cx('year')}
-                                            value={year}
-                                            onChange={(e) => setYear(e.target.value)}
+                                            value={profile.year}
+                                            onChange={(e) => setProfile((prev) => ({ ...prev, year: e.target.value }))}
                                         >
                                             <option value="">Năm</option>
-                                            <option value="1986">1986</option>
-                                            <option value="1987">1987</option>
-                                            <option value="1989">1989</option>
-                                            <option value="1990">1990</option>
-                                            <option value="1992">1992</option>
-                                            <option value="1993">1993</option>
-                                            <option value="1994">1994</option>
-                                            <option value="1995">1995</option>
-                                            <option value="1996">1996</option>
-                                            <option value="1997">1997</option>
-                                            <option value="1998">1998</option>
-                                            <option value="1999">1999</option>
-                                            <option value="2000">2000</option>
-                                            <option value="2001">2001</option>
-                                            <option value="2002">2002</option>
-                                            <option value="2003">2003</option>
-                                            <option value="2004">2004</option>
-                                            <option value="2005">2005</option>
+                                            {renderOptions(20, 4, 1985)} {/* Custom year range */}
                                         </select>
                                     </div>
 
                                     <div className={cx('container__profile-infor-item')}>
-                                        {user.address !== '' ? (
-                                            <div className={cx('address')}>
-                                                <span>Địa chỉ</span>
-                                                <span className={classNames('address-value')}>{user.address}</span>
-                                            </div>
-                                        ) : (
-                                            <div className={cx('address')}>
-                                                <span>Địa chỉ</span>
+                                        <div className={cx('address')}>
+                                            <span>Địa chỉ</span>
+                                            {profile.address ? (
+                                                <span className={cx('address-value')}>{profile.address}</span>
+                                            ) : (
                                                 <div className={cx('form-add')}>
                                                     <input
                                                         type="text"
                                                         placeholder="Nhập địa chỉ"
-                                                        onChange={(e) => setAddress(e.target.value)}
+                                                        onChange={(e) =>
+                                                            setProfile((prev) => ({
+                                                                ...prev,
+                                                                address: e.target.value,
+                                                            }))
+                                                        }
                                                     />
                                                 </div>
-                                            </div>
-                                        )}
+                                            )}
+                                        </div>
                                     </div>
 
                                     <div className={cx('btn-save')}>
@@ -269,7 +268,7 @@ function Profile() {
                                         </span>
                                         <span className={cx('phone')}>
                                             <p>Số điện thoại</p>
-                                            <p>{user.tel}</p>
+                                            <p>{profile.tel}</p>
                                         </span>
                                         <span className={cx('btn-update')}>
                                             <button onClick={() => handleClick('tel')}>Cập nhật</button>
@@ -282,7 +281,7 @@ function Profile() {
                                         </span>
                                         <span className={cx('mail')}>
                                             <p>Địa chỉ Email</p>
-                                            <p>{user.email}</p>
+                                            <p>{profile.email}</p>
                                         </span>
                                         <span className={cx('btn-update')}>
                                             <button onClick={() => handleClick('email')}>Cập nhật</button>
@@ -298,7 +297,7 @@ function Profile() {
                                             Đổi mật khẩu
                                         </span>
                                         <span className={cx('btn-update')}>
-                                            <button onClick={handleClick}>Cập nhật</button>
+                                            <button onClick={() => handleClick('password')}>Cập nhật</button>
                                         </span>
                                     </div>
                                 </div>

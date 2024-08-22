@@ -15,7 +15,7 @@ import ReactMarkdown from 'react-markdown';
 
 import { useParams } from 'react-router-dom';
 import { Link, useLocation } from 'react-router-dom';
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 
 const cx = classNames.bind(styles);
 
@@ -29,7 +29,6 @@ function BookDetail() {
     const [comment, setComment] = useState([]);
     const [numberCart, setNumberCart] = useState(0);
     const [showRating, setShowRating] = useState(false);
-    const [success, setSuccess] = useState(false);
     const [checkLike, setCheckLike] = useState(false);
 
     const location = useLocation();
@@ -38,7 +37,7 @@ function BookDetail() {
         if (location.state) {
             setUser(location.state.user);
             axios
-                .get('https://be-library.vercel.app/users/cart', {
+                .get('https://library-be-wine.vercel.app/users/cart', {
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${location.state.user.accessToken}`,
@@ -49,11 +48,11 @@ function BookDetail() {
                 })
                 .catch((err) => console.error(err));
         }
-    }, [location.state, success]);
+    }, [location.state]);
 
     useEffect(() => {
         axios
-            .get('https://be-library.vercel.app/library/books/detail', { params: { name: nameBook } })
+            .get('https://library-be-wine.vercel.app/library/books/detail', { params: { name: nameBook } })
             .then((res) => {
                 setBook(res.data);
             })
@@ -63,47 +62,48 @@ function BookDetail() {
     }, [nameBook]);
     useEffect(() => {
         axios
-            .get('https://be-library.vercel.app/users/cmt', { params: { name: nameBook } })
+            .get('https://library-be-wine.vercel.app/users/cmt', { params: { name: nameBook } })
             .then((cmts) => {
                 setComment(cmts.data);
             })
             .catch((err) => console.log(err));
-    }, [nameBook, success, checkLike]);
+    }, [nameBook, checkLike]);
 
-    const handleRatingChange = (value) => {
-        setShowRating(value.state);
-        setSuccess(value.success);
+    const handleRatingChange = (cmt) => {
+        setComment([cmt, ...comment]);
+        setShowRating(false);
     };
 
     const handleLike = (value) => {
         setCheckLike(value);
     };
 
-    const renderCmt = useCallback(
-        comment.map((cmt, index) => {
-            return (
-                <div key={index}>
-                    <Comment
-                        user={user}
-                        id={cmt._id}
-                        title={cmt.title}
-                        time={cmt.created_at}
-                        rating={cmt.rating}
-                        like={cmt.like}
-                        handleLike={handleLike}
-                    />
-                </div>
-            );
-        }),
-        [comment],
-    );
+    const renderCmt = comment.map((cmt, index) => {
+        return (
+            <div key={index}>
+                <Comment
+                    user={user}
+                    id={cmt._id}
+                    title={cmt.title}
+                    time={cmt.created_at}
+                    rating={cmt.rating}
+                    like={cmt.like}
+                    handleLike={handleLike}
+                />
+            </div>
+        );
+    });
     const countPrice = (price) => {
         const oldPrice = (Number(price) + (Number(price) * 20) / 100).toString();
         return oldPrice.slice(0, oldPrice.length - 3) + '.000';
     };
     const solveString = (num) => {
-        const str = num.toString();
-        return str.slice(0, str.length - 3) + '.000';
+        if (num === 0) {
+            return '0';
+        } else {
+            const str = num.toString();
+            return str.slice(0, str.length - 3) + '.' + str.slice(str.length - 3, str.length);
+        }
     };
 
     const addCart = async () => {
@@ -114,7 +114,7 @@ function BookDetail() {
                 quantity: 1,
             };
             await axios
-                .post('https://be-library.vercel.app/users/cart/add', data, {
+                .post('https://library-be-wine.vercel.app/users/cart/add', data, {
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${user.accessToken}`,
@@ -138,10 +138,19 @@ function BookDetail() {
             <div className={cx('container')}>
                 <ConfirmCart check={check} user={user} numberCart={numberCart} />
                 <ConfirmLogin check={confirmLogin} url={document.URL} />
-                {showRating ? <RatingStar onChange={handleRatingChange} book={book} user={user} /> : ''}
+                {showRating ? (
+                    <RatingStar
+                        onChange={handleRatingChange}
+                        close={() => setShowRating(false)}
+                        book={book}
+                        user={user}
+                    />
+                ) : (
+                    ''
+                )}
                 <div className={cx('separate')}></div>
                 <div className={cx('btn-back')}>
-                    <Link to="/books" state={{ user: user }}>
+                    <Link to="/library/books" state={{ user: user }}>
                         <span>
                             <i className={cx('fa-solid fa-arrow-left')}></i>
                         </span>

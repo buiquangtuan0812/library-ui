@@ -29,7 +29,7 @@ const publicRoutes = [
     { path: config.routes.book, component: Book },
     { path: config.routes.bookType, component: BookTypePage },
     { path: config.routes.bookAuthor, component: BookTypePage },
-    { path: config.routes.bookdetail, component: BookDetail },
+    { path: config.routes.bookDetail, component: BookDetail },
     { path: config.routes.login, component: LoginUser },
     {
         path: config.routes.signup,

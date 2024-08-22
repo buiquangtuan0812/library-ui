@@ -17,7 +17,7 @@ function Home() {
             const user = location.state.user;
             setUser(user);
             axios
-                .get('https://be-library.vercel.app/users/cart', {
+                .get('https://library-be-wine.vercel.app/users/cart', {
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${location.state.user.accessToken}`,

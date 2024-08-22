@@ -25,7 +25,7 @@ function Blog() {
             setUser(location.state.user);
         }
         axios
-            .get('https://be-library.vercel.app/users/cart', {
+            .get('https://library-be-wine.vercel.app/users/cart', {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${location.state.user.accessToken}`,
@@ -36,7 +36,7 @@ function Blog() {
             })
             .catch((err) => console.error(err));
         axios
-            .get('https://be-library.vercel.app/library/blogs')
+            .get('https://library-be-wine.vercel.app/library/blogs')
             .then((res) => setBlogs(res.data))
             .catch((err) => console.error(err));
     }, [location.state]);
@@ -79,7 +79,7 @@ function Blog() {
         return (
             <Link
                 key={index}
-                to={`/blog-detail/${blog._id}`}
+                to={`/library/blog-detail/${blog._id}`}
                 state={dataUser ? { user: dataUser, idBlog: blog._id } : { idBlog: blog._id }}
                 className={cx('blog-detail')}
             >
@@ -120,7 +120,7 @@ function Blog() {
                         <p>Tổng hợp các bài viết chia sẻ về sách.</p>
                     </div>
                     <div className={cx('btn-create')}>
-                        <Link to={'/blogs/create'} state={dataUser ? { user: dataUser } : ''}>
+                        <Link to={'/library/blogs/create'} state={dataUser ? { user: dataUser } : ''}>
                             <button>
                                 <FaPen className={cx('icon-pen')} /> Viết blog
                             </button>

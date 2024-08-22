@@ -8,7 +8,7 @@
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #ccc;
-    background-color: #383838;
+    background-color: #1b3764;
     .btn-back {
         color: #ffffff;
         cursor: pointer;
@@ -25,7 +25,7 @@
         }
         .back {
             margin-left: 8px;
-            font-size: 20px;
+            font-size: 18px;
             a {
                 color: #ffffff;
                 text-decoration: none;
@@ -52,7 +52,7 @@
     &-item {
         .btn-post {
             button {
-                padding: 6px 16px;
+                padding: 4px 16px;
                 border: none;
                 border-radius: 20px;
                 background-color: #cc3000;
@@ -63,7 +63,7 @@
         }
         .btn-success-post {
             button {
-                padding: 6px 16px;
+                padding: 4px 16px;
                 border: none;
                 border-radius: 20px;
                 background-color: #cc3000;
@@ -73,7 +73,7 @@
         }
         .my-blog {
             color: #fff;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 600;
             margin-left: 36px;
             padding: 8px;
@@ -117,22 +117,6 @@
                     font-size: 16px;
                 }
             }
-        }
-    }
-}
-.ctn__confirm {
-    position: relative;
-    .btn-close {
-        position: absolute;
-        top: 8px;
-        left: 12px;
-        z-index: 2;
-        i {
-            padding: 8px;
-            font-size: 24px;
-        }
-        &:hover {
-            cursor: pointer;
         }
     }
 }

@@ -7,141 +7,95 @@ import { Link } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
 function CategoryBook(props) {
-    const [stateArea, setArea] = useState([false, false]);
-    const [stateAuthor, setStateAuthor] = useState([false, false, false, false, false]);
-    const [state, setState] = useState([false, false, false, false, false, false, false, false]);
+    const [activeStates, setActiveStates] = useState({
+        categories: [false, false, false, false, false, false, false, false],
+        authors: [false, false, false, false, false],
+        areas: [false, false],
+    });
 
     const handleTitle = (title) => {
-        return title.slice(0, 1).toUpperCase() + title.slice(1, title.length);
+        return title.charAt(0).toUpperCase() + title.slice(1);
     };
+
     const listType = [
-        {
-            type: 'Tâm lý học',
-            title: 'psychology',
-        },
-        {
-            type: 'Kinh tế',
-            title: 'economy',
-        },
-        {
-            type: 'Văn học',
-            title: 'literature',
-        },
-        {
-            type: 'Lịch sử',
-            title: 'history',
-        },
-        {
-            type: 'Phát triển bản thân',
-            title: 'self-growth',
-        },
-        {
-            type: 'Kỹ năng sống',
-            title: 'life-skill',
-        },
-        {
-            type: 'Chánh niệm',
-            title: 'contemplation',
-        },
-        {
-            type: 'Kỹ năng giao tiếp',
-            title: 'communicate',
-        },
+        { type: 'Tâm lý học', title: 'psychology' },
+        { type: 'Kinh tế', title: 'economy' },
+        { type: 'Văn học', title: 'literature' },
+        { type: 'Lịch sử', title: 'history' },
+        { type: 'Phát triển bản thân', title: 'self-growth' },
+        { type: 'Kỹ năng sống', title: 'life-skill' },
+        { type: 'Chánh niệm', title: 'contemplation' },
+        { type: 'Kỹ năng giao tiếp', title: 'communicate' },
     ];
 
     const listAuthor = ['Dale Carnegie', 'Paulo Coelho', 'Thích Nhất Hạnh', 'Tony Buổi Sáng', 'Nguyễn Nhật Ánh'];
 
+    const updateState = (type, index) => {
+        const newState = {
+            categories: type === 'categories' ? generateArray(8, index) : generateFalseArray(8),
+            authors: type === 'authors' ? generateArray(5, index) : generateFalseArray(5),
+            areas: type === 'areas' ? generateArray(2, index) : generateFalseArray(2),
+        };
+        setActiveStates(newState);
+    };
+
+    const generateArray = (size, activeIndex) => {
+        return Array(size)
+            .fill(false)
+            .map((_, index) => index === activeIndex);
+    };
+
     const generateFalseArray = (size) => {
-        return new Array(size).fill(false);
+        return Array(size).fill(false);
     };
 
-    const changeColor = (index) => {
-        const arr = generateFalseArray(8);
-        arr[index] = true;
-        setState(arr);
-        setStateAuthor(generateFalseArray(5));
-        setArea(generateFalseArray(2));
-    };
-
-    const changeColorAuthor = (index) => {
-        const arr = generateFalseArray(5);
-        arr[index] = true;
-        setState(generateFalseArray(8));
-        setStateAuthor(arr);
-        setArea(generateFalseArray(2));
-    };
-
-    const changeColorArea = (index) => {
-        const arr = generateFalseArray(2);
-        arr[index] = true;
-        setState(generateFalseArray(8));
-        setStateAuthor(generateFalseArray(5));
-        setArea(arr);
-    };
-
-    const renderType = listType.map((type, index) => {
-        return (
-            <li className={cx('item-catergory')} key={index} onClick={() => changeColor(index)}>
-                <Link
-                    to={`/book/${type.title}`}
-                    onClick={() => changeColor(index)}
-                    style={state[index] ? { color: '#f05123' } : { color: '#000' }}
-                    state={{ title: type.title, user: props.user, type: handleTitle(type.title) }}
-                >
-                    {type.type}
-                </Link>
-            </li>
-        );
-    });
-
-    const renderAuthor = listAuthor.map((author, index) => {
-        return (
+    const renderList = (list, type, isAuthor) =>
+        list.map((item, index) => (
             <Link
                 key={index}
-                className={cx('link-author')}
-                to={`/book/author/${author}`}
-                onClick={() => changeColorAuthor(index)}
-                state={{ author: author, user: props.user, type: handleTitle(author) }}
+                className={isAuthor ? cx('link-author') : cx('item-catergory')}
+                to={`/library/book/${isAuthor ? 'author/' + item : item.title}`}
+                onClick={() => updateState(type, index)}
+                state={{
+                    [isAuthor ? 'author' : 'title']: isAuthor ? item : item.title,
+                    user: props.user,
+                    type: handleTitle(isAuthor ? item : item.title),
+                }}
             >
-                <li className={cx('getAuthor')} style={stateAuthor[index] ? { color: '#f05123' } : { color: '#000' }}>
-                    {author}
+                <li
+                    className={cx(isAuthor ? 'getAuthor' : 'item')}
+                    style={activeStates[type][index] ? { color: '#f05123' } : { color: '#000' }}
+                >
+                    {isAuthor ? item : item.type}
                 </li>
             </Link>
-        );
-    });
+        ));
 
     return (
         <div className={cx('container__catergory')}>
             <h2>Main navigation</h2>
             <ul className={cx('catergory__search')}>
                 Thể loại
-                {renderType}
+                {renderList(listType, 'categories', false)}
             </ul>
             <ul className={cx('author__search')}>
                 Tác giả
-                {renderAuthor}
+                {renderList(listAuthor, 'authors', true)}
             </ul>
-
             <ul className={cx('country__search')}>
                 Phạm vi
-                <li className={cx('item-catergory')} onClick={() => changeColorArea(0)}>
-                    <Link
-                        to={`/book/${'domestic'}`}
-                        style={stateArea[0] ? { color: '#f05123' } : { color: '#000' }}
-                        state={{ title: 'domestic', user: props.user, type: handleTitle('domestic') }}
-                    >
-                        Trong nước
-                    </Link>
-                </li>
-                <li className={cx('item-catergory')} onClick={() => changeColorArea(1)}>
-                    <Link
-                        to={`/book/${'foreign'}`}
-                        style={stateArea[1] ? { color: '#f05123' } : { color: '#000' }}
-                        state={{ title: 'foreign', user: props.user, type: handleTitle('foreign') }}
-                    >
-                        Nước ngoài
-                    </Link>
-                </li>
+                {['domestic', 'foreign'].map((area, index) => (
+                    <li className={cx('item-area')} key={index} onClick={() => updateState('areas', index)}>
+                        <Link
+                            className={cx('item')}
+                            to={`/library/book/${area}`}
+                            style={activeStates.areas[index] ? { color: '#f05123' } : { color: '#000' }}
+                            state={{ title: area, user: props.user, type: handleTitle(area) }}
+                        >
+                            {index === 0 ? 'Trong nước' : 'Nước ngoài'}
+                        </Link>
+                    </li>
+                ))}
             </ul>
         </div>
     );

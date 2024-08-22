@@ -8,6 +8,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { BsTelephone } from 'react-icons/bs';
 import { TbTruckDelivery } from 'react-icons/tb';
 import { AiTwotoneHome } from 'react-icons/ai';
+import { TiHomeOutline } from 'react-icons/ti';
 
 import Confirm from '~/components/ConfirmPayment/ConfirmSuccess';
 
@@ -98,14 +99,13 @@ function PayCart() {
             listCart: data,
         };
         axios
-            .post('https://be-library.vercel.app/user/pay', dataBill, {
+            .post('https://library-be-wine.vercel.app/user/pay', dataBill, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${user.accessToken}`,
                 },
             })
             .then((response) => {
-                console.log(response.data);
                 setCheckPay(true);
             })
             .catch((err) => console.log(err));
@@ -113,14 +113,22 @@ function PayCart() {
 
     return (
         <div className={cx('container__page')}>
+            {checkPay && (
+                <div className={cx('confirm__form')}>
+                    <Confirm text="Bạn đã đặt hàng thành công!" user={user} />
+                </div>
+            )}
             <div className={cx('container__page-header')}>
+                <div className={cx('home')}>
+                    <Link to="/home" state={{ user: user }}>
+                        <span className={cx('icon')}>
+                            <TiHomeOutline />
+                        </span>
+                        <span>Trang chủ</span>
+                    </Link>
+                </div>
                 <div className={cx('item-header1')}>
                     <div className={cx('text')}>Thanh toán</div>
-                </div>
-                <div className={cx('logo')}>
-                    <Link to="/home" state={''}>
-                        <span className={cx('icon')}></span>
-                    </Link>
                 </div>
 
                 <div className={cx('item-header2')}>
@@ -134,7 +142,6 @@ function PayCart() {
                 </div>
             </div>
             <div className={cx('container__page-body')}>
-                {checkPay ? <Confirm text="Bạn đã mua hàng thành công!" user={user} /> : ''}
                 <div className={cx('container')}>
                     <div className={cx('row')}>
                         <div className={cx('col-9')}>

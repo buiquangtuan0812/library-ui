@@ -18,7 +18,7 @@ function Remove(props) {
         e.preventDefault();
         axios
             .post(
-                'https://be-library.vercel.app/users/cart/delete',
+                'https://library-be-wine.vercel.app/users/cart/delete',
                 { idCart: props.idCart },
                 {
                     headers: {

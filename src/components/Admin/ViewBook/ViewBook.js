@@ -102,7 +102,7 @@ function ViewBookComponent() {
         };
         setData(data);
         axios
-            .put('https://be-library.vercel.app/admin/update-book', data, {
+            .put('https://library-be-wine.vercel.app/admin/update-book', data, {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${dataUser.accessToken}`,

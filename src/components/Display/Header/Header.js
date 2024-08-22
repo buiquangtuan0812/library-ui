@@ -20,12 +20,12 @@ function Header(props) {
         <div className={cx('header')}>
             <div className={cx('container__content')}>
                 <div className={cx('container__content-book')}>
-                    <Link to="/books" state={props.user ? { user: props.user } : ''}>
+                    <Link to="/library/books" state={props.user ? { user: props.user } : ''}>
                         {props.page === 'book' ? <span style={{ color: '#ffca42' }}>Sách</span> : <span>Sách</span>}
                     </Link>
                 </div>
                 <div className={cx('container__content-author')}>
-                    <Link to="/authors" state={props.user ? { user: props.user } : ''}>
+                    <Link to="/library/authors" state={props.user ? { user: props.user } : ''}>
                         {props.page === 'author' ? (
                             <span style={{ color: '#ffca42' }}>Tác giả</span>
                         ) : (
@@ -34,7 +34,7 @@ function Header(props) {
                     </Link>
                 </div>
                 <div className={cx('container__content-blog')}>
-                    <Link to="/blogs" state={props.user ? { user: props.user } : ''}>
+                    <Link to="/library/blogs" state={props.user ? { user: props.user } : ''}>
                         {props.page === 'blog' ? <span style={{ color: '#ffca42' }}>Blogs</span> : <span>Blogs</span>}
                     </Link>
                 </div>

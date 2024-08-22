@@ -15,17 +15,25 @@ function ConfirmPost(props) {
     const [shortDes, setshortDes] = useState('');
     const [state, setState] = useState(false);
     const [check, setCheck] = useState(false);
+    const [objectImg, setObjectImg] = useState({});
 
     const convertToBase64 = (e) => {
-        var reader = new FileReader();
-        reader.readAsDataURL(e.target.files[0]);
+        const file = e.target.files[0];
+        const objectImg = {
+            uri: '',
+            name: file.name,
+            type: file.type,
+        };
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
         reader.onload = () => {
             setUrl(reader.result);
             setState(true);
+            const base64 = reader.result.split(',')[1];
+            objectImg.uri = base64;
+            setObjectImg(objectImg);
         };
-        reader.onerror = (err) => {
-            console.log(err);
-        };
+        reader.onerror = (err) => console.error(err);
     };
 
     const handlePost = () => {
@@ -37,11 +45,11 @@ function ConfirmPost(props) {
             shortDes: shortDes,
             content: {
                 text: props.markdownVal,
-                image: urlImg,
+                image: objectImg,
             },
         };
         axios
-            .post('https://be-library.vercel.app/library/blogs/create', data, {
+            .post('https://library-be-wine.vercel.app/library/blogs/create', data, {
                 headers: { 'Content-Type': 'application/json' },
             })
             .then((response) => {
@@ -52,66 +60,75 @@ function ConfirmPost(props) {
     };
     return (
         <div className={cx('container')}>
-            <div className={cx(check ? 'confirm-success' : 'hide')}>
-                <span className={cx('icon-success')}>
-                    <i className={cx('fa-solid fa-circle-check')}></i>
-                </span>
-                <span className={cx('separate')}></span>
-                <span className={cx('text')}>Bạn đã đăng blog thành công!</span>
-                <Link to="/blogs" state={{ user: props.user }}>
-                    <button>Quay lại</button>
-                </Link>
+            {check && (
+                <div className={cx('confirm__form')}>
+                    <div className={cx('confirm-success')}>
+                        <span className={cx('icon-success')}>
+                            <i className={cx('fa-solid fa-circle-check')}></i>
+                        </span>
+                        {/* <span className={cx('separate')}></span> */}
+                        <span className={cx('text')}>Bạn đã đăng blog thành công!</span>
+                        <Link to="/library/blogs" state={{ user: props.user }}>
+                            <button>Quay lại</button>
+                        </Link>
+                    </div>
+                </div>
+            )}
+            <div className={cx('btn-close')} onClick={props.handleHide}>
+                <i className={cx('fa-solid fa-xmark')}></i>
             </div>
-            <div className={cx('row')}>
-                <div className={cx('col-6')}>
-                    <div className={cx('nav-left')}>
-                        <h2>Preview</h2>
-                        <div className={cx(state ? 'hide' : 'simulation-img')}>
-                            <label htmlFor="file">
-                                <p>Adding a profile picture will make your blog more attractive to readers</p>
-                                <p className={cx('icon-upload')}>
-                                    <BsFillCloudUploadFill />
-                                </p>
-                            </label>
-                            <input
-                                type="file"
-                                accept="image/*"
-                                id="file"
-                                className={cx('chose-file')}
-                                onChange={(e) => convertToBase64(e)}
-                            />
-                        </div>
-                        {state ? (
-                            <div>
-                                <label htmlFor="file-change">
-                                    <img src={urlImg} alt="" />
+            <div className={cx('body')}>
+                <div className={cx('row')}>
+                    <div className={cx('col-6')}>
+                        <div className={cx('nav-left')}>
+                            <h2>Preview</h2>
+                            <div className={cx(state ? 'hide' : 'simulation-img')}>
+                                <label htmlFor="file">
+                                    <p>Thêm ảnh đại diện sẽ làm cho blog của bạn hấp dẫn hơn đối với người đọc</p>
+                                    <p className={cx('icon-upload')}>
+                                        <BsFillCloudUploadFill />
+                                    </p>
                                 </label>
                                 <input
                                     type="file"
                                     accept="image/*"
-                                    id="file-change"
-                                    className={cx('change-file')}
+                                    id="file"
+                                    className={cx('chose-file')}
                                     onChange={(e) => convertToBase64(e)}
                                 />
                             </div>
-                        ) : (
-                            ''
-                        )}
-                    </div>
-                </div>
-                <div className={cx('col-6')}>
-                    <div className={cx('nav-right')}>
-                        <div className={cx('simulation-content')}>
-                            <h2>{props.title}</h2>
-                            <input placeholder="Description when shown" onChange={(e) => setshortDes(e.target.value)} />
-                            <div>
-                                <strong>Note</strong>: Editing here will change the way the article is displayed on the
-                                homepage, featured news - Not the content of your article.
-                            </div>
+                            {state ? (
+                                <div>
+                                    <label htmlFor="file-change">
+                                        <img src={urlImg} alt="" />
+                                    </label>
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        id="file-change"
+                                        className={cx('change-file')}
+                                        onChange={(e) => convertToBase64(e)}
+                                    />
+                                </div>
+                            ) : (
+                                ''
+                            )}
                         </div>
+                    </div>
+                    <div className={cx('col-6')}>
+                        <div className={cx('nav-right')}>
+                            <div className={cx('simulation-content')}>
+                                <h2>{props.title}</h2>
+                                <input placeholder="Mô tả khi hiển thị" onChange={(e) => setshortDes(e.target.value)} />
+                                <div>
+                                    <strong>Note</strong>: Việc chỉnh sửa ở đây sẽ thay đổi cách bài viết được hiển thị
+                                    trên trang chủ, tin tức nổi bật - Không phải nội dung bài viết của bạn.
+                                </div>
+                            </div>
 
-                        <div className={cx('btn-post')}>
-                            <button onClick={handlePost}>Post</button>
+                            <div className={cx('btn-post')}>
+                                <button onClick={handlePost}>Đăng</button>
+                            </div>
                         </div>
                     </div>
                 </div>

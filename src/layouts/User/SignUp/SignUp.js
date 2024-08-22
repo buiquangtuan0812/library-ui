@@ -10,92 +10,133 @@ const cx = classNames.bind(styles);
 
 function SignUpForm() {
     document.title = 'My Library | Sign Up';
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [email, setEmail] = useState('');
-    const [tel, setTel] = useState('');
-    const [display, setState] = useState(false);
-    const [token, setToken] = useState('');
-    const [errName, setErrorName] = useState(false);
-    const [errEmail, setErrorEmail] = useState(false);
-    const [errTel, setErrorTel] = useState(false);
-    const [errpassword, setErrorPassword] = useState(false);
-    const [warnName, setWarningName] = useState(false);
-    const [warnTel, setWarningTel] = useState(false);
-    const [warnEmail, setWarningEmail] = useState(false);
-    const [warnPassword, setWarningPassword] = useState(false);
+
+    const [formData, setFormData] = useState({
+        username: '',
+        password: '',
+        email: '',
+        tel: '',
+    });
+
+    const [errors, setErrors] = useState({
+        username: false,
+        email: false,
+        tel: false,
+        password: false,
+    });
+
+    const [warnings, setWarnings] = useState({
+        username: false,
+        email: false,
+        tel: false,
+        password: false,
+    });
+
     const [isLoading, setIsLoading] = useState(false);
+    const [notification, setNotification] = useState({
+        visible: false,
+        message: '',
+        messageLink: '',
+        success: false,
+        token: '',
+    });
 
-    const [checkRegister, setCheckRegister] = useState(false);
-    const [message, setMessage] = useState('');
-    const [messageLink, setMessageLink] = useState('');
-    const [count, setCount] = useState(0);
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({ ...prevData, [name]: value }));
+    };
 
-    const handleSignup = () => {
-        setCount(count + 1);
-        setIsLoading(true);
-        const dataUser = {
-            username: username,
-            email: email,
-            tel: tel,
-            password: password,
-        };
-        if (
-            username.length === 0 &&
-            email.length === 0 &&
-            password.length === 0 &&
-            tel.length === 0 &&
-            password.length === 0
-        ) {
-            setErrorEmail(true);
-            setErrorName(true);
-            setErrorTel(true);
-            setErrorPassword(true);
-            setIsLoading(false);
+    const validateForm = () => {
+        const { username, email, tel, password } = formData;
+        let isValid = true;
+        const newErrors = { username: false, email: false, tel: false, password: false };
+        const newWarnings = { username: false, email: false, tel: false, password: false };
+
+        if (username.length === 0) {
+            newErrors.username = true;
+            isValid = false;
         } else if (username.length < 6) {
-            setWarningName(true);
-            setIsLoading(false);
-        } else if (email.slice(email.length - 10, email.length) !== '@gmail.com') {
-            setWarningEmail(true);
-            setIsLoading(false);
-        } else if (password.length < 6) {
-            setWarningPassword(true);
-            setIsLoading(false);
-        } else {
-            setTimeout(() => {
-                axios
-                    .post('https://be-library.vercel.app/user/signup', dataUser, {
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                    })
-                    .then((res) => {
-                        setState(true);
-                        setIsLoading(false);
-                        setToken(res.data);
-                        setMessage('You have successfully registered !');
-                        setMessageLink('Login now!');
-                        setCheckRegister(true);
-                    })
-                    .catch((err) => {
-                        setIsLoading(false);
-                        setMessage(err.request.response);
-                        setMessageLink('Try re-entering !');
-                        setCheckRegister(false);
-                    });
-            }, 800);
+            newWarnings.username = true;
+            isValid = false;
         }
+
+        if (email.length === 0) {
+            newErrors.email = true;
+            isValid = false;
+        } else if (!email.endsWith('@gmail.com')) {
+            newWarnings.email = true;
+            isValid = false;
+        }
+
+        if (tel.length === 0) {
+            newErrors.tel = true;
+            isValid = false;
+        } else if (tel.length !== 10) {
+            newWarnings.tel = true;
+            isValid = false;
+        }
+
+        if (password.length === 0) {
+            newErrors.password = true;
+            isValid = false;
+        } else if (password.length < 8) {
+            newWarnings.password = true;
+            isValid = false;
+        }
+
+        setErrors(newErrors);
+        setWarnings(newWarnings);
+        return isValid;
+    };
+
+    const handleSignup = async () => {
+        if (!validateForm()) {
+            setIsLoading(false);
+            return;
+        }
+
+        setIsLoading(true);
+
+        try {
+            const response = await axios.post('https://library-be-wine.vercel.app/user/signup', formData, {
+                headers: { 'Content-Type': 'application/json' },
+            });
+            setNotification({
+                visible: true,
+                message: 'Bạn đã đăng ký thành công!',
+                messageLink: 'Đăng nhập!',
+                success: true,
+                token: response.data,
+            });
+        } catch (err) {
+            setNotification({
+                visible: true,
+                message: err.response?.data || 'Có một lỗi xảy ra. Vui lòng thử lại',
+                messageLink: 'Thử lại!',
+                success: false,
+                token: '',
+            });
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const handleClose = () => {
+        setNotification((prevNotification) => ({
+            ...prevNotification,
+            visible: false,
+        }));
     };
 
     return (
         <div className={cx('container__signup')}>
-            <div className={cx(display ? 'show' : 'hide-content')}>
+            <div className={cx(notification.visible ? 'show' : 'hide-content')}>
                 <Notification
-                    token={token}
-                    message={message}
-                    messageLink={messageLink}
-                    check={checkRegister}
-                    count={count}
+                    token={notification.token}
+                    message={notification.message}
+                    messageLink={notification.messageLink}
+                    check={notification.success}
+                    close={handleClose}
                 />
             </div>
             <div className={cx('form')}>
@@ -110,20 +151,14 @@ function SignUpForm() {
                             className={cx('input-field')}
                             type="text"
                             id="username"
-                            value={username}
                             name="username"
-                            onChange={(e) => {
-                                if (e.target.value.length > 0) {
-                                    setErrorName(false);
-                                }
-                                setUsername(e.target.value);
-                            }}
+                            value={formData.username}
+                            onChange={handleInputChange}
                         />
                     </div>
-                    <div className={cx(errName ? 'err-username' : 'hide-content')}>
-                        Tên đăng nhập không được bỏ tróng!
-                    </div>
-                    <div className={cx(warnName ? 'err-mail' : 'hide-content')}>Tên đăng nhập ít nhất 6 ký tự!</div>
+                    {errors.username && <div className={cx('err-username')}>Tên đăng nhập không được bỏ trống!</div>}
+                    {warnings.username && <div className={cx('warn-username')}>Tên đăng nhập ít nhất 6 ký tự!</div>}
+
                     <div className={cx('field')}>
                         <i className={cx('fa-solid fa-envelope')}></i>
                         <label htmlFor="email"></label>
@@ -134,49 +169,30 @@ function SignUpForm() {
                             type="text"
                             id="email"
                             name="email"
-                            value={email}
-                            onChange={(e) => {
-                                setEmail(e.target.value);
-                                if (
-                                    e.target.value.slice(e.target.value.length - 10, e.target.value.length) ===
-                                    '@gmail.com'
-                                ) {
-                                    setErrorEmail(false);
-                                    setWarningEmail(false);
-                                } else {
-                                    setErrorEmail(false);
-                                    setWarningEmail(true);
-                                }
-                            }}
+                            value={formData.email}
+                            onChange={handleInputChange}
                         />
                     </div>
-                    <div className={cx(warnEmail ? 'err-mail' : 'hide-content')}>Email chưa đúng định dạng!</div>
-                    <div className={cx(errEmail ? 'err-email' : 'hide-content')}>Email không được bỏ trống!</div>
+                    {errors.email && <div className={cx('err-email')}>Email không được bỏ trống!</div>}
+                    {warnings.email && <div className={cx('warn-email')}>Email chưa đúng định dạng!</div>}
+
                     <div className={cx('field')}>
                         <i className={cx('fa-solid fa-phone')}></i>
-                        <label htmlFor="numberphone"></label>
+                        <label htmlFor="tel"></label>
                         <input
                             autoComplete="off"
                             placeholder="Số điện thoại"
                             className={cx('input-field')}
                             type="text"
-                            name="numberphone"
-                            id="numberphone"
-                            value={tel}
-                            onChange={(e) => {
-                                if (e.target.value.length === 10) {
-                                    setErrorTel(false);
-                                    setWarningTel(false);
-                                } else {
-                                    setErrorTel(false);
-                                    setWarningTel(true);
-                                }
-                                setTel(e.target.value);
-                            }}
+                            id="tel"
+                            name="tel"
+                            value={formData.tel}
+                            onChange={handleInputChange}
                         />
                     </div>
-                    <div className={cx(errTel ? 'err-tel' : 'hide-content')}>Bạn cần nhập số điện thoại!</div>
-                    <div className={cx(warnTel ? 'warn-tel' : 'hide-content')}>Số điện thoại gồm 10 chữ số!</div>
+                    {errors.tel && <div className={cx('err-tel')}>Bạn cần nhập số điện thoại!</div>}
+                    {warnings.tel && <div className={cx('warn-tel')}>Số điện thoại gồm 10 chữ số!</div>}
+
                     <div className={cx('field')}>
                         <i className={cx('fa-solid fa-lock')}></i>
                         <label htmlFor="password"></label>
@@ -184,27 +200,14 @@ function SignUpForm() {
                             placeholder="Mật khẩu"
                             className={cx('input-field')}
                             type="password"
-                            name="password"
                             id="password"
-                            value={password}
-                            onChange={(e) => {
-                                if (e.target.value.length >= 8) {
-                                    setErrorPassword(false);
-                                    setWarningPassword(false);
-                                } else {
-                                    setErrorPassword(false);
-                                    setWarningPassword(true);
-                                }
-                                setPassword(e.target.value);
-                            }}
+                            name="password"
+                            value={formData.password}
+                            onChange={handleInputChange}
                         />
                     </div>
-                    <div className={cx(warnPassword ? 'err-pass' : 'hide-content')}>
-                        Mật khẩu phải gồm ít nhất 8 ký tự!
-                    </div>
-                    <div className={cx(errpassword ? 'err-password' : 'hide-content')}>
-                        Mật khẩu không được bỏ trống!
-                    </div>
+                    {errors.password && <div className={cx('err-password')}>Mật khẩu không được bỏ trống!</div>}
+                    {warnings.password && <div className={cx('warn-password')}>Mật khẩu phải gồm ít nhất 8 ký tự!</div>}
                 </form>
                 <div className={cx('btn-signup')}>
                     <button className={cx('button2')} onClick={handleSignup}>
@@ -213,12 +216,10 @@ function SignUpForm() {
                 </div>
             </div>
 
-            {isLoading ? (
+            {isLoading && (
                 <div className={cx('form-loading')}>
                     <Loading props="Đang đăng ký" />
                 </div>
-            ) : (
-                ''
             )}
         </div>
     );

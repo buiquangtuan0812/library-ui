@@ -14,12 +14,11 @@ const cx = classNames.bind(styles);
 function BookTypePage() {
     const [user, setUser] = useState([]);
     const [dataBook, setdataBook] = useState([]);
-    const [inputBook, setinputBook] = useState('');
     const [numberCart, setNumberCart] = useState(0);
     const location = useLocation();
     document.title = 'Book | ' + location.state.type;
-    const url = 'https://be-library.vercel.app/library/books/' + location.state.title;
-    const urlAuthor = 'https://be-library.vercel.app/library/books/author';
+    const url = 'https://library-be-wine.vercel.app/library/books/' + location.state.title;
+    const urlAuthor = 'https://library-be-wine.vercel.app/library/books/author';
     useEffect(() => {
         setUser(location.state.user);
         if (location.state.author) {
@@ -38,7 +37,7 @@ function BookTypePage() {
                 });
         }
         axios
-            .get('https://be-library.vercel.app/users/cart', {
+            .get('https://library-be-wine.vercel.app/users/cart', {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${location.state.user.accessToken}`,
@@ -73,26 +72,13 @@ function BookTypePage() {
         [dataBook],
     );
 
-    const searchBook = () => {
-        axios
-            .get('https://be-library.vercel.app/library/books/search', { params: { name: inputBook } })
-            .then((response) => {
-                if (response.data.length > 1) {
-                    setdataBook(response.data);
-                } else {
-                    setdataBook([response.data]);
-                }
-            })
-            .catch((err) => console.error(err));
-    };
-
     return (
         <div>
             <Header user={user} numberCart={numberCart} page="book" />
             <div className={cx('container')}>
                 <div className={cx('separate')}></div>
                 <div className={cx('btn-back')}>
-                    <Link to="/books" state={{ user }}>
+                    <Link to="/library/books" state={{ user }}>
                         <span>
                             <i className={cx('fa-solid fa-arrow-left')}></i>
                         </span>
@@ -104,28 +90,6 @@ function BookTypePage() {
                         <CategoryBook user={user} />
                     </div>
                     <div className={cx('col-10')}>
-                        <div className={cx('row')}>
-                            <div className={cx('form-serach')}>
-                                <div className={cx('col-6 search__input form-group')}>
-                                    <label htmlFor="name"></label>
-                                    <input
-                                        type="text"
-                                        className={cx('input__value')}
-                                        name="name"
-                                        id="name"
-                                        placeholder="Nhập từ khóa tìm kiếm!"
-                                        onChange={(e) => setinputBook(e.target.value)}
-                                    />
-                                </div>
-                                <div className={cx('col-2')} id="btnSubmit">
-                                    {/* <Link to={`/library/book/detail/${inputBook}`}> */}
-                                    <button type="submit" className={cx('btn-search')} onClick={searchBook}>
-                                        Tìm kiếm
-                                    </button>
-                                    {/* </Link> */}
-                                </div>
-                            </div>
-                        </div>
                         <div className={cx('row row-cols-auto"')}>{renderBook}</div>
                         <div className={cx('mb100')}></div>
                     </div>

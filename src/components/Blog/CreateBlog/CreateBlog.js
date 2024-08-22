@@ -64,7 +64,7 @@ function CreateBlog() {
         if (location.state.user) {
             setUser(location.state.user);
             axios
-                .get('https://be-library.vercel.app/users/cart', {
+                .get('https://library-be-wine.vercel.app/users/cart', {
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${location.state.user.accessToken}`,
@@ -94,7 +94,7 @@ function CreateBlog() {
                             <MdOutlineArrowBackIosNew />
                         </span>
                         <span className={cx('back')}>
-                            <Link to="/blogs" state={{ user: user }}>
+                            <Link to="/library/blogs" state={{ user: user }}>
                                 Quay lại
                             </Link>
                         </span>
@@ -106,7 +106,7 @@ function CreateBlog() {
                     </div>
                     <div className={cx('header-item')}>
                         <span className={cx(title !== '' && markdownVal !== '' ? 'btn-success-post' : 'btn-post')}>
-                            <button onClick={handleShow}>Post Blog</button>
+                            <button onClick={handleShow}>Đăng</button>
                         </span>
                         <span className={cx('my-blog')}>My blog</span>
                         <Tippy
@@ -150,12 +150,7 @@ function CreateBlog() {
                 <Footer />
             </div>
 
-            <div className={cx(!state ? 'hide' : 'ctn__confirm')}>
-                <div className={cx('btn-close')} onClick={handleHide}>
-                    <i className={cx('fa-solid fa-xmark')}></i>
-                </div>
-                <ConfirmPost title={title} markdownVal={markdownVal} user={user} />
-            </div>
+            {state && <ConfirmPost title={title} markdownVal={markdownVal} user={user} handleHide={handleHide} />}
         </div>
     );
 }

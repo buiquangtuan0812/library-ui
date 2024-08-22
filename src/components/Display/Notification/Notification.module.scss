@@ -10,7 +10,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: transparent;
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 10;
 }
 
@@ -22,7 +22,8 @@
     border-radius: 12px;
     background-color: #fff;
     animation-name: show;
-    animation-duration: 1s;
+    animation-duration: 0.75s;
+    top: 200px;
     border: 1px solid #ccc;
     font-family: source sans pro, sans-serif;
     .confirm__err {
@@ -68,7 +69,7 @@
         button {
             color: #fff;
             border: none;
-            padding: 12px;
+            padding: 8px 16px;
             cursor: pointer;
             border-radius: 25px;
             background-color: #8bc34a;
@@ -92,7 +93,7 @@
         button {
             color: #fff;
             border: none;
-            padding: 12px;
+            padding: 8px 16px;
             cursor: pointer;
             border-radius: 25px;
             background-color: #cc3300;
@@ -108,7 +109,7 @@
             top: -227px;
         }
         to {
-            top: 260px;
+            top: 200px;
         }
     }
 }

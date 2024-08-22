@@ -18,17 +18,27 @@
 }
 
 .item-catergory {
+    text-decoration: none;
+    font-weight: 400;
+    color: #000;
+    .item {
+        padding-left: 20px;
+        margin: 20px 0;
+        font-size: 16px;
+    }
+}
+.item-area {
     padding-left: 20px;
     margin: 20px 0;
     font-size: 16px;
+    font-weight: 400;
+    color: #000;
     a {
         text-decoration: none;
-        font-weight: 400;
-        color: #000;
-    }
-    a:hover {
-        cursor: pointer;
-        opacity: 0.7;
+        &:hover {
+            cursor: pointer;
+            opacity: 0.7;
+        }
     }
 }
 

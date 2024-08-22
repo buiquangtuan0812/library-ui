@@ -35,7 +35,7 @@ function CartUser() {
         setUser(location.state.user);
         setNumberCart(location.state.numberCart);
         axios
-            .get('https://be-library.vercel.app/users/cart', {
+            .get('https://library-be-wine.vercel.app/users/cart', {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${location.state.user.accessToken}`,
@@ -165,7 +165,7 @@ function CartUser() {
                         <MdOutlineArrowBackIosNew />
                     </span>
                     <span className={cx('back')}>
-                        <Link to="/books" state={{ user }}>
+                        <Link to="/library/books" state={{ user }}>
                             Quay lại
                         </Link>
                     </span>

@@ -7,17 +7,20 @@ import CategoryBook from './CategoryBook/CategoryBook';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
 
 const cx = classNames.bind(styles);
 
 function BookPage() {
-    const [id, setIndex] = useState(1);
+    const [page, setPage] = useState(1);
+    const [totalPage, setTotalPage] = useState(null);
+    const [arrPage, setArr] = useState([]);
     const [numberCart, setNumberCart] = useState(0);
     const [dataBook, setdataBook] = useState([]);
     const [inputBook, setinputBook] = useState('');
+    const [noticeSearch, setNoticeSearch] = useState(false);
     document.title = 'Book | My Library';
 
     const [user, setUser] = useState([]);
@@ -27,7 +30,7 @@ function BookPage() {
             setUser(location.state.user);
         }
         axios
-            .get('https://be-library.vercel.app/users/cart', {
+            .get('https://library-be-wine.vercel.app/users/cart', {
                 headers: {
                     'Content-Type': 'application/json',
                     Authorization: `Bearer ${location.state.user.accessToken}`,
@@ -37,100 +40,101 @@ function BookPage() {
                 setNumberCart(res.data.length);
             })
             .catch((err) => console.error(err));
-    }, [location.state, id]);
+    }, [location.state]);
 
-    useEffect(() => {
+    const getBooks = (page) => {
         axios
-            .get('https://be-library.vercel.app/library/books')
-            .then((res) => setdataBook(res.data))
+            .get('https://library-be-wine.vercel.app/library/books', {
+                params: {
+                    page: page,
+                },
+            })
+            .then((res) => {
+                setdataBook(res.data.books);
+                setTotalPage(res.data.totalPages);
+                setPage(res.data.page);
+                const arr = [];
+                for (let i = 1; i <= res.data.totalPages; i++) {
+                    if (i === page) {
+                        arr.push(true);
+                    } else {
+                        arr.push(false);
+                    }
+                }
+                setArr(arr);
+            })
             .catch((err) => {
                 console.log(err);
             });
+    };
+
+    useEffect(() => {
+        getBooks(1);
     }, []);
-    const renderBook = useCallback(
-        dataBook.map((book, index) => {
-            if (index < 20 * (id - 1) || index >= 20 * id) {
-                return '';
-            } else {
-                if (book.name.includes(inputBook)) {
-                    return (
-                        <div className={cx('col-3')} key={index}>
-                            <Link className={cx('link-item')} to={`/book/detail/${book.name}`} state={{ user: user }}>
-                                <div className={cx('book-item')}>
-                                    <div className={cx('card')}>
-                                        <img src={book.imgDes} className={cx('card-img-top')} alt="..." />
-                                        <div className={cx('card-body')}>
-                                            <div className={cx('card-title')}>
-                                                <span className={cx('card-name')}>{book.name}</span>
-                                                <span className={cx('card-text')}> ({book.author})</span>
-                                            </div>
-                                        </div>
-                                    </div>
+    const renderBook = dataBook.map((book, index) => {
+        return (
+            <div className={cx('col-3')} key={index}>
+                <Link className={cx('link-item')} to={`/library/book/detail/${book.name}`} state={{ user: user }}>
+                    <div className={cx('book-item')}>
+                        <div className={cx('card')}>
+                            <img src={book.imgDes} className={cx('card-img-top')} alt="..." />
+                            <div className={cx('card-body')}>
+                                <div className={cx('card-title')}>
+                                    <span className={cx('card-name')}>{book.name}</span>
+                                    <span className={cx('card-text')}> ({book.author})</span>
                                 </div>
-                            </Link>
+                            </div>
                         </div>
-                    );
-                }
-            }
-        }),
-        [dataBook, id, inputBook],
-    );
+                    </div>
+                </Link>
+            </div>
+        );
+    });
 
     const searchBook = () => {
         axios
-            .get('https://be-library.vercel.app/library/books/search', { params: { name: inputBook } })
+            .get('https://library-be-wine.vercel.app/library/books/search', { params: { key: inputBook } })
             .then((response) => {
-                if (response.data.length > 1) {
-                    setdataBook(response.data);
+                setdataBook(response.data);
+                if (response.data.length > 0) {
+                    setNoticeSearch(false);
                 } else {
-                    setdataBook([response.data]);
+                    setNoticeSearch(true);
                 }
             })
             .catch((err) => console.error(err));
     };
-
-    const [indexArr, setArr] = useState([true, false, false, false]);
     const handleDivide = (value) => {
-        const arr = [false, false, false, false];
-        for (var i = 0; i < arr.length; i++) {
-            if (value === i + 1) {
-                arr[i] = true;
-            }
-        }
-        setArr(arr);
-        setIndex(value);
+        setPage(value);
+        getBooks(value);
     };
     const handlePre = () => {
-        if (id === 1) {
+        if (page === 1) {
             return;
         } else {
-            const value = id - 1;
-            const arr = [false, false, false, false];
-            for (var i = 0; i < arr.length; i++) {
-                if (value === i + 1) {
-                    arr[i] = true;
-                }
-            }
-            setArr(arr);
-            setIndex(value);
+            const value = page - 1;
+            getBooks(value);
+            setPage(value);
         }
     };
 
     const handleNext = () => {
-        if (id === 4) {
+        if (page === totalPage) {
             return;
         } else {
-            const value = id + 1;
-            const arr = [false, false, false, false];
-            for (var i = 0; i < arr.length; i++) {
-                if (value === i + 1) {
-                    arr[i] = true;
-                }
-            }
-            setArr(arr);
-            setIndex(value);
+            const value = page + 1;
+            getBooks(value);
+            setPage(value);
         }
     };
+
+    const renderPage = arrPage.map((value, index) => {
+        return (
+            <span className={cx(value ? 'index-curr' : 'index')} onClick={() => handleDivide(index + 1)} key={index}>
+                {index + 1}
+            </span>
+        );
+    });
 
     return (
         <div>
@@ -172,38 +176,18 @@ function BookPage() {
                             </div>
                         </div>
                         <div className={cx('row row-cols-auto"')}>{renderBook}</div>
-                        <div className={cx('divide-page')}>
-                            <span className={cx('icon-pre')} onClick={handlePre}>
-                                <GrFormPrevious />
-                            </span>
-                            <span
-                                className={cx(indexArr[0] === true ? 'index-curr' : 'index')}
-                                onClick={() => handleDivide(1)}
-                            >
-                                1
-                            </span>
-                            <span
-                                className={cx(indexArr[1] === true ? 'index-curr' : 'index')}
-                                onClick={() => handleDivide(2)}
-                            >
-                                2
-                            </span>
-                            <span
-                                className={cx(indexArr[2] === true ? 'index-curr' : 'index')}
-                                onClick={() => handleDivide(3)}
-                            >
-                                3
-                            </span>
-                            <span
-                                className={cx(indexArr[3] === true ? 'index-curr' : 'index')}
-                                onClick={() => handleDivide(4)}
-                            >
-                                4
-                            </span>
-                            <span>
-                                <GrFormNext className={cx('icon-next')} onClick={handleNext} />
-                            </span>
-                        </div>
+                        {dataBook.length >= 20 && (
+                            <div className={cx('divide-page')}>
+                                <span className={cx('icon-pre')} onClick={handlePre}>
+                                    <GrFormPrevious />
+                                </span>
+                                {renderPage}
+                                <span>
+                                    <GrFormNext className={cx('icon-next')} onClick={handleNext} />
+                                </span>
+                            </div>
+                        )}
+                        {noticeSearch && <div className={cx('notice-search')}>Không tìm thấy sách bạn muốn!</div>}
                     </div>
                 </div>
             </div>

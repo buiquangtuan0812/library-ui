@@ -23,7 +23,7 @@ function CartItem(props) {
 
     useEffect(() => {
         axios
-            .get('https://be-library.vercel.app/library/books/by', { params: { _id: props.idBook } })
+            .get('https://library-be-wine.vercel.app/library/books/by', { params: { _id: props.idBook } })
             .then((response) => {
                 setData(response.data);
                 setPrice(response.data.price);
@@ -36,8 +36,12 @@ function CartItem(props) {
         return oldPrice.slice(0, oldPrice.length - 3) + '.000';
     };
     const solveString = (num) => {
-        const str = num.toString();
-        return str.slice(0, str.length - 3) + '.000';
+        if (num === 0) {
+            return '0';
+        } else {
+            const str = num.toString();
+            return str.slice(0, str.length - 3) + '.' + str.slice(str.length - 3, str.length);
+        }
     };
 
     const handleReduce = () => {
@@ -137,7 +141,7 @@ function CartItem(props) {
                         <img src={data.imgDes} alt="Cart" />
                     </span>
                     <span className={cx('product-name')}>
-                        <Link className={cx('name')}>
+                        <Link className={cx('name')} to={`/library/book/detail/${data.name}`}>
                             <p>{data.name}</p>
                         </Link>
                         <p className={cx('state')}>{props.stateCart ? 'Đã thanh toán' : 'Chưa thanh toán'}</p>

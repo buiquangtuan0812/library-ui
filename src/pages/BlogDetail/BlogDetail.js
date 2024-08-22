@@ -29,7 +29,7 @@ function BlogDetail() {
             setUser(location.state.user);
         }
         axios
-            .get('https://be-library.vercel.app/library/blogs/details', { params: { _id: location.state.idBlog } })
+            .get('https://library-be-wine.vercel.app/library/blogs/details', { params: { _id: location.state.idBlog } })
             .then((res) => {
                 setAuthor(res.data.blog.author);
                 setContentBlog(res.data.blog.content);
@@ -42,7 +42,10 @@ function BlogDetail() {
     const renderTippy = (prop) => {
         return (
             <div>
-                <AccountReview />
+                <AccountReview
+                    user={location.state.user}
+                    numberCart={location.state.user.cart ? location.state.user.cart.length : 0}
+                />
             </div>
         );
     };
@@ -58,7 +61,7 @@ function BlogDetail() {
                         <MdOutlineArrowBackIosNew />
                     </span>
                     <span className={cx('back')}>
-                        <Link to="/blogs" state={{ user }}>
+                        <Link to="/library/blogs" state={{ user }}>
                             Quay lại
                         </Link>
                     </span>
@@ -69,15 +72,27 @@ function BlogDetail() {
                     </Link>
                 </div>
                 <div className={cx('header-item')}>
+                    {location.state.user.accessToken ? (
+                        <Tippy
+                            render={renderTippy}
+                            interactive
+                            delay={[200, 100]}
+                            offset={[-85, 12]}
+                            placement="bottom"
+                        >
+                            <span className={cx('my-account')}>
+                                <img className={cx('icon-user')} src={user.imgDes} alt="" />
+                            </span>
+                        </Tippy>
+                    ) : (
+                        <Link to="/user/login">
+                            <span className={cx('my-blog')}>Đăng nhập</span>
+                        </Link>
+                    )}
                     <span className={cx('my-blog')}>Blog của tôi</span>
                     <span>
                         <FaBell className={cx('notification')} />
                     </span>
-                    <Tippy render={renderTippy} interactive delay={[200, 100]} offset={[-85, 12]} placement="bottom">
-                        <span className={cx('my-account')}>
-                            <img className={cx('icon-user')} src={user.imgDes} alt="" />
-                        </span>
-                    </Tippy>
                 </div>
             </div>
             <div className={cx('mt')}>

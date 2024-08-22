@@ -16,7 +16,7 @@ function Cancel(props) {
         e.preventDefault();
         axios
             .post(
-                'https://be-library.vercel.app/user/order/cancel',
+                'https://library-be-wine.vercel.app/user/order/cancel',
                 { _id: props.id },
                 {
                     headers: {

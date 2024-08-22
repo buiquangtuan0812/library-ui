@@ -4,7 +4,7 @@
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #ccc;
-    background-color: #383838;
+    background-color: #1b3764;
     top: 0;
     left: 0;
     right: 0;
@@ -20,19 +20,19 @@
         &:hover {
             transform: scale(1.05);
             margin-left: 0px;
-            color: #ff424f;
+            color: #ffca42;
         }
         .icon-back {
             font-size: 22px;
         }
         .back {
             margin-left: 8px;
-            font-size: 20px;
+            font-size: 18px;
             a {
                 color: #ffffff;
                 text-decoration: none;
                 &:hover {
-                    color: #ff424f;
+                    color: #ffca42;
                 }
             }
         }
@@ -59,14 +59,18 @@
         justify-content: center;
         align-items: center;
         color: #ffffff;
+        a {
+            text-decoration: none;
+            color: #fff;
+        }
         .my-blog {
-            font-size: 22px;
+            font-size: 18px;
             font-weight: 540;
             margin-left: 36px;
             padding: 8px;
             &:hover {
                 cursor: pointer;
-                color: #ff424f;
+                color: #ffca42;
             }
         }
         .my-account {
@@ -83,13 +87,13 @@
         }
         .notification {
             color: #ffffff;
-            font-size: 40px;
+            font-size: 36px;
             font-weight: 600;
             margin-left: 36px;
             padding: 8px;
             &:hover {
                 cursor: pointer;
-                color: #ff424f;
+                color: #ffca42;
             }
         }
     }
@@ -173,7 +177,7 @@
                 margin-bottom: 24px;
                 h3 {
                     padding: 12px 0 28px 0;
-                    font-size: 28px;
+                    font-size: 20px;
                     border-bottom: 1px solid #ccc;
                 }
             }

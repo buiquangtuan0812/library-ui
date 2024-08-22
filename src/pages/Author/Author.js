@@ -20,7 +20,7 @@ const AuthorComponent = () => {
         if (location.state) {
             setUser(location.state.user);
             axios
-                .get('https://be-library.vercel.app/users/cart', {
+                .get('https://library-be-wine.vercel.app/users/cart', {
                     headers: {
                         'Content-Type': 'application/json',
                         Authorization: `Bearer ${location.state.user.accessToken}`,
@@ -35,7 +35,7 @@ const AuthorComponent = () => {
 
     useEffect(() => {
         axios
-            .get('https://be-library.vercel.app/library/author/get_all')
+            .get('https://library-be-wine.vercel.app/library/author/get_all')
             .then((res) => {
                 setLstAuthor(res.data);
             })
