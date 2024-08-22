@@ -71,6 +71,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { publicRoutes } from '~/routes';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 
 function App() {
     const accessToken = localStorage.getItem('token');
@@ -87,6 +88,7 @@ function App() {
                         }
                     })}
                 </Routes>
+                <SpeedInsights />
             </div>
         </Router>
     );
